@@ -1,4 +1,7 @@
-public interface JobTrackerInterface {
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface JobTrackerInterface extends Remote{
 	
 	/* JobSubmitResponse jobSubmit(JobSubmitRequest) */
 	byte[] jobSubmit(byte[] request) throws RemoteException;
