@@ -4,7 +4,7 @@ option java_outer_classname = "MRProtos";
 option java_package = "com.distributed.systems";
 
 message JobSubmitRequest {
-  optional string mapName = 1; // Java class, or name of C .so
+  optional string mapperName = 1; // Java class, or name of C .so
   optional string reducerName = 2; // Java class, or name of C .so
   optional string inputFile = 3;
   optional string outputFile = 4;
@@ -63,7 +63,7 @@ message BlockLocations {
 message MapTaskInfo {
   optional int32 jobId = 1;
   optional int32 taskId = 2;
-  optional string mapName = 3;
+  optional string mapperName = 3;
   repeated BlockLocations inputBlocks = 4;
 }
 

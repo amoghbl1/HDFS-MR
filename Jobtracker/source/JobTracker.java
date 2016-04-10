@@ -14,16 +14,19 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
     /* JobSubmitResponse jobSubmit(JobSubmitRequest) */
     public byte[] jobSubmit(byte[] encodedRequest) throws RemoteException {
+        System.out.println("Received job submit!!");
         return null;
     }
 
     /* JobStatusResponse getJobStatus(JobStatusRequest) */
     public byte[] getJobStatus(byte[] encodedRequest) throws RemoteException {
+        System.out.println("Received job status!!");
         return null;
     }
 
     /* HeartBeatResponse heartBeat(HeartBeatRequest) */
     public byte[] heartBeat(byte[] encodedRequest) throws RemoteException {
+        System.out.println("Received heart beat!!");
         return null;
     }
 

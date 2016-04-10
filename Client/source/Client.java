@@ -10,6 +10,8 @@ import com.distributed.systems.HDFSProtos.ReadBlockRequest;
 import com.distributed.systems.HDFSProtos.ReadBlockResponse;
 import com.distributed.systems.HDFSProtos.WriteBlockRequest;
 import com.distributed.systems.HDFSProtos.WriteBlockResponse;
+import com.distributed.systems.MRProtos.JobSubmitRequest;
+import com.distributed.systems.MRProtos.JobSubmitResponse;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -350,6 +352,24 @@ public class Client {
      * @param numberOfReducers the number of reducers to be used
      */
     public void runJob(String mapClassName, String reduceClassName, String inputFile, String outputFile, int numberOfReducers) {
+        JobSubmitResponse response = null;
+        byte[] responseEncoded = null;
+        try {
+            JobSubmitRequest.Builder requestBuilder = JobSubmitRequest.newBuilder();
+            requestBuilder.setMapperName(mapClassName);
+            requestBuilder.setReducerName(reduceClassName);
+            requestBuilder.setInputFile(inputFile);
+            requestBuilder.setOutputFile(outputFile);
+            requestBuilder.setNumReduceTasks(numberOfReducers);
+
+            JobTrackerInterface jobTracker = (JobTrackerInterface) Naming.lookup("//" +
+                    jobTrackerIP + "/HDFSMRJobTracker");
+
+            responseEncoded = jobTracker.jobSubmit(requestBuilder.build().toByteArray());
+        } catch (Exception e) {
+            System.out.println("Problem sending a job submit to job tracker??" + e.getMessage());
+            e.printStackTrace();
+        }
         
     }
 

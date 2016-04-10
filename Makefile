@@ -12,7 +12,7 @@ datanode: protobuf
 	@echo "Data Node compiled"
 
 client: protobuf
-	cd Client && javac -d bin -cp .:../protobuf-java-2.6.1.jar: source/Client.java source/NameNodeInterface.java source/DataNodeInterface.java source/RendezvousRunnableInterface.java
+	cd Client && javac -d bin -cp .:../protobuf-java-2.6.1.jar: source/Client.java source/NameNodeInterface.java source/DataNodeInterface.java source/RendezvousRunnableInterface.java source/JobTrackerInterface.java
 	@echo "Client Compiled..."
 
 clean:
