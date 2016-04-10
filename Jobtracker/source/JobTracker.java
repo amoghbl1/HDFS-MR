@@ -1,3 +1,7 @@
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 public class JobTracker extends UnicastRemoteObject implements JobTrackerInterface {
 
     // Using this default config file
@@ -9,17 +13,17 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
     }
 
     /* JobSubmitResponse jobSubmit(JobSubmitRequest) */
-    byte[] jobSubmit(byte[] encodedRequest) throws RemoteException {
+    public byte[] jobSubmit(byte[] encodedRequest) throws RemoteException {
         return null;
     }
 
     /* JobStatusResponse getJobStatus(JobStatusRequest) */
-    byte[] getJobStatus(byte[] encodedRequest) throws RemoteException {
+    public byte[] getJobStatus(byte[] encodedRequest) throws RemoteException {
         return null;
     }
 
     /* HeartBeatResponse heartBeat(HeartBeatRequest) */
-    byte[] heartBeat(byte[] encodedRequest) throws RemoteException {
+    public byte[] heartBeat(byte[] encodedRequest) throws RemoteException {
         return null;
     }
 
