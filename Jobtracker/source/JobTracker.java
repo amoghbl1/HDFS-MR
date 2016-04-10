@@ -8,6 +8,21 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         this.configFile = conf;
     }
 
+    /* JobSubmitResponse jobSubmit(JobSubmitRequest) */
+    byte[] jobSubmit(byte[] encodedRequest) throws RemoteException {
+        return null;
+    }
+
+    /* JobStatusResponse getJobStatus(JobStatusRequest) */
+    byte[] getJobStatus(byte[] encodedRequest) throws RemoteException {
+        return null;
+    }
+
+    /* HeartBeatResponse heartBeat(HeartBeatRequest) */
+    byte[] heartBeat(byte[] encodedRequest) throws RemoteException {
+        return null;
+    }
+
     public static void main(String[] args) {
         JobTracker me = null;
         try {
