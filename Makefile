@@ -16,7 +16,7 @@ client: protobuf
 	@echo "Client Compiled..."
 
 tasktracker: protobuf
-	cd TaskTracker && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java
+	cd Tasktracker && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java
 	@echo "Task Tracker Compiled..."
 
 clean:
