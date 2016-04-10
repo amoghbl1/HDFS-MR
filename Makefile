@@ -15,6 +15,10 @@ client: protobuf
 	cd Client && javac -d bin -cp .:../protobuf-java-2.6.1.jar: source/Client.java source/NameNodeInterface.java source/DataNodeInterface.java source/RendezvousRunnableInterface.java source/JobTrackerInterface.java
 	@echo "Client Compiled..."
 
+tasktracker: protobuf
+	cd TaskTracker && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java
+	@echo "Task Tracker Compiled..."
+
 clean:
 	rm -rf com */com
 	find . -name "nohup.out" -type f -delete
