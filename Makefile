@@ -16,10 +16,11 @@ client: protobuf
 	@echo "Client Compiled..."
 
 clean:
-	rm -rf com
+	rm -rf com */com
 	find . -name "nohup.out" -type f -delete
 	find . -name "*.class" -type f -delete
 	find . -name "*.pbuf" -type f -delete
+	find . -name "*.swp" -type f -delete
 	if pgrep rmiregistry; then pkill rmiregistry; fi
 
 protobuf:
@@ -28,3 +29,5 @@ protobuf:
 	cp -r com Namenode
 	cp -r com Datanode
 	cp -r com Client
+	cp -r com Jobtracker
+	cp -r com Tasktracker

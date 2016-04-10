@@ -23,10 +23,12 @@ public class Client {
 
     private int BLOCK_SIZE_IN_BYTES = 32000000;
 
-    // Using hdfs_client.conf as the default config file.
-    private static String configFile = "hdfs_client.conf"; 
+    // Using hdfs_mr_client.conf as the default config file.
+    private static String configFile = "hdfs_mr_client.conf"; 
 
+    // Using these defaults in case there is nothing in the config file.
     private static String nameNodeIP = "127.0.0.1";
+    private static String jobTrackerIP = "127.0.0.1";
 
     private static String rendezvousIdentifier;
     
@@ -45,7 +47,8 @@ public class Client {
      * Opens a file, that is, gets the rendezvous identifier
      * and sets it as this objects rendezvous.
      * 
-     * @param String Filename is the filename
+     * @param filename the file to open
+     * @param forRead set if file is being read
      * @return boolean Success of the request
      */
     public boolean open(String fileName, boolean forRead) {
@@ -107,7 +110,7 @@ public class Client {
      * The get function is used to download a file
      * stored on the HDFS, using the HDFS config file
      *
-     * @param String This is the filename to be downloaded from the HDFS
+     * @param fileName This is the filename to be downloaded from the HDFS
      * @return boolean Value indicating the success of the get request
      */ 
     public boolean get(String fileName) {
@@ -150,7 +153,7 @@ public class Client {
     * Helper for file download
     * Appends a block to a given filename
     *
-    * @param String filename to append to
+    * @param filename the file to append to
     * @param blockNumber is the block to download
     * @param dataNodeIP is the Data Node to download from
     *
@@ -174,8 +177,8 @@ public class Client {
      * Helper function for file download
      * gets the block number on a particular server.
      *
-     * @param String server IP or name
-     * @param int Block number to fetch
+     * @param server server IP or name
+     * @param blockNumber Block number to fetch
      * @return byte[] The byte array that the server responds with
      */
     public byte[] getBlockFromServer(String server, int blocknumber) {
@@ -226,7 +229,7 @@ public class Client {
      * The get function is used to upload a file
      * to the HDFS, using the HDFS config file
      *
-     * @param String This is the filename to be uploaded to the HDFS
+     * @param filename This is the filename to be uploaded to the HDFS
      * @return boolean Value indicating the success of the put request
      */
     public boolean put(String filename) {
@@ -338,6 +341,19 @@ public class Client {
     }
 
     /**
+     * Runs a job given all the right parameters
+     *  
+     * @param mapClassName The class name that map task should load
+     * @param reduceClassName The class name that reduce task should load
+     * @param inputFile the input file on HDFS to run job on
+     * @param outputFile the output file to write on HDFS
+     * @param numberOfReducers the number of reducers to be used
+     */
+    public void runJob(String mapClassName, String reduceClassName, String inputFile, String outputFile, int numberOfReducers) {
+
+    }
+
+    /**
      * Parse all command line args and figure out what exactly to do
      * Also parse the config file to figure out the HDFS environment
      *
@@ -376,6 +392,9 @@ public class Client {
             if(configLine.startsWith("nameNodeIP")) {
                 nameNodeIP = configLine.split(" ")[1];
             }
+            else if(configLine.startsWith("jobTrackerIP")) {
+                jobTrackerIP = configLine.split(" ")[1];
+            }
         }
 
         // This is done so that we can set the conf file with the constructor.
@@ -412,6 +431,19 @@ public class Client {
             me.open(args[1], true);
             me.get(args[1]);
             me.close();
+        }
+        else if(args[0].equals("job")) {
+            if(args.length < 6) {
+                System.out.println("Not enough arguments for job.");
+                System.out.println("Usage:");
+                System.out.println("job mapClassName reduceClassName inputFile outputFile numOfReducers");
+                return;
+            }
+            me.runJob(args[1], // Map Class Name
+                    args[2], // Reduce Class Name
+                    args[3], // Input File Name (File present on HDFS)
+                    args[4], // Output File Name (File will be written to HDFS)
+                    Integer.parseInt(args[5])); // Number of reducers
         }
     }
 }
