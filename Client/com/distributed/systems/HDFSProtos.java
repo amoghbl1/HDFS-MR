@@ -8,10 +8,10 @@ public final class HDFSProtos {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface OpenFileRequestOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface OpenFileRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:OpenFileRequest)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string fileName = 1;
     /**
      * <code>optional string fileName = 1;</code>
      *
@@ -38,7 +38,6 @@ public final class HDFSProtos {
     com.google.protobuf.ByteString
         getFileNameBytes();
 
-    // optional bool forRead = 2;
     /**
      * <code>optional bool forRead = 2;</code>
      *
@@ -59,36 +58,28 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code OpenFileRequest}
    */
-  public static final class OpenFileRequest extends
-      com.google.protobuf.GeneratedMessage
-      implements OpenFileRequestOrBuilder {
+  public  static final class OpenFileRequest extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:OpenFileRequest)
+      OpenFileRequestOrBuilder {
     // Use OpenFileRequest.newBuilder() to construct.
     private OpenFileRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private OpenFileRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final OpenFileRequest defaultInstance;
-    public static OpenFileRequest getDefaultInstance() {
-      return defaultInstance;
+    private OpenFileRequest() {
+      fileName_ = "";
+      forRead_ = false;
     }
 
-    public OpenFileRequest getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private OpenFileRequest(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -108,8 +99,9 @@ public final class HDFSProtos {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              fileName_ = input.readBytes();
+              fileName_ = bs;
               break;
             }
             case 16: {
@@ -120,10 +112,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -141,25 +133,9 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.OpenFileRequest.class, com.distributed.systems.HDFSProtos.OpenFileRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<OpenFileRequest> PARSER =
-        new com.google.protobuf.AbstractParser<OpenFileRequest>() {
-      public OpenFileRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new OpenFileRequest(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<OpenFileRequest> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional string fileName = 1;
     public static final int FILENAME_FIELD_NUMBER = 1;
-    private java.lang.Object fileName_;
+    private volatile java.lang.Object fileName_;
     /**
      * <code>optional string fileName = 1;</code>
      *
@@ -212,7 +188,6 @@ public final class HDFSProtos {
       }
     }
 
-    // optional bool forRead = 2;
     public static final int FORREAD_FIELD_NUMBER = 2;
     private boolean forRead_;
     /**
@@ -236,14 +211,11 @@ public final class HDFSProtos {
       return forRead_;
     }
 
-    private void initFields() {
-      fileName_ = "";
-      forRead_ = false;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -251,42 +223,33 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getFileNameBytes());
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, fileName_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBool(2, forRead_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getFileNameBytes());
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, fileName_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(2, forRead_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.OpenFileRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -310,42 +273,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.OpenFileRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.OpenFileRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.OpenFileRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.OpenFileRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.OpenFileRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.OpenFileRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.OpenFileRequest prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.OpenFileRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -357,8 +319,9 @@ public final class HDFSProtos {
      * Protobuf type {@code OpenFileRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.OpenFileRequestOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:OpenFileRequest)
+        com.distributed.systems.HDFSProtos.OpenFileRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_OpenFileRequest_descriptor;
@@ -385,10 +348,6 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         fileName_ = "";
@@ -396,10 +355,6 @@ public final class HDFSProtos {
         forRead_ = false;
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -455,7 +410,8 @@ public final class HDFSProtos {
         if (other.hasForRead()) {
           setForRead(other.getForRead());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -472,7 +428,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.OpenFileRequest) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -482,7 +438,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional string fileName = 1;
       private java.lang.Object fileName_ = "";
       /**
        * <code>optional string fileName = 1;</code>
@@ -504,9 +459,12 @@ public final class HDFSProtos {
       public java.lang.String getFileName() {
         java.lang.Object ref = fileName_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          fileName_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            fileName_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -580,7 +538,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // optional bool forRead = 2;
       private boolean forRead_ ;
       /**
        * <code>optional bool forRead = 2;</code>
@@ -632,18 +589,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:OpenFileRequest)
     }
 
+    // @@protoc_insertion_point(class_scope:OpenFileRequest)
+    private static final com.distributed.systems.HDFSProtos.OpenFileRequest DEFAULT_INSTANCE;
     static {
-      defaultInstance = new OpenFileRequest(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.OpenFileRequest();
     }
 
-    // @@protoc_insertion_point(class_scope:OpenFileRequest)
+    public static com.distributed.systems.HDFSProtos.OpenFileRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<OpenFileRequest>
+        PARSER = new com.google.protobuf.AbstractParser<OpenFileRequest>() {
+      public OpenFileRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new OpenFileRequest(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<OpenFileRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<OpenFileRequest> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.OpenFileRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface OpenFileResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface OpenFileResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:OpenFileResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 status = 1;
     /**
      * <code>optional int32 status = 1;</code>
      *
@@ -661,7 +654,6 @@ public final class HDFSProtos {
      */
     int getStatus();
 
-    // optional string rendezvousIndentifier = 2;
     /**
      * <code>optional string rendezvousIndentifier = 2;</code>
      *
@@ -697,36 +689,28 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code OpenFileResponse}
    */
-  public static final class OpenFileResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements OpenFileResponseOrBuilder {
+  public  static final class OpenFileResponse extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:OpenFileResponse)
+      OpenFileResponseOrBuilder {
     // Use OpenFileResponse.newBuilder() to construct.
     private OpenFileResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private OpenFileResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final OpenFileResponse defaultInstance;
-    public static OpenFileResponse getDefaultInstance() {
-      return defaultInstance;
+    private OpenFileResponse() {
+      status_ = 0;
+      rendezvousIndentifier_ = "";
     }
 
-    public OpenFileResponse getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private OpenFileResponse(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -751,17 +735,18 @@ public final class HDFSProtos {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              rendezvousIndentifier_ = input.readBytes();
+              rendezvousIndentifier_ = bs;
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -779,23 +764,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.OpenFileResponse.class, com.distributed.systems.HDFSProtos.OpenFileResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<OpenFileResponse> PARSER =
-        new com.google.protobuf.AbstractParser<OpenFileResponse>() {
-      public OpenFileResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new OpenFileResponse(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<OpenFileResponse> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 status = 1;
     public static final int STATUS_FIELD_NUMBER = 1;
     private int status_;
     /**
@@ -819,9 +788,8 @@ public final class HDFSProtos {
       return status_;
     }
 
-    // optional string rendezvousIndentifier = 2;
     public static final int RENDEZVOUSINDENTIFIER_FIELD_NUMBER = 2;
-    private java.lang.Object rendezvousIndentifier_;
+    private volatile java.lang.Object rendezvousIndentifier_;
     /**
      * <code>optional string rendezvousIndentifier = 2;</code>
      *
@@ -880,14 +848,11 @@ public final class HDFSProtos {
       }
     }
 
-    private void initFields() {
-      status_ = 0;
-      rendezvousIndentifier_ = "";
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -895,19 +860,17 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, status_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getRendezvousIndentifierBytes());
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, rendezvousIndentifier_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -916,21 +879,14 @@ public final class HDFSProtos {
           .computeInt32Size(1, status_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getRendezvousIndentifierBytes());
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, rendezvousIndentifier_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.OpenFileResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -954,42 +910,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.OpenFileResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.OpenFileResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.OpenFileResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.OpenFileResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.OpenFileResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.OpenFileResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.OpenFileResponse prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.OpenFileResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -1001,8 +956,9 @@ public final class HDFSProtos {
      * Protobuf type {@code OpenFileResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.OpenFileResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:OpenFileResponse)
+        com.distributed.systems.HDFSProtos.OpenFileResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_OpenFileResponse_descriptor;
@@ -1029,10 +985,6 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         status_ = 0;
@@ -1040,10 +992,6 @@ public final class HDFSProtos {
         rendezvousIndentifier_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -1099,7 +1047,8 @@ public final class HDFSProtos {
           rendezvousIndentifier_ = other.rendezvousIndentifier_;
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -1116,7 +1065,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.OpenFileResponse) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1126,7 +1075,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 status = 1;
       private int status_ ;
       /**
        * <code>optional int32 status = 1;</code>
@@ -1175,7 +1123,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // optional string rendezvousIndentifier = 2;
       private java.lang.Object rendezvousIndentifier_ = "";
       /**
        * <code>optional string rendezvousIndentifier = 2;</code>
@@ -1201,9 +1148,12 @@ public final class HDFSProtos {
       public java.lang.String getRendezvousIndentifier() {
         java.lang.Object ref = rendezvousIndentifier_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          rendezvousIndentifier_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            rendezvousIndentifier_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1288,18 +1238,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:OpenFileResponse)
     }
 
+    // @@protoc_insertion_point(class_scope:OpenFileResponse)
+    private static final com.distributed.systems.HDFSProtos.OpenFileResponse DEFAULT_INSTANCE;
     static {
-      defaultInstance = new OpenFileResponse(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.OpenFileResponse();
     }
 
-    // @@protoc_insertion_point(class_scope:OpenFileResponse)
+    public static com.distributed.systems.HDFSProtos.OpenFileResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<OpenFileResponse>
+        PARSER = new com.google.protobuf.AbstractParser<OpenFileResponse>() {
+      public OpenFileResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new OpenFileResponse(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<OpenFileResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<OpenFileResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.OpenFileResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface CloseFileRequestOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface CloseFileRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:CloseFileRequest)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 handle = 1;
     /**
      * <code>optional int32 handle = 1;</code>
      *
@@ -1320,36 +1306,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code CloseFileRequest}
    */
-  public static final class CloseFileRequest extends
-      com.google.protobuf.GeneratedMessage
-      implements CloseFileRequestOrBuilder {
+  public  static final class CloseFileRequest extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:CloseFileRequest)
+      CloseFileRequestOrBuilder {
     // Use CloseFileRequest.newBuilder() to construct.
     private CloseFileRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private CloseFileRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final CloseFileRequest defaultInstance;
-    public static CloseFileRequest getDefaultInstance() {
-      return defaultInstance;
+    private CloseFileRequest() {
+      handle_ = 0;
     }
 
-    public CloseFileRequest getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private CloseFileRequest(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1376,10 +1353,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1397,23 +1374,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.CloseFileRequest.class, com.distributed.systems.HDFSProtos.CloseFileRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<CloseFileRequest> PARSER =
-        new com.google.protobuf.AbstractParser<CloseFileRequest>() {
-      public CloseFileRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CloseFileRequest(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CloseFileRequest> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 handle = 1;
     public static final int HANDLE_FIELD_NUMBER = 1;
     private int handle_;
     /**
@@ -1437,13 +1398,11 @@ public final class HDFSProtos {
       return handle_;
     }
 
-    private void initFields() {
-      handle_ = 0;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1451,16 +1410,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, handle_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -1468,18 +1425,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, handle_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.CloseFileRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1503,42 +1454,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.CloseFileRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.CloseFileRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.CloseFileRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.CloseFileRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.CloseFileRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.CloseFileRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.CloseFileRequest prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.CloseFileRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -1550,8 +1500,9 @@ public final class HDFSProtos {
      * Protobuf type {@code CloseFileRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.CloseFileRequestOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:CloseFileRequest)
+        com.distributed.systems.HDFSProtos.CloseFileRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_CloseFileRequest_descriptor;
@@ -1578,19 +1529,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         handle_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -1637,7 +1580,8 @@ public final class HDFSProtos {
         if (other.hasHandle()) {
           setHandle(other.getHandle());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -1654,7 +1598,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.CloseFileRequest) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1664,7 +1608,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 handle = 1;
       private int handle_ ;
       /**
        * <code>optional int32 handle = 1;</code>
@@ -1716,18 +1659,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:CloseFileRequest)
     }
 
+    // @@protoc_insertion_point(class_scope:CloseFileRequest)
+    private static final com.distributed.systems.HDFSProtos.CloseFileRequest DEFAULT_INSTANCE;
     static {
-      defaultInstance = new CloseFileRequest(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.CloseFileRequest();
     }
 
-    // @@protoc_insertion_point(class_scope:CloseFileRequest)
+    public static com.distributed.systems.HDFSProtos.CloseFileRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<CloseFileRequest>
+        PARSER = new com.google.protobuf.AbstractParser<CloseFileRequest>() {
+      public CloseFileRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new CloseFileRequest(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<CloseFileRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CloseFileRequest> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.CloseFileRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface CloseFileResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface CloseFileResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:CloseFileResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 status = 1;
     /**
      * <code>optional int32 status = 1;</code>
      */
@@ -1740,36 +1719,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code CloseFileResponse}
    */
-  public static final class CloseFileResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements CloseFileResponseOrBuilder {
+  public  static final class CloseFileResponse extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:CloseFileResponse)
+      CloseFileResponseOrBuilder {
     // Use CloseFileResponse.newBuilder() to construct.
     private CloseFileResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private CloseFileResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final CloseFileResponse defaultInstance;
-    public static CloseFileResponse getDefaultInstance() {
-      return defaultInstance;
+    private CloseFileResponse() {
+      status_ = 0;
     }
 
-    public CloseFileResponse getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private CloseFileResponse(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1796,10 +1766,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1817,23 +1787,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.CloseFileResponse.class, com.distributed.systems.HDFSProtos.CloseFileResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<CloseFileResponse> PARSER =
-        new com.google.protobuf.AbstractParser<CloseFileResponse>() {
-      public CloseFileResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CloseFileResponse(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CloseFileResponse> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 status = 1;
     public static final int STATUS_FIELD_NUMBER = 1;
     private int status_;
     /**
@@ -1849,13 +1803,11 @@ public final class HDFSProtos {
       return status_;
     }
 
-    private void initFields() {
-      status_ = 0;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1863,16 +1815,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, status_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -1880,18 +1830,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, status_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.CloseFileResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1915,42 +1859,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.CloseFileResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.CloseFileResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.CloseFileResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.CloseFileResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.CloseFileResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.CloseFileResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.CloseFileResponse prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.CloseFileResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -1962,8 +1905,9 @@ public final class HDFSProtos {
      * Protobuf type {@code CloseFileResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.CloseFileResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:CloseFileResponse)
+        com.distributed.systems.HDFSProtos.CloseFileResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_CloseFileResponse_descriptor;
@@ -1990,19 +1934,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         status_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -2049,7 +1985,8 @@ public final class HDFSProtos {
         if (other.hasStatus()) {
           setStatus(other.getStatus());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -2066,7 +2003,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.CloseFileResponse) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2076,7 +2013,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 status = 1;
       private int status_ ;
       /**
        * <code>optional int32 status = 1;</code>
@@ -2112,18 +2048,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:CloseFileResponse)
     }
 
+    // @@protoc_insertion_point(class_scope:CloseFileResponse)
+    private static final com.distributed.systems.HDFSProtos.CloseFileResponse DEFAULT_INSTANCE;
     static {
-      defaultInstance = new CloseFileResponse(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.CloseFileResponse();
     }
 
-    // @@protoc_insertion_point(class_scope:CloseFileResponse)
+    public static com.distributed.systems.HDFSProtos.CloseFileResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<CloseFileResponse>
+        PARSER = new com.google.protobuf.AbstractParser<CloseFileResponse>() {
+      public CloseFileResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new CloseFileResponse(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<CloseFileResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CloseFileResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.CloseFileResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface WriteBlockRequestOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface WriteBlockRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:WriteBlockRequest)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 blockNumber = 1;
     /**
      * <code>optional int32 blockNumber = 1;</code>
      */
@@ -2133,7 +2105,6 @@ public final class HDFSProtos {
      */
     int getBlockNumber();
 
-    // repeated bytes data = 2;
     /**
      * <code>repeated bytes data = 2;</code>
      */
@@ -2147,12 +2118,11 @@ public final class HDFSProtos {
      */
     com.google.protobuf.ByteString getData(int index);
 
-    // repeated string remainingDataNodeIPs = 3;
     /**
      * <code>repeated string remainingDataNodeIPs = 3;</code>
      */
-    java.util.List<java.lang.String>
-    getRemainingDataNodeIPsList();
+    com.google.protobuf.ProtocolStringList
+        getRemainingDataNodeIPsList();
     /**
      * <code>repeated string remainingDataNodeIPs = 3;</code>
      */
@@ -2170,36 +2140,29 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code WriteBlockRequest}
    */
-  public static final class WriteBlockRequest extends
-      com.google.protobuf.GeneratedMessage
-      implements WriteBlockRequestOrBuilder {
+  public  static final class WriteBlockRequest extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:WriteBlockRequest)
+      WriteBlockRequestOrBuilder {
     // Use WriteBlockRequest.newBuilder() to construct.
     private WriteBlockRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private WriteBlockRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final WriteBlockRequest defaultInstance;
-    public static WriteBlockRequest getDefaultInstance() {
-      return defaultInstance;
+    private WriteBlockRequest() {
+      blockNumber_ = 0;
+      data_ = java.util.Collections.emptyList();
+      remainingDataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
-    public WriteBlockRequest getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private WriteBlockRequest(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2232,26 +2195,27 @@ public final class HDFSProtos {
               break;
             }
             case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 remainingDataNodeIPs_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000004;
               }
-              remainingDataNodeIPs_.add(input.readBytes());
+              remainingDataNodeIPs_.add(bs);
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           data_ = java.util.Collections.unmodifiableList(data_);
         }
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          remainingDataNodeIPs_ = new com.google.protobuf.UnmodifiableLazyStringList(remainingDataNodeIPs_);
+          remainingDataNodeIPs_ = remainingDataNodeIPs_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -2269,23 +2233,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.WriteBlockRequest.class, com.distributed.systems.HDFSProtos.WriteBlockRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<WriteBlockRequest> PARSER =
-        new com.google.protobuf.AbstractParser<WriteBlockRequest>() {
-      public WriteBlockRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new WriteBlockRequest(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<WriteBlockRequest> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 blockNumber = 1;
     public static final int BLOCKNUMBER_FIELD_NUMBER = 1;
     private int blockNumber_;
     /**
@@ -2301,7 +2249,6 @@ public final class HDFSProtos {
       return blockNumber_;
     }
 
-    // repeated bytes data = 2;
     public static final int DATA_FIELD_NUMBER = 2;
     private java.util.List<com.google.protobuf.ByteString> data_;
     /**
@@ -2324,13 +2271,12 @@ public final class HDFSProtos {
       return data_.get(index);
     }
 
-    // repeated string remainingDataNodeIPs = 3;
     public static final int REMAININGDATANODEIPS_FIELD_NUMBER = 3;
     private com.google.protobuf.LazyStringList remainingDataNodeIPs_;
     /**
      * <code>repeated string remainingDataNodeIPs = 3;</code>
      */
-    public java.util.List<java.lang.String>
+    public com.google.protobuf.ProtocolStringList
         getRemainingDataNodeIPsList() {
       return remainingDataNodeIPs_;
     }
@@ -2354,15 +2300,11 @@ public final class HDFSProtos {
       return remainingDataNodeIPs_.getByteString(index);
     }
 
-    private void initFields() {
-      blockNumber_ = 0;
-      data_ = java.util.Collections.emptyList();
-      remainingDataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -2370,7 +2312,6 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, blockNumber_);
       }
@@ -2378,14 +2319,13 @@ public final class HDFSProtos {
         output.writeBytes(2, data_.get(i));
       }
       for (int i = 0; i < remainingDataNodeIPs_.size(); i++) {
-        output.writeBytes(3, remainingDataNodeIPs_.getByteString(i));
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, remainingDataNodeIPs_.getRaw(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -2405,24 +2345,17 @@ public final class HDFSProtos {
       {
         int dataSize = 0;
         for (int i = 0; i < remainingDataNodeIPs_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeBytesSizeNoTag(remainingDataNodeIPs_.getByteString(i));
+          dataSize += computeStringSizeNoTag(remainingDataNodeIPs_.getRaw(i));
         }
         size += dataSize;
         size += 1 * getRemainingDataNodeIPsList().size();
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.WriteBlockRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2446,42 +2379,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.WriteBlockRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.WriteBlockRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.WriteBlockRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.WriteBlockRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.WriteBlockRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.WriteBlockRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.WriteBlockRequest prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.WriteBlockRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -2493,8 +2425,9 @@ public final class HDFSProtos {
      * Protobuf type {@code WriteBlockRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.WriteBlockRequestOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:WriteBlockRequest)
+        com.distributed.systems.HDFSProtos.WriteBlockRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_WriteBlockRequest_descriptor;
@@ -2521,10 +2454,6 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         blockNumber_ = 0;
@@ -2534,10 +2463,6 @@ public final class HDFSProtos {
         remainingDataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000004);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -2571,8 +2496,7 @@ public final class HDFSProtos {
         }
         result.data_ = data_;
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          remainingDataNodeIPs_ = new com.google.protobuf.UnmodifiableLazyStringList(
-              remainingDataNodeIPs_);
+          remainingDataNodeIPs_ = remainingDataNodeIPs_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.remainingDataNodeIPs_ = remainingDataNodeIPs_;
@@ -2615,7 +2539,8 @@ public final class HDFSProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -2632,7 +2557,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.WriteBlockRequest) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2642,7 +2567,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 blockNumber = 1;
       private int blockNumber_ ;
       /**
        * <code>optional int32 blockNumber = 1;</code>
@@ -2675,7 +2599,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // repeated bytes data = 2;
       private java.util.List<com.google.protobuf.ByteString> data_ = java.util.Collections.emptyList();
       private void ensureDataIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
@@ -2733,7 +2656,8 @@ public final class HDFSProtos {
       public Builder addAllData(
           java.lang.Iterable<? extends com.google.protobuf.ByteString> values) {
         ensureDataIsMutable();
-        super.addAll(values, data_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, data_);
         onChanged();
         return this;
       }
@@ -2747,7 +2671,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // repeated string remainingDataNodeIPs = 3;
       private com.google.protobuf.LazyStringList remainingDataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureRemainingDataNodeIPsIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
@@ -2758,9 +2681,9 @@ public final class HDFSProtos {
       /**
        * <code>repeated string remainingDataNodeIPs = 3;</code>
        */
-      public java.util.List<java.lang.String>
+      public com.google.protobuf.ProtocolStringList
           getRemainingDataNodeIPsList() {
-        return java.util.Collections.unmodifiableList(remainingDataNodeIPs_);
+        return remainingDataNodeIPs_.getUnmodifiableView();
       }
       /**
        * <code>repeated string remainingDataNodeIPs = 3;</code>
@@ -2813,7 +2736,8 @@ public final class HDFSProtos {
       public Builder addAllRemainingDataNodeIPs(
           java.lang.Iterable<java.lang.String> values) {
         ensureRemainingDataNodeIPsIsMutable();
-        super.addAll(values, remainingDataNodeIPs_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, remainingDataNodeIPs_);
         onChanged();
         return this;
       }
@@ -2843,18 +2767,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:WriteBlockRequest)
     }
 
+    // @@protoc_insertion_point(class_scope:WriteBlockRequest)
+    private static final com.distributed.systems.HDFSProtos.WriteBlockRequest DEFAULT_INSTANCE;
     static {
-      defaultInstance = new WriteBlockRequest(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.WriteBlockRequest();
     }
 
-    // @@protoc_insertion_point(class_scope:WriteBlockRequest)
+    public static com.distributed.systems.HDFSProtos.WriteBlockRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<WriteBlockRequest>
+        PARSER = new com.google.protobuf.AbstractParser<WriteBlockRequest>() {
+      public WriteBlockRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new WriteBlockRequest(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<WriteBlockRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<WriteBlockRequest> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.WriteBlockRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface WriteBlockResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface WriteBlockResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:WriteBlockResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 status = 1;
     /**
      * <code>optional int32 status = 1;</code>
      */
@@ -2867,36 +2827,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code WriteBlockResponse}
    */
-  public static final class WriteBlockResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements WriteBlockResponseOrBuilder {
+  public  static final class WriteBlockResponse extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:WriteBlockResponse)
+      WriteBlockResponseOrBuilder {
     // Use WriteBlockResponse.newBuilder() to construct.
     private WriteBlockResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private WriteBlockResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final WriteBlockResponse defaultInstance;
-    public static WriteBlockResponse getDefaultInstance() {
-      return defaultInstance;
+    private WriteBlockResponse() {
+      status_ = 0;
     }
 
-    public WriteBlockResponse getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private WriteBlockResponse(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2923,10 +2874,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -2944,23 +2895,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.WriteBlockResponse.class, com.distributed.systems.HDFSProtos.WriteBlockResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<WriteBlockResponse> PARSER =
-        new com.google.protobuf.AbstractParser<WriteBlockResponse>() {
-      public WriteBlockResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new WriteBlockResponse(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<WriteBlockResponse> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 status = 1;
     public static final int STATUS_FIELD_NUMBER = 1;
     private int status_;
     /**
@@ -2976,13 +2911,11 @@ public final class HDFSProtos {
       return status_;
     }
 
-    private void initFields() {
-      status_ = 0;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -2990,16 +2923,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, status_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -3007,18 +2938,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, status_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.WriteBlockResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3042,42 +2967,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.WriteBlockResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.WriteBlockResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.WriteBlockResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.WriteBlockResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.WriteBlockResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.WriteBlockResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.WriteBlockResponse prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.WriteBlockResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -3089,8 +3013,9 @@ public final class HDFSProtos {
      * Protobuf type {@code WriteBlockResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.WriteBlockResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:WriteBlockResponse)
+        com.distributed.systems.HDFSProtos.WriteBlockResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_WriteBlockResponse_descriptor;
@@ -3117,19 +3042,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         status_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -3176,7 +3093,8 @@ public final class HDFSProtos {
         if (other.hasStatus()) {
           setStatus(other.getStatus());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -3193,7 +3111,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.WriteBlockResponse) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -3203,7 +3121,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 status = 1;
       private int status_ ;
       /**
        * <code>optional int32 status = 1;</code>
@@ -3239,18 +3156,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:WriteBlockResponse)
     }
 
+    // @@protoc_insertion_point(class_scope:WriteBlockResponse)
+    private static final com.distributed.systems.HDFSProtos.WriteBlockResponse DEFAULT_INSTANCE;
     static {
-      defaultInstance = new WriteBlockResponse(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.WriteBlockResponse();
     }
 
-    // @@protoc_insertion_point(class_scope:WriteBlockResponse)
+    public static com.distributed.systems.HDFSProtos.WriteBlockResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<WriteBlockResponse>
+        PARSER = new com.google.protobuf.AbstractParser<WriteBlockResponse>() {
+      public WriteBlockResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new WriteBlockResponse(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<WriteBlockResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<WriteBlockResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.WriteBlockResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface BlockLocationRequestOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface BlockLocationRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:BlockLocationRequest)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated int32 blockNums = 1;
     /**
      * <code>repeated int32 blockNums = 1;</code>
      */
@@ -3267,36 +3220,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code BlockLocationRequest}
    */
-  public static final class BlockLocationRequest extends
-      com.google.protobuf.GeneratedMessage
-      implements BlockLocationRequestOrBuilder {
+  public  static final class BlockLocationRequest extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:BlockLocationRequest)
+      BlockLocationRequestOrBuilder {
     // Use BlockLocationRequest.newBuilder() to construct.
     private BlockLocationRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private BlockLocationRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final BlockLocationRequest defaultInstance;
-    public static BlockLocationRequest getDefaultInstance() {
-      return defaultInstance;
+    private BlockLocationRequest() {
+      blockNums_ = java.util.Collections.emptyList();
     }
 
-    public BlockLocationRequest getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private BlockLocationRequest(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -3339,10 +3283,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           blockNums_ = java.util.Collections.unmodifiableList(blockNums_);
@@ -3363,22 +3307,6 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.BlockLocationRequest.class, com.distributed.systems.HDFSProtos.BlockLocationRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<BlockLocationRequest> PARSER =
-        new com.google.protobuf.AbstractParser<BlockLocationRequest>() {
-      public BlockLocationRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new BlockLocationRequest(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<BlockLocationRequest> getParserForType() {
-      return PARSER;
-    }
-
-    // repeated int32 blockNums = 1;
     public static final int BLOCKNUMS_FIELD_NUMBER = 1;
     private java.util.List<java.lang.Integer> blockNums_;
     /**
@@ -3401,13 +3329,11 @@ public final class HDFSProtos {
       return blockNums_.get(index);
     }
 
-    private void initFields() {
-      blockNums_ = java.util.Collections.emptyList();
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -3415,16 +3341,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       for (int i = 0; i < blockNums_.size(); i++) {
         output.writeInt32(1, blockNums_.get(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -3437,18 +3361,12 @@ public final class HDFSProtos {
         size += dataSize;
         size += 1 * getBlockNumsList().size();
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.BlockLocationRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3472,42 +3390,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.BlockLocationRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockLocationRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.BlockLocationRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockLocationRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.BlockLocationRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockLocationRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.BlockLocationRequest prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.BlockLocationRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -3519,8 +3436,9 @@ public final class HDFSProtos {
      * Protobuf type {@code BlockLocationRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.BlockLocationRequestOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:BlockLocationRequest)
+        com.distributed.systems.HDFSProtos.BlockLocationRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_BlockLocationRequest_descriptor;
@@ -3547,19 +3465,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         blockNums_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -3612,7 +3522,8 @@ public final class HDFSProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -3629,7 +3540,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.BlockLocationRequest) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -3639,7 +3550,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // repeated int32 blockNums = 1;
       private java.util.List<java.lang.Integer> blockNums_ = java.util.Collections.emptyList();
       private void ensureBlockNumsIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -3691,7 +3601,8 @@ public final class HDFSProtos {
       public Builder addAllBlockNums(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureBlockNumsIsMutable();
-        super.addAll(values, blockNums_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, blockNums_);
         onChanged();
         return this;
       }
@@ -3708,18 +3619,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:BlockLocationRequest)
     }
 
+    // @@protoc_insertion_point(class_scope:BlockLocationRequest)
+    private static final com.distributed.systems.HDFSProtos.BlockLocationRequest DEFAULT_INSTANCE;
     static {
-      defaultInstance = new BlockLocationRequest(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.BlockLocationRequest();
     }
 
-    // @@protoc_insertion_point(class_scope:BlockLocationRequest)
+    public static com.distributed.systems.HDFSProtos.BlockLocationRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<BlockLocationRequest>
+        PARSER = new com.google.protobuf.AbstractParser<BlockLocationRequest>() {
+      public BlockLocationRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new BlockLocationRequest(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<BlockLocationRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BlockLocationRequest> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.BlockLocationRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface BlockLocationResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface BlockLocationResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:BlockLocationResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 status = 1;
     /**
      * <code>optional int32 status = 1;</code>
      *
@@ -3740,36 +3687,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code BlockLocationResponse}
    */
-  public static final class BlockLocationResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements BlockLocationResponseOrBuilder {
+  public  static final class BlockLocationResponse extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:BlockLocationResponse)
+      BlockLocationResponseOrBuilder {
     // Use BlockLocationResponse.newBuilder() to construct.
     private BlockLocationResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private BlockLocationResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final BlockLocationResponse defaultInstance;
-    public static BlockLocationResponse getDefaultInstance() {
-      return defaultInstance;
+    private BlockLocationResponse() {
+      status_ = 0;
     }
 
-    public BlockLocationResponse getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private BlockLocationResponse(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -3796,10 +3734,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -3817,23 +3755,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.BlockLocationResponse.class, com.distributed.systems.HDFSProtos.BlockLocationResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<BlockLocationResponse> PARSER =
-        new com.google.protobuf.AbstractParser<BlockLocationResponse>() {
-      public BlockLocationResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new BlockLocationResponse(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<BlockLocationResponse> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 status = 1;
     public static final int STATUS_FIELD_NUMBER = 1;
     private int status_;
     /**
@@ -3857,13 +3779,11 @@ public final class HDFSProtos {
       return status_;
     }
 
-    private void initFields() {
-      status_ = 0;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -3871,16 +3791,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, status_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -3888,18 +3806,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, status_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.BlockLocationResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3923,42 +3835,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.BlockLocationResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockLocationResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.BlockLocationResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockLocationResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.BlockLocationResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockLocationResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.BlockLocationResponse prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.BlockLocationResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -3970,8 +3881,9 @@ public final class HDFSProtos {
      * Protobuf type {@code BlockLocationResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.BlockLocationResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:BlockLocationResponse)
+        com.distributed.systems.HDFSProtos.BlockLocationResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_BlockLocationResponse_descriptor;
@@ -3998,19 +3910,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         status_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -4057,7 +3961,8 @@ public final class HDFSProtos {
         if (other.hasStatus()) {
           setStatus(other.getStatus());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -4074,7 +3979,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.BlockLocationResponse) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -4084,7 +3989,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 status = 1;
       private int status_ ;
       /**
        * <code>optional int32 status = 1;</code>
@@ -4136,18 +4040,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:BlockLocationResponse)
     }
 
+    // @@protoc_insertion_point(class_scope:BlockLocationResponse)
+    private static final com.distributed.systems.HDFSProtos.BlockLocationResponse DEFAULT_INSTANCE;
     static {
-      defaultInstance = new BlockLocationResponse(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.BlockLocationResponse();
     }
 
-    // @@protoc_insertion_point(class_scope:BlockLocationResponse)
+    public static com.distributed.systems.HDFSProtos.BlockLocationResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<BlockLocationResponse>
+        PARSER = new com.google.protobuf.AbstractParser<BlockLocationResponse>() {
+      public BlockLocationResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new BlockLocationResponse(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<BlockLocationResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BlockLocationResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.BlockLocationResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface AssignBlockResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface AssignBlockResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:AssignBlockResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 status = 1;
     /**
      * <code>optional int32 status = 1;</code>
      */
@@ -4157,7 +4097,6 @@ public final class HDFSProtos {
      */
     int getStatus();
 
-    // optional int32 blockNumber = 2;
     /**
      * <code>optional int32 blockNumber = 2;</code>
      */
@@ -4167,7 +4106,6 @@ public final class HDFSProtos {
      */
     int getBlockNumber();
 
-    // repeated string dataNodeIPs = 3;
     /**
      * <code>repeated string dataNodeIPs = 3;</code>
      *
@@ -4178,8 +4116,8 @@ public final class HDFSProtos {
      * data node, and hence redundancy
      * </pre>
      */
-    java.util.List<java.lang.String>
-    getDataNodeIPsList();
+    com.google.protobuf.ProtocolStringList
+        getDataNodeIPsList();
     /**
      * <code>repeated string dataNodeIPs = 3;</code>
      *
@@ -4218,36 +4156,29 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code AssignBlockResponse}
    */
-  public static final class AssignBlockResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements AssignBlockResponseOrBuilder {
+  public  static final class AssignBlockResponse extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:AssignBlockResponse)
+      AssignBlockResponseOrBuilder {
     // Use AssignBlockResponse.newBuilder() to construct.
     private AssignBlockResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private AssignBlockResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final AssignBlockResponse defaultInstance;
-    public static AssignBlockResponse getDefaultInstance() {
-      return defaultInstance;
+    private AssignBlockResponse() {
+      status_ = 0;
+      blockNumber_ = 0;
+      dataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
-    public AssignBlockResponse getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private AssignBlockResponse(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -4277,23 +4208,24 @@ public final class HDFSProtos {
               break;
             }
             case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 dataNodeIPs_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000004;
               }
-              dataNodeIPs_.add(input.readBytes());
+              dataNodeIPs_.add(bs);
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          dataNodeIPs_ = new com.google.protobuf.UnmodifiableLazyStringList(dataNodeIPs_);
+          dataNodeIPs_ = dataNodeIPs_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -4311,23 +4243,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.AssignBlockResponse.class, com.distributed.systems.HDFSProtos.AssignBlockResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<AssignBlockResponse> PARSER =
-        new com.google.protobuf.AbstractParser<AssignBlockResponse>() {
-      public AssignBlockResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new AssignBlockResponse(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<AssignBlockResponse> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 status = 1;
     public static final int STATUS_FIELD_NUMBER = 1;
     private int status_;
     /**
@@ -4343,7 +4259,6 @@ public final class HDFSProtos {
       return status_;
     }
 
-    // optional int32 blockNumber = 2;
     public static final int BLOCKNUMBER_FIELD_NUMBER = 2;
     private int blockNumber_;
     /**
@@ -4359,7 +4274,6 @@ public final class HDFSProtos {
       return blockNumber_;
     }
 
-    // repeated string dataNodeIPs = 3;
     public static final int DATANODEIPS_FIELD_NUMBER = 3;
     private com.google.protobuf.LazyStringList dataNodeIPs_;
     /**
@@ -4372,7 +4286,7 @@ public final class HDFSProtos {
      * data node, and hence redundancy
      * </pre>
      */
-    public java.util.List<java.lang.String>
+    public com.google.protobuf.ProtocolStringList
         getDataNodeIPsList() {
       return dataNodeIPs_;
     }
@@ -4417,15 +4331,11 @@ public final class HDFSProtos {
       return dataNodeIPs_.getByteString(index);
     }
 
-    private void initFields() {
-      status_ = 0;
-      blockNumber_ = 0;
-      dataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -4433,7 +4343,6 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, status_);
       }
@@ -4441,14 +4350,13 @@ public final class HDFSProtos {
         output.writeInt32(2, blockNumber_);
       }
       for (int i = 0; i < dataNodeIPs_.size(); i++) {
-        output.writeBytes(3, dataNodeIPs_.getByteString(i));
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, dataNodeIPs_.getRaw(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -4463,24 +4371,17 @@ public final class HDFSProtos {
       {
         int dataSize = 0;
         for (int i = 0; i < dataNodeIPs_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeBytesSizeNoTag(dataNodeIPs_.getByteString(i));
+          dataSize += computeStringSizeNoTag(dataNodeIPs_.getRaw(i));
         }
         size += dataSize;
         size += 1 * getDataNodeIPsList().size();
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.AssignBlockResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4504,42 +4405,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.AssignBlockResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.AssignBlockResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.AssignBlockResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.AssignBlockResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.AssignBlockResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.AssignBlockResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.AssignBlockResponse prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.AssignBlockResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -4551,8 +4451,9 @@ public final class HDFSProtos {
      * Protobuf type {@code AssignBlockResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.AssignBlockResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:AssignBlockResponse)
+        com.distributed.systems.HDFSProtos.AssignBlockResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_AssignBlockResponse_descriptor;
@@ -4579,10 +4480,6 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         status_ = 0;
@@ -4592,10 +4489,6 @@ public final class HDFSProtos {
         dataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000004);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -4628,8 +4521,7 @@ public final class HDFSProtos {
         }
         result.blockNumber_ = blockNumber_;
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          dataNodeIPs_ = new com.google.protobuf.UnmodifiableLazyStringList(
-              dataNodeIPs_);
+          dataNodeIPs_ = dataNodeIPs_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.dataNodeIPs_ = dataNodeIPs_;
@@ -4665,7 +4557,8 @@ public final class HDFSProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -4682,7 +4575,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.AssignBlockResponse) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -4692,7 +4585,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 status = 1;
       private int status_ ;
       /**
        * <code>optional int32 status = 1;</code>
@@ -4725,7 +4617,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // optional int32 blockNumber = 2;
       private int blockNumber_ ;
       /**
        * <code>optional int32 blockNumber = 2;</code>
@@ -4758,7 +4649,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // repeated string dataNodeIPs = 3;
       private com.google.protobuf.LazyStringList dataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureDataNodeIPsIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
@@ -4776,9 +4666,9 @@ public final class HDFSProtos {
        * data node, and hence redundancy
        * </pre>
        */
-      public java.util.List<java.lang.String>
+      public com.google.protobuf.ProtocolStringList
           getDataNodeIPsList() {
-        return java.util.Collections.unmodifiableList(dataNodeIPs_);
+        return dataNodeIPs_.getUnmodifiableView();
       }
       /**
        * <code>repeated string dataNodeIPs = 3;</code>
@@ -4873,7 +4763,8 @@ public final class HDFSProtos {
       public Builder addAllDataNodeIPs(
           java.lang.Iterable<java.lang.String> values) {
         ensureDataNodeIPsIsMutable();
-        super.addAll(values, dataNodeIPs_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, dataNodeIPs_);
         onChanged();
         return this;
       }
@@ -4917,18 +4808,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:AssignBlockResponse)
     }
 
+    // @@protoc_insertion_point(class_scope:AssignBlockResponse)
+    private static final com.distributed.systems.HDFSProtos.AssignBlockResponse DEFAULT_INSTANCE;
     static {
-      defaultInstance = new AssignBlockResponse(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.AssignBlockResponse();
     }
 
-    // @@protoc_insertion_point(class_scope:AssignBlockResponse)
+    public static com.distributed.systems.HDFSProtos.AssignBlockResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<AssignBlockResponse>
+        PARSER = new com.google.protobuf.AbstractParser<AssignBlockResponse>() {
+      public AssignBlockResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new AssignBlockResponse(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<AssignBlockResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AssignBlockResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.AssignBlockResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface ListFilesRequestOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ListFilesRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ListFilesRequest)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string dirName = 1;
     /**
      * <code>optional string dirName = 1;</code>
      *
@@ -4958,36 +4885,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code ListFilesRequest}
    */
-  public static final class ListFilesRequest extends
-      com.google.protobuf.GeneratedMessage
-      implements ListFilesRequestOrBuilder {
+  public  static final class ListFilesRequest extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:ListFilesRequest)
+      ListFilesRequestOrBuilder {
     // Use ListFilesRequest.newBuilder() to construct.
     private ListFilesRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private ListFilesRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final ListFilesRequest defaultInstance;
-    public static ListFilesRequest getDefaultInstance() {
-      return defaultInstance;
+    private ListFilesRequest() {
+      dirName_ = "";
     }
 
-    public ListFilesRequest getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private ListFilesRequest(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -5007,17 +4925,18 @@ public final class HDFSProtos {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              dirName_ = input.readBytes();
+              dirName_ = bs;
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -5035,25 +4954,9 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.ListFilesRequest.class, com.distributed.systems.HDFSProtos.ListFilesRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<ListFilesRequest> PARSER =
-        new com.google.protobuf.AbstractParser<ListFilesRequest>() {
-      public ListFilesRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ListFilesRequest(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ListFilesRequest> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional string dirName = 1;
     public static final int DIRNAME_FIELD_NUMBER = 1;
-    private java.lang.Object dirName_;
+    private volatile java.lang.Object dirName_;
     /**
      * <code>optional string dirName = 1;</code>
      *
@@ -5106,13 +5009,11 @@ public final class HDFSProtos {
       }
     }
 
-    private void initFields() {
-      dirName_ = "";
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -5120,35 +5021,26 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getDirNameBytes());
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, dirName_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getDirNameBytes());
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, dirName_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.ListFilesRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -5172,42 +5064,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.ListFilesRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ListFilesRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.ListFilesRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ListFilesRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.ListFilesRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ListFilesRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.ListFilesRequest prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.ListFilesRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -5219,8 +5110,9 @@ public final class HDFSProtos {
      * Protobuf type {@code ListFilesRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.ListFilesRequestOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ListFilesRequest)
+        com.distributed.systems.HDFSProtos.ListFilesRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_ListFilesRequest_descriptor;
@@ -5247,19 +5139,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         dirName_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -5308,7 +5192,8 @@ public final class HDFSProtos {
           dirName_ = other.dirName_;
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -5325,7 +5210,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.ListFilesRequest) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -5335,7 +5220,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional string dirName = 1;
       private java.lang.Object dirName_ = "";
       /**
        * <code>optional string dirName = 1;</code>
@@ -5357,9 +5241,12 @@ public final class HDFSProtos {
       public java.lang.String getDirName() {
         java.lang.Object ref = dirName_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          dirName_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            dirName_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -5436,18 +5323,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:ListFilesRequest)
     }
 
+    // @@protoc_insertion_point(class_scope:ListFilesRequest)
+    private static final com.distributed.systems.HDFSProtos.ListFilesRequest DEFAULT_INSTANCE;
     static {
-      defaultInstance = new ListFilesRequest(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.ListFilesRequest();
     }
 
-    // @@protoc_insertion_point(class_scope:ListFilesRequest)
+    public static com.distributed.systems.HDFSProtos.ListFilesRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<ListFilesRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ListFilesRequest>() {
+      public ListFilesRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new ListFilesRequest(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<ListFilesRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ListFilesRequest> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.ListFilesRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface ListFilesResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ListFilesResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ListFilesResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 status = 1;
     /**
      * <code>optional int32 status = 1;</code>
      */
@@ -5457,12 +5380,11 @@ public final class HDFSProtos {
      */
     int getStatus();
 
-    // repeated string fileNames = 2;
     /**
      * <code>repeated string fileNames = 2;</code>
      */
-    java.util.List<java.lang.String>
-    getFileNamesList();
+    com.google.protobuf.ProtocolStringList
+        getFileNamesList();
     /**
      * <code>repeated string fileNames = 2;</code>
      */
@@ -5480,36 +5402,28 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code ListFilesResponse}
    */
-  public static final class ListFilesResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements ListFilesResponseOrBuilder {
+  public  static final class ListFilesResponse extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:ListFilesResponse)
+      ListFilesResponseOrBuilder {
     // Use ListFilesResponse.newBuilder() to construct.
     private ListFilesResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private ListFilesResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final ListFilesResponse defaultInstance;
-    public static ListFilesResponse getDefaultInstance() {
-      return defaultInstance;
+    private ListFilesResponse() {
+      status_ = 0;
+      fileNames_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
-    public ListFilesResponse getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private ListFilesResponse(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -5534,23 +5448,24 @@ public final class HDFSProtos {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
                 fileNames_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000002;
               }
-              fileNames_.add(input.readBytes());
+              fileNames_.add(bs);
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          fileNames_ = new com.google.protobuf.UnmodifiableLazyStringList(fileNames_);
+          fileNames_ = fileNames_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -5568,23 +5483,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.ListFilesResponse.class, com.distributed.systems.HDFSProtos.ListFilesResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<ListFilesResponse> PARSER =
-        new com.google.protobuf.AbstractParser<ListFilesResponse>() {
-      public ListFilesResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ListFilesResponse(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ListFilesResponse> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 status = 1;
     public static final int STATUS_FIELD_NUMBER = 1;
     private int status_;
     /**
@@ -5600,13 +5499,12 @@ public final class HDFSProtos {
       return status_;
     }
 
-    // repeated string fileNames = 2;
     public static final int FILENAMES_FIELD_NUMBER = 2;
     private com.google.protobuf.LazyStringList fileNames_;
     /**
      * <code>repeated string fileNames = 2;</code>
      */
-    public java.util.List<java.lang.String>
+    public com.google.protobuf.ProtocolStringList
         getFileNamesList() {
       return fileNames_;
     }
@@ -5630,14 +5528,11 @@ public final class HDFSProtos {
       return fileNames_.getByteString(index);
     }
 
-    private void initFields() {
-      status_ = 0;
-      fileNames_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -5645,19 +5540,17 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, status_);
       }
       for (int i = 0; i < fileNames_.size(); i++) {
-        output.writeBytes(2, fileNames_.getByteString(i));
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, fileNames_.getRaw(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -5668,24 +5561,17 @@ public final class HDFSProtos {
       {
         int dataSize = 0;
         for (int i = 0; i < fileNames_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeBytesSizeNoTag(fileNames_.getByteString(i));
+          dataSize += computeStringSizeNoTag(fileNames_.getRaw(i));
         }
         size += dataSize;
         size += 1 * getFileNamesList().size();
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.ListFilesResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -5709,42 +5595,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.ListFilesResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ListFilesResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.ListFilesResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ListFilesResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.ListFilesResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ListFilesResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.ListFilesResponse prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.ListFilesResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -5756,8 +5641,9 @@ public final class HDFSProtos {
      * Protobuf type {@code ListFilesResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.ListFilesResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ListFilesResponse)
+        com.distributed.systems.HDFSProtos.ListFilesResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_ListFilesResponse_descriptor;
@@ -5784,10 +5670,6 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         status_ = 0;
@@ -5795,10 +5677,6 @@ public final class HDFSProtos {
         fileNames_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -5827,8 +5705,7 @@ public final class HDFSProtos {
         }
         result.status_ = status_;
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          fileNames_ = new com.google.protobuf.UnmodifiableLazyStringList(
-              fileNames_);
+          fileNames_ = fileNames_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.fileNames_ = fileNames_;
@@ -5861,7 +5738,8 @@ public final class HDFSProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -5878,7 +5756,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.ListFilesResponse) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -5888,7 +5766,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 status = 1;
       private int status_ ;
       /**
        * <code>optional int32 status = 1;</code>
@@ -5921,7 +5798,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // repeated string fileNames = 2;
       private com.google.protobuf.LazyStringList fileNames_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureFileNamesIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
@@ -5932,9 +5808,9 @@ public final class HDFSProtos {
       /**
        * <code>repeated string fileNames = 2;</code>
        */
-      public java.util.List<java.lang.String>
+      public com.google.protobuf.ProtocolStringList
           getFileNamesList() {
-        return java.util.Collections.unmodifiableList(fileNames_);
+        return fileNames_.getUnmodifiableView();
       }
       /**
        * <code>repeated string fileNames = 2;</code>
@@ -5987,7 +5863,8 @@ public final class HDFSProtos {
       public Builder addAllFileNames(
           java.lang.Iterable<java.lang.String> values) {
         ensureFileNamesIsMutable();
-        super.addAll(values, fileNames_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, fileNames_);
         onChanged();
         return this;
       }
@@ -6017,18 +5894,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:ListFilesResponse)
     }
 
+    // @@protoc_insertion_point(class_scope:ListFilesResponse)
+    private static final com.distributed.systems.HDFSProtos.ListFilesResponse DEFAULT_INSTANCE;
     static {
-      defaultInstance = new ListFilesResponse(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.ListFilesResponse();
     }
 
-    // @@protoc_insertion_point(class_scope:ListFilesResponse)
+    public static com.distributed.systems.HDFSProtos.ListFilesResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<ListFilesResponse>
+        PARSER = new com.google.protobuf.AbstractParser<ListFilesResponse>() {
+      public ListFilesResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new ListFilesResponse(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<ListFilesResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ListFilesResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.ListFilesResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface ReadBlockRequestOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ReadBlockRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ReadBlockRequest)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 blockNumber = 1;
     /**
      * <code>optional int32 blockNumber = 1;</code>
      */
@@ -6041,36 +5954,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code ReadBlockRequest}
    */
-  public static final class ReadBlockRequest extends
-      com.google.protobuf.GeneratedMessage
-      implements ReadBlockRequestOrBuilder {
+  public  static final class ReadBlockRequest extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:ReadBlockRequest)
+      ReadBlockRequestOrBuilder {
     // Use ReadBlockRequest.newBuilder() to construct.
     private ReadBlockRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private ReadBlockRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final ReadBlockRequest defaultInstance;
-    public static ReadBlockRequest getDefaultInstance() {
-      return defaultInstance;
+    private ReadBlockRequest() {
+      blockNumber_ = 0;
     }
 
-    public ReadBlockRequest getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private ReadBlockRequest(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -6097,10 +6001,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -6118,23 +6022,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.ReadBlockRequest.class, com.distributed.systems.HDFSProtos.ReadBlockRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<ReadBlockRequest> PARSER =
-        new com.google.protobuf.AbstractParser<ReadBlockRequest>() {
-      public ReadBlockRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ReadBlockRequest(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ReadBlockRequest> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 blockNumber = 1;
     public static final int BLOCKNUMBER_FIELD_NUMBER = 1;
     private int blockNumber_;
     /**
@@ -6150,13 +6038,11 @@ public final class HDFSProtos {
       return blockNumber_;
     }
 
-    private void initFields() {
-      blockNumber_ = 0;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -6164,16 +6050,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, blockNumber_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -6181,18 +6065,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, blockNumber_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.ReadBlockRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -6216,42 +6094,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.ReadBlockRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ReadBlockRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.ReadBlockRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ReadBlockRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.ReadBlockRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ReadBlockRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.ReadBlockRequest prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.ReadBlockRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -6263,8 +6140,9 @@ public final class HDFSProtos {
      * Protobuf type {@code ReadBlockRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.ReadBlockRequestOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ReadBlockRequest)
+        com.distributed.systems.HDFSProtos.ReadBlockRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_ReadBlockRequest_descriptor;
@@ -6291,19 +6169,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         blockNumber_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -6350,7 +6220,8 @@ public final class HDFSProtos {
         if (other.hasBlockNumber()) {
           setBlockNumber(other.getBlockNumber());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -6367,7 +6238,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.ReadBlockRequest) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -6377,7 +6248,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 blockNumber = 1;
       private int blockNumber_ ;
       /**
        * <code>optional int32 blockNumber = 1;</code>
@@ -6413,18 +6283,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:ReadBlockRequest)
     }
 
+    // @@protoc_insertion_point(class_scope:ReadBlockRequest)
+    private static final com.distributed.systems.HDFSProtos.ReadBlockRequest DEFAULT_INSTANCE;
     static {
-      defaultInstance = new ReadBlockRequest(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.ReadBlockRequest();
     }
 
-    // @@protoc_insertion_point(class_scope:ReadBlockRequest)
+    public static com.distributed.systems.HDFSProtos.ReadBlockRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<ReadBlockRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ReadBlockRequest>() {
+      public ReadBlockRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new ReadBlockRequest(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<ReadBlockRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ReadBlockRequest> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.ReadBlockRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface ReadBlockResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ReadBlockResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ReadBlockResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 status = 1;
     /**
      * <code>optional int32 status = 1;</code>
      *
@@ -6445,36 +6351,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code ReadBlockResponse}
    */
-  public static final class ReadBlockResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements ReadBlockResponseOrBuilder {
+  public  static final class ReadBlockResponse extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:ReadBlockResponse)
+      ReadBlockResponseOrBuilder {
     // Use ReadBlockResponse.newBuilder() to construct.
     private ReadBlockResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private ReadBlockResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final ReadBlockResponse defaultInstance;
-    public static ReadBlockResponse getDefaultInstance() {
-      return defaultInstance;
+    private ReadBlockResponse() {
+      status_ = 0;
     }
 
-    public ReadBlockResponse getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private ReadBlockResponse(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -6501,10 +6398,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -6522,23 +6419,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.ReadBlockResponse.class, com.distributed.systems.HDFSProtos.ReadBlockResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<ReadBlockResponse> PARSER =
-        new com.google.protobuf.AbstractParser<ReadBlockResponse>() {
-      public ReadBlockResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ReadBlockResponse(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ReadBlockResponse> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 status = 1;
     public static final int STATUS_FIELD_NUMBER = 1;
     private int status_;
     /**
@@ -6562,13 +6443,11 @@ public final class HDFSProtos {
       return status_;
     }
 
-    private void initFields() {
-      status_ = 0;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -6576,16 +6455,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, status_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -6593,18 +6470,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, status_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.ReadBlockResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -6628,42 +6499,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.ReadBlockResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ReadBlockResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.ReadBlockResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ReadBlockResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.ReadBlockResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.ReadBlockResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.ReadBlockResponse prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.ReadBlockResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -6675,8 +6545,9 @@ public final class HDFSProtos {
      * Protobuf type {@code ReadBlockResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.ReadBlockResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ReadBlockResponse)
+        com.distributed.systems.HDFSProtos.ReadBlockResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_ReadBlockResponse_descriptor;
@@ -6703,19 +6574,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         status_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -6762,7 +6625,8 @@ public final class HDFSProtos {
         if (other.hasStatus()) {
           setStatus(other.getStatus());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -6779,7 +6643,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.ReadBlockResponse) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -6789,7 +6653,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 status = 1;
       private int status_ ;
       /**
        * <code>optional int32 status = 1;</code>
@@ -6841,18 +6704,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:ReadBlockResponse)
     }
 
+    // @@protoc_insertion_point(class_scope:ReadBlockResponse)
+    private static final com.distributed.systems.HDFSProtos.ReadBlockResponse DEFAULT_INSTANCE;
     static {
-      defaultInstance = new ReadBlockResponse(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.ReadBlockResponse();
     }
 
-    // @@protoc_insertion_point(class_scope:ReadBlockResponse)
+    public static com.distributed.systems.HDFSProtos.ReadBlockResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<ReadBlockResponse>
+        PARSER = new com.google.protobuf.AbstractParser<ReadBlockResponse>() {
+      public ReadBlockResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new ReadBlockResponse(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<ReadBlockResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ReadBlockResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.ReadBlockResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface BlockReportRequestOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface BlockReportRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:BlockReportRequest)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 id = 1;
     /**
      * <code>optional int32 id = 1;</code>
      *
@@ -6870,7 +6769,6 @@ public final class HDFSProtos {
      */
     int getId();
 
-    // optional .DataNodeReportMapping mappings = 2;
     /**
      * <code>optional .DataNodeReportMapping mappings = 2;</code>
      */
@@ -6887,36 +6785,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code BlockReportRequest}
    */
-  public static final class BlockReportRequest extends
-      com.google.protobuf.GeneratedMessage
-      implements BlockReportRequestOrBuilder {
+  public  static final class BlockReportRequest extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:BlockReportRequest)
+      BlockReportRequestOrBuilder {
     // Use BlockReportRequest.newBuilder() to construct.
     private BlockReportRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private BlockReportRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final BlockReportRequest defaultInstance;
-    public static BlockReportRequest getDefaultInstance() {
-      return defaultInstance;
+    private BlockReportRequest() {
+      id_ = 0;
     }
 
-    public BlockReportRequest getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private BlockReportRequest(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -6945,7 +6834,7 @@ public final class HDFSProtos {
               if (((bitField0_ & 0x00000002) == 0x00000002)) {
                 subBuilder = mappings_.toBuilder();
               }
-              mappings_ = input.readMessage(com.distributed.systems.HDFSProtos.DataNodeReportMapping.PARSER, extensionRegistry);
+              mappings_ = input.readMessage(com.distributed.systems.HDFSProtos.DataNodeReportMapping.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(mappings_);
                 mappings_ = subBuilder.buildPartial();
@@ -6956,10 +6845,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -6977,23 +6866,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.BlockReportRequest.class, com.distributed.systems.HDFSProtos.BlockReportRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<BlockReportRequest> PARSER =
-        new com.google.protobuf.AbstractParser<BlockReportRequest>() {
-      public BlockReportRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new BlockReportRequest(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<BlockReportRequest> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private int id_;
     /**
@@ -7017,7 +6890,6 @@ public final class HDFSProtos {
       return id_;
     }
 
-    // optional .DataNodeReportMapping mappings = 2;
     public static final int MAPPINGS_FIELD_NUMBER = 2;
     private com.distributed.systems.HDFSProtos.DataNodeReportMapping mappings_;
     /**
@@ -7030,23 +6902,20 @@ public final class HDFSProtos {
      * <code>optional .DataNodeReportMapping mappings = 2;</code>
      */
     public com.distributed.systems.HDFSProtos.DataNodeReportMapping getMappings() {
-      return mappings_;
+      return mappings_ == null ? com.distributed.systems.HDFSProtos.DataNodeReportMapping.getDefaultInstance() : mappings_;
     }
     /**
      * <code>optional .DataNodeReportMapping mappings = 2;</code>
      */
     public com.distributed.systems.HDFSProtos.DataNodeReportMappingOrBuilder getMappingsOrBuilder() {
-      return mappings_;
+      return mappings_ == null ? com.distributed.systems.HDFSProtos.DataNodeReportMapping.getDefaultInstance() : mappings_;
     }
 
-    private void initFields() {
-      id_ = 0;
-      mappings_ = com.distributed.systems.HDFSProtos.DataNodeReportMapping.getDefaultInstance();
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -7054,19 +6923,17 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeMessage(2, mappings_);
+        output.writeMessage(2, getMappings());
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -7076,20 +6943,14 @@ public final class HDFSProtos {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, mappings_);
+          .computeMessageSize(2, getMappings());
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.BlockReportRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -7113,42 +6974,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.BlockReportRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockReportRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.BlockReportRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockReportRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.BlockReportRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockReportRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.BlockReportRequest prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.BlockReportRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -7160,8 +7020,9 @@ public final class HDFSProtos {
      * Protobuf type {@code BlockReportRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.BlockReportRequestOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:BlockReportRequest)
+        com.distributed.systems.HDFSProtos.BlockReportRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_BlockReportRequest_descriptor;
@@ -7189,25 +7050,17 @@ public final class HDFSProtos {
           getMappingsFieldBuilder();
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         id_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         if (mappingsBuilder_ == null) {
-          mappings_ = com.distributed.systems.HDFSProtos.DataNodeReportMapping.getDefaultInstance();
+          mappings_ = null;
         } else {
           mappingsBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -7265,7 +7118,8 @@ public final class HDFSProtos {
         if (other.hasMappings()) {
           mergeMappings(other.getMappings());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -7282,7 +7136,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.BlockReportRequest) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -7292,7 +7146,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 id = 1;
       private int id_ ;
       /**
        * <code>optional int32 id = 1;</code>
@@ -7341,8 +7194,7 @@ public final class HDFSProtos {
         return this;
       }
 
-      // optional .DataNodeReportMapping mappings = 2;
-      private com.distributed.systems.HDFSProtos.DataNodeReportMapping mappings_ = com.distributed.systems.HDFSProtos.DataNodeReportMapping.getDefaultInstance();
+      private com.distributed.systems.HDFSProtos.DataNodeReportMapping mappings_ = null;
       private com.google.protobuf.SingleFieldBuilder<
           com.distributed.systems.HDFSProtos.DataNodeReportMapping, com.distributed.systems.HDFSProtos.DataNodeReportMapping.Builder, com.distributed.systems.HDFSProtos.DataNodeReportMappingOrBuilder> mappingsBuilder_;
       /**
@@ -7356,7 +7208,7 @@ public final class HDFSProtos {
        */
       public com.distributed.systems.HDFSProtos.DataNodeReportMapping getMappings() {
         if (mappingsBuilder_ == null) {
-          return mappings_;
+          return mappings_ == null ? com.distributed.systems.HDFSProtos.DataNodeReportMapping.getDefaultInstance() : mappings_;
         } else {
           return mappingsBuilder_.getMessage();
         }
@@ -7397,6 +7249,7 @@ public final class HDFSProtos {
       public Builder mergeMappings(com.distributed.systems.HDFSProtos.DataNodeReportMapping value) {
         if (mappingsBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              mappings_ != null &&
               mappings_ != com.distributed.systems.HDFSProtos.DataNodeReportMapping.getDefaultInstance()) {
             mappings_ =
               com.distributed.systems.HDFSProtos.DataNodeReportMapping.newBuilder(mappings_).mergeFrom(value).buildPartial();
@@ -7415,7 +7268,7 @@ public final class HDFSProtos {
        */
       public Builder clearMappings() {
         if (mappingsBuilder_ == null) {
-          mappings_ = com.distributed.systems.HDFSProtos.DataNodeReportMapping.getDefaultInstance();
+          mappings_ = null;
           onChanged();
         } else {
           mappingsBuilder_.clear();
@@ -7438,7 +7291,8 @@ public final class HDFSProtos {
         if (mappingsBuilder_ != null) {
           return mappingsBuilder_.getMessageOrBuilder();
         } else {
-          return mappings_;
+          return mappings_ == null ?
+              com.distributed.systems.HDFSProtos.DataNodeReportMapping.getDefaultInstance() : mappings_;
         }
       }
       /**
@@ -7450,7 +7304,7 @@ public final class HDFSProtos {
         if (mappingsBuilder_ == null) {
           mappingsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.distributed.systems.HDFSProtos.DataNodeReportMapping, com.distributed.systems.HDFSProtos.DataNodeReportMapping.Builder, com.distributed.systems.HDFSProtos.DataNodeReportMappingOrBuilder>(
-                  mappings_,
+                  getMappings(),
                   getParentForChildren(),
                   isClean());
           mappings_ = null;
@@ -7461,18 +7315,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:BlockReportRequest)
     }
 
+    // @@protoc_insertion_point(class_scope:BlockReportRequest)
+    private static final com.distributed.systems.HDFSProtos.BlockReportRequest DEFAULT_INSTANCE;
     static {
-      defaultInstance = new BlockReportRequest(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.BlockReportRequest();
     }
 
-    // @@protoc_insertion_point(class_scope:BlockReportRequest)
+    public static com.distributed.systems.HDFSProtos.BlockReportRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<BlockReportRequest>
+        PARSER = new com.google.protobuf.AbstractParser<BlockReportRequest>() {
+      public BlockReportRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new BlockReportRequest(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<BlockReportRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BlockReportRequest> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.BlockReportRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface BlockReportResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface BlockReportResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:BlockReportResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated int32 status = 1;
     /**
      * <code>repeated int32 status = 1;</code>
      */
@@ -7489,36 +7379,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code BlockReportResponse}
    */
-  public static final class BlockReportResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements BlockReportResponseOrBuilder {
+  public  static final class BlockReportResponse extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:BlockReportResponse)
+      BlockReportResponseOrBuilder {
     // Use BlockReportResponse.newBuilder() to construct.
     private BlockReportResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private BlockReportResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final BlockReportResponse defaultInstance;
-    public static BlockReportResponse getDefaultInstance() {
-      return defaultInstance;
+    private BlockReportResponse() {
+      status_ = java.util.Collections.emptyList();
     }
 
-    public BlockReportResponse getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private BlockReportResponse(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -7561,10 +7442,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           status_ = java.util.Collections.unmodifiableList(status_);
@@ -7585,22 +7466,6 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.BlockReportResponse.class, com.distributed.systems.HDFSProtos.BlockReportResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<BlockReportResponse> PARSER =
-        new com.google.protobuf.AbstractParser<BlockReportResponse>() {
-      public BlockReportResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new BlockReportResponse(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<BlockReportResponse> getParserForType() {
-      return PARSER;
-    }
-
-    // repeated int32 status = 1;
     public static final int STATUS_FIELD_NUMBER = 1;
     private java.util.List<java.lang.Integer> status_;
     /**
@@ -7623,13 +7488,11 @@ public final class HDFSProtos {
       return status_.get(index);
     }
 
-    private void initFields() {
-      status_ = java.util.Collections.emptyList();
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -7637,16 +7500,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       for (int i = 0; i < status_.size(); i++) {
         output.writeInt32(1, status_.get(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -7659,18 +7520,12 @@ public final class HDFSProtos {
         size += dataSize;
         size += 1 * getStatusList().size();
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.BlockReportResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -7694,42 +7549,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.BlockReportResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockReportResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.BlockReportResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockReportResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.BlockReportResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.BlockReportResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.BlockReportResponse prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.BlockReportResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -7741,8 +7595,9 @@ public final class HDFSProtos {
      * Protobuf type {@code BlockReportResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.BlockReportResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:BlockReportResponse)
+        com.distributed.systems.HDFSProtos.BlockReportResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_BlockReportResponse_descriptor;
@@ -7769,19 +7624,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         status_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -7834,7 +7681,8 @@ public final class HDFSProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -7851,7 +7699,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.BlockReportResponse) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -7861,7 +7709,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // repeated int32 status = 1;
       private java.util.List<java.lang.Integer> status_ = java.util.Collections.emptyList();
       private void ensureStatusIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -7913,7 +7760,8 @@ public final class HDFSProtos {
       public Builder addAllStatus(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureStatusIsMutable();
-        super.addAll(values, status_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, status_);
         onChanged();
         return this;
       }
@@ -7930,18 +7778,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:BlockReportResponse)
     }
 
+    // @@protoc_insertion_point(class_scope:BlockReportResponse)
+    private static final com.distributed.systems.HDFSProtos.BlockReportResponse DEFAULT_INSTANCE;
     static {
-      defaultInstance = new BlockReportResponse(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.BlockReportResponse();
     }
 
-    // @@protoc_insertion_point(class_scope:BlockReportResponse)
+    public static com.distributed.systems.HDFSProtos.BlockReportResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<BlockReportResponse>
+        PARSER = new com.google.protobuf.AbstractParser<BlockReportResponse>() {
+      public BlockReportResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new BlockReportResponse(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<BlockReportResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BlockReportResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.BlockReportResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface HeartBeatRequestOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface HeartBeatRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:HeartBeatRequest)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 id = 1;
     /**
      * <code>optional int32 id = 1;</code>
      */
@@ -7951,7 +7835,6 @@ public final class HDFSProtos {
      */
     int getId();
 
-    // optional string ip = 2;
     /**
      * <code>optional string ip = 2;</code>
      */
@@ -7969,36 +7852,28 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code HeartBeatRequest}
    */
-  public static final class HeartBeatRequest extends
-      com.google.protobuf.GeneratedMessage
-      implements HeartBeatRequestOrBuilder {
+  public  static final class HeartBeatRequest extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:HeartBeatRequest)
+      HeartBeatRequestOrBuilder {
     // Use HeartBeatRequest.newBuilder() to construct.
     private HeartBeatRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private HeartBeatRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final HeartBeatRequest defaultInstance;
-    public static HeartBeatRequest getDefaultInstance() {
-      return defaultInstance;
+    private HeartBeatRequest() {
+      id_ = 0;
+      ip_ = "";
     }
 
-    public HeartBeatRequest getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private HeartBeatRequest(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -8023,17 +7898,18 @@ public final class HDFSProtos {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              ip_ = input.readBytes();
+              ip_ = bs;
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -8051,23 +7927,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.HeartBeatRequest.class, com.distributed.systems.HDFSProtos.HeartBeatRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<HeartBeatRequest> PARSER =
-        new com.google.protobuf.AbstractParser<HeartBeatRequest>() {
-      public HeartBeatRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new HeartBeatRequest(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<HeartBeatRequest> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private int id_;
     /**
@@ -8083,9 +7943,8 @@ public final class HDFSProtos {
       return id_;
     }
 
-    // optional string ip = 2;
     public static final int IP_FIELD_NUMBER = 2;
-    private java.lang.Object ip_;
+    private volatile java.lang.Object ip_;
     /**
      * <code>optional string ip = 2;</code>
      */
@@ -8126,14 +7985,11 @@ public final class HDFSProtos {
       }
     }
 
-    private void initFields() {
-      id_ = 0;
-      ip_ = "";
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -8141,19 +7997,17 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getIpBytes());
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, ip_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -8162,21 +8016,14 @@ public final class HDFSProtos {
           .computeInt32Size(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getIpBytes());
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, ip_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.HeartBeatRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -8200,42 +8047,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.HeartBeatRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.HeartBeatRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.HeartBeatRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.HeartBeatRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.HeartBeatRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.HeartBeatRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.HeartBeatRequest prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.HeartBeatRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -8247,8 +8093,9 @@ public final class HDFSProtos {
      * Protobuf type {@code HeartBeatRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.HeartBeatRequestOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:HeartBeatRequest)
+        com.distributed.systems.HDFSProtos.HeartBeatRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_HeartBeatRequest_descriptor;
@@ -8275,10 +8122,6 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         id_ = 0;
@@ -8286,10 +8129,6 @@ public final class HDFSProtos {
         ip_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -8345,7 +8184,8 @@ public final class HDFSProtos {
           ip_ = other.ip_;
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -8362,7 +8202,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.HeartBeatRequest) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -8372,7 +8212,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 id = 1;
       private int id_ ;
       /**
        * <code>optional int32 id = 1;</code>
@@ -8405,7 +8244,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // optional string ip = 2;
       private java.lang.Object ip_ = "";
       /**
        * <code>optional string ip = 2;</code>
@@ -8419,9 +8257,12 @@ public final class HDFSProtos {
       public java.lang.String getIp() {
         java.lang.Object ref = ip_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          ip_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            ip_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8482,18 +8323,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:HeartBeatRequest)
     }
 
+    // @@protoc_insertion_point(class_scope:HeartBeatRequest)
+    private static final com.distributed.systems.HDFSProtos.HeartBeatRequest DEFAULT_INSTANCE;
     static {
-      defaultInstance = new HeartBeatRequest(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.HeartBeatRequest();
     }
 
-    // @@protoc_insertion_point(class_scope:HeartBeatRequest)
+    public static com.distributed.systems.HDFSProtos.HeartBeatRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<HeartBeatRequest>
+        PARSER = new com.google.protobuf.AbstractParser<HeartBeatRequest>() {
+      public HeartBeatRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new HeartBeatRequest(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<HeartBeatRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<HeartBeatRequest> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.HeartBeatRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface HeartBeatResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface HeartBeatResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:HeartBeatResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 status = 1;
     /**
      * <code>optional int32 status = 1;</code>
      */
@@ -8506,36 +8383,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code HeartBeatResponse}
    */
-  public static final class HeartBeatResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements HeartBeatResponseOrBuilder {
+  public  static final class HeartBeatResponse extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:HeartBeatResponse)
+      HeartBeatResponseOrBuilder {
     // Use HeartBeatResponse.newBuilder() to construct.
     private HeartBeatResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private HeartBeatResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final HeartBeatResponse defaultInstance;
-    public static HeartBeatResponse getDefaultInstance() {
-      return defaultInstance;
+    private HeartBeatResponse() {
+      status_ = 0;
     }
 
-    public HeartBeatResponse getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private HeartBeatResponse(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -8562,10 +8430,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -8583,23 +8451,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.HeartBeatResponse.class, com.distributed.systems.HDFSProtos.HeartBeatResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<HeartBeatResponse> PARSER =
-        new com.google.protobuf.AbstractParser<HeartBeatResponse>() {
-      public HeartBeatResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new HeartBeatResponse(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<HeartBeatResponse> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 status = 1;
     public static final int STATUS_FIELD_NUMBER = 1;
     private int status_;
     /**
@@ -8615,13 +8467,11 @@ public final class HDFSProtos {
       return status_;
     }
 
-    private void initFields() {
-      status_ = 0;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -8629,16 +8479,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, status_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -8646,18 +8494,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, status_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.HeartBeatResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -8681,42 +8523,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.HeartBeatResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.HeartBeatResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.HeartBeatResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.HeartBeatResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.HeartBeatResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.HeartBeatResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.HeartBeatResponse prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.HeartBeatResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -8728,8 +8569,9 @@ public final class HDFSProtos {
      * Protobuf type {@code HeartBeatResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.HeartBeatResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:HeartBeatResponse)
+        com.distributed.systems.HDFSProtos.HeartBeatResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_HeartBeatResponse_descriptor;
@@ -8756,19 +8598,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         status_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -8815,7 +8649,8 @@ public final class HDFSProtos {
         if (other.hasStatus()) {
           setStatus(other.getStatus());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -8832,7 +8667,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.HeartBeatResponse) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -8842,7 +8677,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 status = 1;
       private int status_ ;
       /**
        * <code>optional int32 status = 1;</code>
@@ -8878,18 +8712,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:HeartBeatResponse)
     }
 
+    // @@protoc_insertion_point(class_scope:HeartBeatResponse)
+    private static final com.distributed.systems.HDFSProtos.HeartBeatResponse DEFAULT_INSTANCE;
     static {
-      defaultInstance = new HeartBeatResponse(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.HeartBeatResponse();
     }
 
-    // @@protoc_insertion_point(class_scope:HeartBeatResponse)
+    public static com.distributed.systems.HDFSProtos.HeartBeatResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<HeartBeatResponse>
+        PARSER = new com.google.protobuf.AbstractParser<HeartBeatResponse>() {
+      public HeartBeatResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new HeartBeatResponse(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<HeartBeatResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<HeartBeatResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.HeartBeatResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface DataNodeBlockMappingsOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface DataNodeBlockMappingsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:DataNodeBlockMappings)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .DataNodeBlockMapping mappings = 1;
     /**
      * <code>repeated .DataNodeBlockMapping mappings = 1;</code>
      */
@@ -8917,36 +8787,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code DataNodeBlockMappings}
    */
-  public static final class DataNodeBlockMappings extends
-      com.google.protobuf.GeneratedMessage
-      implements DataNodeBlockMappingsOrBuilder {
+  public  static final class DataNodeBlockMappings extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:DataNodeBlockMappings)
+      DataNodeBlockMappingsOrBuilder {
     // Use DataNodeBlockMappings.newBuilder() to construct.
     private DataNodeBlockMappings(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private DataNodeBlockMappings(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final DataNodeBlockMappings defaultInstance;
-    public static DataNodeBlockMappings getDefaultInstance() {
-      return defaultInstance;
+    private DataNodeBlockMappings() {
+      mappings_ = java.util.Collections.emptyList();
     }
 
-    public DataNodeBlockMappings getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private DataNodeBlockMappings(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -8970,16 +8831,16 @@ public final class HDFSProtos {
                 mappings_ = new java.util.ArrayList<com.distributed.systems.HDFSProtos.DataNodeBlockMapping>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              mappings_.add(input.readMessage(com.distributed.systems.HDFSProtos.DataNodeBlockMapping.PARSER, extensionRegistry));
+              mappings_.add(input.readMessage(com.distributed.systems.HDFSProtos.DataNodeBlockMapping.parser(), extensionRegistry));
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           mappings_ = java.util.Collections.unmodifiableList(mappings_);
@@ -9000,22 +8861,6 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.DataNodeBlockMappings.class, com.distributed.systems.HDFSProtos.DataNodeBlockMappings.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<DataNodeBlockMappings> PARSER =
-        new com.google.protobuf.AbstractParser<DataNodeBlockMappings>() {
-      public DataNodeBlockMappings parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new DataNodeBlockMappings(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<DataNodeBlockMappings> getParserForType() {
-      return PARSER;
-    }
-
-    // repeated .DataNodeBlockMapping mappings = 1;
     public static final int MAPPINGS_FIELD_NUMBER = 1;
     private java.util.List<com.distributed.systems.HDFSProtos.DataNodeBlockMapping> mappings_;
     /**
@@ -9051,13 +8896,11 @@ public final class HDFSProtos {
       return mappings_.get(index);
     }
 
-    private void initFields() {
-      mappings_ = java.util.Collections.emptyList();
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -9065,16 +8908,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       for (int i = 0; i < mappings_.size(); i++) {
         output.writeMessage(1, mappings_.get(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -9082,18 +8923,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, mappings_.get(i));
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMappings parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -9117,42 +8952,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMappings parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMappings parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMappings parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMappings parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMappings parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMappings parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.DataNodeBlockMappings prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.DataNodeBlockMappings prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -9164,8 +8998,9 @@ public final class HDFSProtos {
      * Protobuf type {@code DataNodeBlockMappings}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.DataNodeBlockMappingsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:DataNodeBlockMappings)
+        com.distributed.systems.HDFSProtos.DataNodeBlockMappingsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_DataNodeBlockMappings_descriptor;
@@ -9193,10 +9028,6 @@ public final class HDFSProtos {
           getMappingsFieldBuilder();
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         if (mappingsBuilder_ == null) {
@@ -9206,10 +9037,6 @@ public final class HDFSProtos {
           mappingsBuilder_.clear();
         }
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -9282,7 +9109,8 @@ public final class HDFSProtos {
             }
           }
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -9299,7 +9127,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.DataNodeBlockMappings) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -9309,7 +9137,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // repeated .DataNodeBlockMapping mappings = 1;
       private java.util.List<com.distributed.systems.HDFSProtos.DataNodeBlockMapping> mappings_ =
         java.util.Collections.emptyList();
       private void ensureMappingsIsMutable() {
@@ -9451,7 +9278,8 @@ public final class HDFSProtos {
           java.lang.Iterable<? extends com.distributed.systems.HDFSProtos.DataNodeBlockMapping> values) {
         if (mappingsBuilder_ == null) {
           ensureMappingsIsMutable();
-          super.addAll(values, mappings_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, mappings_);
           onChanged();
         } else {
           mappingsBuilder_.addAllMessages(values);
@@ -9552,18 +9380,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:DataNodeBlockMappings)
     }
 
+    // @@protoc_insertion_point(class_scope:DataNodeBlockMappings)
+    private static final com.distributed.systems.HDFSProtos.DataNodeBlockMappings DEFAULT_INSTANCE;
     static {
-      defaultInstance = new DataNodeBlockMappings(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.DataNodeBlockMappings();
     }
 
-    // @@protoc_insertion_point(class_scope:DataNodeBlockMappings)
+    public static com.distributed.systems.HDFSProtos.DataNodeBlockMappings getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<DataNodeBlockMappings>
+        PARSER = new com.google.protobuf.AbstractParser<DataNodeBlockMappings>() {
+      public DataNodeBlockMappings parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new DataNodeBlockMappings(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<DataNodeBlockMappings> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DataNodeBlockMappings> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.DataNodeBlockMappings getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface DataNodeBlockMappingOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface DataNodeBlockMappingOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:DataNodeBlockMapping)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 blockNumber = 1;
     /**
      * <code>optional int32 blockNumber = 1;</code>
      */
@@ -9573,7 +9437,6 @@ public final class HDFSProtos {
      */
     int getBlockNumber();
 
-    // optional string localPath = 2;
     /**
      * <code>optional string localPath = 2;</code>
      */
@@ -9591,36 +9454,28 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code DataNodeBlockMapping}
    */
-  public static final class DataNodeBlockMapping extends
-      com.google.protobuf.GeneratedMessage
-      implements DataNodeBlockMappingOrBuilder {
+  public  static final class DataNodeBlockMapping extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:DataNodeBlockMapping)
+      DataNodeBlockMappingOrBuilder {
     // Use DataNodeBlockMapping.newBuilder() to construct.
     private DataNodeBlockMapping(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private DataNodeBlockMapping(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final DataNodeBlockMapping defaultInstance;
-    public static DataNodeBlockMapping getDefaultInstance() {
-      return defaultInstance;
+    private DataNodeBlockMapping() {
+      blockNumber_ = 0;
+      localPath_ = "";
     }
 
-    public DataNodeBlockMapping getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private DataNodeBlockMapping(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -9645,17 +9500,18 @@ public final class HDFSProtos {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              localPath_ = input.readBytes();
+              localPath_ = bs;
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -9673,23 +9529,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.DataNodeBlockMapping.class, com.distributed.systems.HDFSProtos.DataNodeBlockMapping.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<DataNodeBlockMapping> PARSER =
-        new com.google.protobuf.AbstractParser<DataNodeBlockMapping>() {
-      public DataNodeBlockMapping parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new DataNodeBlockMapping(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<DataNodeBlockMapping> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 blockNumber = 1;
     public static final int BLOCKNUMBER_FIELD_NUMBER = 1;
     private int blockNumber_;
     /**
@@ -9705,9 +9545,8 @@ public final class HDFSProtos {
       return blockNumber_;
     }
 
-    // optional string localPath = 2;
     public static final int LOCALPATH_FIELD_NUMBER = 2;
-    private java.lang.Object localPath_;
+    private volatile java.lang.Object localPath_;
     /**
      * <code>optional string localPath = 2;</code>
      */
@@ -9748,14 +9587,11 @@ public final class HDFSProtos {
       }
     }
 
-    private void initFields() {
-      blockNumber_ = 0;
-      localPath_ = "";
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -9763,19 +9599,17 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, blockNumber_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getLocalPathBytes());
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, localPath_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -9784,21 +9618,14 @@ public final class HDFSProtos {
           .computeInt32Size(1, blockNumber_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getLocalPathBytes());
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, localPath_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMapping parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -9822,42 +9649,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMapping parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMapping parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMapping parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMapping parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMapping parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeBlockMapping parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.DataNodeBlockMapping prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.DataNodeBlockMapping prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -9869,8 +9695,9 @@ public final class HDFSProtos {
      * Protobuf type {@code DataNodeBlockMapping}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.DataNodeBlockMappingOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:DataNodeBlockMapping)
+        com.distributed.systems.HDFSProtos.DataNodeBlockMappingOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_DataNodeBlockMapping_descriptor;
@@ -9897,10 +9724,6 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         blockNumber_ = 0;
@@ -9908,10 +9731,6 @@ public final class HDFSProtos {
         localPath_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -9967,7 +9786,8 @@ public final class HDFSProtos {
           localPath_ = other.localPath_;
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -9984,7 +9804,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.DataNodeBlockMapping) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -9994,7 +9814,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 blockNumber = 1;
       private int blockNumber_ ;
       /**
        * <code>optional int32 blockNumber = 1;</code>
@@ -10027,7 +9846,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // optional string localPath = 2;
       private java.lang.Object localPath_ = "";
       /**
        * <code>optional string localPath = 2;</code>
@@ -10041,9 +9859,12 @@ public final class HDFSProtos {
       public java.lang.String getLocalPath() {
         java.lang.Object ref = localPath_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          localPath_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            localPath_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -10104,18 +9925,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:DataNodeBlockMapping)
     }
 
+    // @@protoc_insertion_point(class_scope:DataNodeBlockMapping)
+    private static final com.distributed.systems.HDFSProtos.DataNodeBlockMapping DEFAULT_INSTANCE;
     static {
-      defaultInstance = new DataNodeBlockMapping(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.DataNodeBlockMapping();
     }
 
-    // @@protoc_insertion_point(class_scope:DataNodeBlockMapping)
+    public static com.distributed.systems.HDFSProtos.DataNodeBlockMapping getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<DataNodeBlockMapping>
+        PARSER = new com.google.protobuf.AbstractParser<DataNodeBlockMapping>() {
+      public DataNodeBlockMapping parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new DataNodeBlockMapping(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<DataNodeBlockMapping> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DataNodeBlockMapping> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.DataNodeBlockMapping getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface NameNodeFileMappingsOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface NameNodeFileMappingsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:NameNodeFileMappings)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .NameNodeFileMapping mappings = 1;
     /**
      * <code>repeated .NameNodeFileMapping mappings = 1;</code>
      */
@@ -10143,36 +10000,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code NameNodeFileMappings}
    */
-  public static final class NameNodeFileMappings extends
-      com.google.protobuf.GeneratedMessage
-      implements NameNodeFileMappingsOrBuilder {
+  public  static final class NameNodeFileMappings extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:NameNodeFileMappings)
+      NameNodeFileMappingsOrBuilder {
     // Use NameNodeFileMappings.newBuilder() to construct.
     private NameNodeFileMappings(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private NameNodeFileMappings(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final NameNodeFileMappings defaultInstance;
-    public static NameNodeFileMappings getDefaultInstance() {
-      return defaultInstance;
+    private NameNodeFileMappings() {
+      mappings_ = java.util.Collections.emptyList();
     }
 
-    public NameNodeFileMappings getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private NameNodeFileMappings(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -10196,16 +10044,16 @@ public final class HDFSProtos {
                 mappings_ = new java.util.ArrayList<com.distributed.systems.HDFSProtos.NameNodeFileMapping>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              mappings_.add(input.readMessage(com.distributed.systems.HDFSProtos.NameNodeFileMapping.PARSER, extensionRegistry));
+              mappings_.add(input.readMessage(com.distributed.systems.HDFSProtos.NameNodeFileMapping.parser(), extensionRegistry));
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           mappings_ = java.util.Collections.unmodifiableList(mappings_);
@@ -10226,22 +10074,6 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.NameNodeFileMappings.class, com.distributed.systems.HDFSProtos.NameNodeFileMappings.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<NameNodeFileMappings> PARSER =
-        new com.google.protobuf.AbstractParser<NameNodeFileMappings>() {
-      public NameNodeFileMappings parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NameNodeFileMappings(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NameNodeFileMappings> getParserForType() {
-      return PARSER;
-    }
-
-    // repeated .NameNodeFileMapping mappings = 1;
     public static final int MAPPINGS_FIELD_NUMBER = 1;
     private java.util.List<com.distributed.systems.HDFSProtos.NameNodeFileMapping> mappings_;
     /**
@@ -10277,13 +10109,11 @@ public final class HDFSProtos {
       return mappings_.get(index);
     }
 
-    private void initFields() {
-      mappings_ = java.util.Collections.emptyList();
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -10291,16 +10121,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       for (int i = 0; i < mappings_.size(); i++) {
         output.writeMessage(1, mappings_.get(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -10308,18 +10136,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, mappings_.get(i));
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.NameNodeFileMappings parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -10343,42 +10165,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.NameNodeFileMappings parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeFileMappings parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeFileMappings parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeFileMappings parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeFileMappings parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeFileMappings parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeFileMappings prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeFileMappings prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -10390,8 +10211,9 @@ public final class HDFSProtos {
      * Protobuf type {@code NameNodeFileMappings}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.NameNodeFileMappingsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:NameNodeFileMappings)
+        com.distributed.systems.HDFSProtos.NameNodeFileMappingsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_NameNodeFileMappings_descriptor;
@@ -10419,10 +10241,6 @@ public final class HDFSProtos {
           getMappingsFieldBuilder();
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         if (mappingsBuilder_ == null) {
@@ -10432,10 +10250,6 @@ public final class HDFSProtos {
           mappingsBuilder_.clear();
         }
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -10508,7 +10322,8 @@ public final class HDFSProtos {
             }
           }
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -10525,7 +10340,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.NameNodeFileMappings) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -10535,7 +10350,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // repeated .NameNodeFileMapping mappings = 1;
       private java.util.List<com.distributed.systems.HDFSProtos.NameNodeFileMapping> mappings_ =
         java.util.Collections.emptyList();
       private void ensureMappingsIsMutable() {
@@ -10677,7 +10491,8 @@ public final class HDFSProtos {
           java.lang.Iterable<? extends com.distributed.systems.HDFSProtos.NameNodeFileMapping> values) {
         if (mappingsBuilder_ == null) {
           ensureMappingsIsMutable();
-          super.addAll(values, mappings_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, mappings_);
           onChanged();
         } else {
           mappingsBuilder_.addAllMessages(values);
@@ -10778,18 +10593,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:NameNodeFileMappings)
     }
 
+    // @@protoc_insertion_point(class_scope:NameNodeFileMappings)
+    private static final com.distributed.systems.HDFSProtos.NameNodeFileMappings DEFAULT_INSTANCE;
     static {
-      defaultInstance = new NameNodeFileMappings(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.NameNodeFileMappings();
     }
 
-    // @@protoc_insertion_point(class_scope:NameNodeFileMappings)
+    public static com.distributed.systems.HDFSProtos.NameNodeFileMappings getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<NameNodeFileMappings>
+        PARSER = new com.google.protobuf.AbstractParser<NameNodeFileMappings>() {
+      public NameNodeFileMappings parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new NameNodeFileMappings(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<NameNodeFileMappings> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NameNodeFileMappings> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.NameNodeFileMappings getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface NameNodeFileMappingOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface NameNodeFileMappingOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:NameNodeFileMapping)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string fileName = 1;
     /**
      * <code>optional string fileName = 1;</code>
      */
@@ -10804,7 +10655,6 @@ public final class HDFSProtos {
     com.google.protobuf.ByteString
         getFileNameBytes();
 
-    // repeated int32 blockNumbers = 2;
     /**
      * <code>repeated int32 blockNumbers = 2;</code>
      */
@@ -10821,36 +10671,28 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code NameNodeFileMapping}
    */
-  public static final class NameNodeFileMapping extends
-      com.google.protobuf.GeneratedMessage
-      implements NameNodeFileMappingOrBuilder {
+  public  static final class NameNodeFileMapping extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:NameNodeFileMapping)
+      NameNodeFileMappingOrBuilder {
     // Use NameNodeFileMapping.newBuilder() to construct.
     private NameNodeFileMapping(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private NameNodeFileMapping(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final NameNodeFileMapping defaultInstance;
-    public static NameNodeFileMapping getDefaultInstance() {
-      return defaultInstance;
+    private NameNodeFileMapping() {
+      fileName_ = "";
+      blockNumbers_ = java.util.Collections.emptyList();
     }
 
-    public NameNodeFileMapping getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private NameNodeFileMapping(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -10870,8 +10712,9 @@ public final class HDFSProtos {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              fileName_ = input.readBytes();
+              fileName_ = bs;
               break;
             }
             case 16: {
@@ -10898,10 +10741,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           blockNumbers_ = java.util.Collections.unmodifiableList(blockNumbers_);
@@ -10922,25 +10765,9 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.NameNodeFileMapping.class, com.distributed.systems.HDFSProtos.NameNodeFileMapping.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<NameNodeFileMapping> PARSER =
-        new com.google.protobuf.AbstractParser<NameNodeFileMapping>() {
-      public NameNodeFileMapping parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NameNodeFileMapping(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NameNodeFileMapping> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional string fileName = 1;
     public static final int FILENAME_FIELD_NUMBER = 1;
-    private java.lang.Object fileName_;
+    private volatile java.lang.Object fileName_;
     /**
      * <code>optional string fileName = 1;</code>
      */
@@ -10981,7 +10808,6 @@ public final class HDFSProtos {
       }
     }
 
-    // repeated int32 blockNumbers = 2;
     public static final int BLOCKNUMBERS_FIELD_NUMBER = 2;
     private java.util.List<java.lang.Integer> blockNumbers_;
     /**
@@ -11004,14 +10830,11 @@ public final class HDFSProtos {
       return blockNumbers_.get(index);
     }
 
-    private void initFields() {
-      fileName_ = "";
-      blockNumbers_ = java.util.Collections.emptyList();
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -11019,25 +10842,22 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getFileNameBytes());
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, fileName_);
       }
       for (int i = 0; i < blockNumbers_.size(); i++) {
         output.writeInt32(2, blockNumbers_.get(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getFileNameBytes());
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, fileName_);
       }
       {
         int dataSize = 0;
@@ -11048,18 +10868,12 @@ public final class HDFSProtos {
         size += dataSize;
         size += 1 * getBlockNumbersList().size();
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.NameNodeFileMapping parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -11083,42 +10897,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.NameNodeFileMapping parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeFileMapping parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeFileMapping parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeFileMapping parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeFileMapping parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeFileMapping parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeFileMapping prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeFileMapping prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -11130,8 +10943,9 @@ public final class HDFSProtos {
      * Protobuf type {@code NameNodeFileMapping}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.NameNodeFileMappingOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:NameNodeFileMapping)
+        com.distributed.systems.HDFSProtos.NameNodeFileMappingOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_NameNodeFileMapping_descriptor;
@@ -11158,10 +10972,6 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         fileName_ = "";
@@ -11169,10 +10979,6 @@ public final class HDFSProtos {
         blockNumbers_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -11236,7 +11042,8 @@ public final class HDFSProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -11253,7 +11060,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.NameNodeFileMapping) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -11263,7 +11070,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional string fileName = 1;
       private java.lang.Object fileName_ = "";
       /**
        * <code>optional string fileName = 1;</code>
@@ -11277,9 +11083,12 @@ public final class HDFSProtos {
       public java.lang.String getFileName() {
         java.lang.Object ref = fileName_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          fileName_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            fileName_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -11337,7 +11146,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // repeated int32 blockNumbers = 2;
       private java.util.List<java.lang.Integer> blockNumbers_ = java.util.Collections.emptyList();
       private void ensureBlockNumbersIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
@@ -11389,7 +11197,8 @@ public final class HDFSProtos {
       public Builder addAllBlockNumbers(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureBlockNumbersIsMutable();
-        super.addAll(values, blockNumbers_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, blockNumbers_);
         onChanged();
         return this;
       }
@@ -11406,18 +11215,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:NameNodeFileMapping)
     }
 
+    // @@protoc_insertion_point(class_scope:NameNodeFileMapping)
+    private static final com.distributed.systems.HDFSProtos.NameNodeFileMapping DEFAULT_INSTANCE;
     static {
-      defaultInstance = new NameNodeFileMapping(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.NameNodeFileMapping();
     }
 
-    // @@protoc_insertion_point(class_scope:NameNodeFileMapping)
+    public static com.distributed.systems.HDFSProtos.NameNodeFileMapping getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<NameNodeFileMapping>
+        PARSER = new com.google.protobuf.AbstractParser<NameNodeFileMapping>() {
+      public NameNodeFileMapping parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new NameNodeFileMapping(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<NameNodeFileMapping> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NameNodeFileMapping> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.NameNodeFileMapping getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface DataNodeReportMappingsOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface DataNodeReportMappingsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:DataNodeReportMappings)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .DataNodeReportMapping mappings = 1;
     /**
      * <code>repeated .DataNodeReportMapping mappings = 1;</code>
      */
@@ -11445,36 +11290,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code DataNodeReportMappings}
    */
-  public static final class DataNodeReportMappings extends
-      com.google.protobuf.GeneratedMessage
-      implements DataNodeReportMappingsOrBuilder {
+  public  static final class DataNodeReportMappings extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:DataNodeReportMappings)
+      DataNodeReportMappingsOrBuilder {
     // Use DataNodeReportMappings.newBuilder() to construct.
     private DataNodeReportMappings(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private DataNodeReportMappings(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final DataNodeReportMappings defaultInstance;
-    public static DataNodeReportMappings getDefaultInstance() {
-      return defaultInstance;
+    private DataNodeReportMappings() {
+      mappings_ = java.util.Collections.emptyList();
     }
 
-    public DataNodeReportMappings getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private DataNodeReportMappings(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -11498,16 +11334,16 @@ public final class HDFSProtos {
                 mappings_ = new java.util.ArrayList<com.distributed.systems.HDFSProtos.DataNodeReportMapping>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              mappings_.add(input.readMessage(com.distributed.systems.HDFSProtos.DataNodeReportMapping.PARSER, extensionRegistry));
+              mappings_.add(input.readMessage(com.distributed.systems.HDFSProtos.DataNodeReportMapping.parser(), extensionRegistry));
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           mappings_ = java.util.Collections.unmodifiableList(mappings_);
@@ -11528,22 +11364,6 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.DataNodeReportMappings.class, com.distributed.systems.HDFSProtos.DataNodeReportMappings.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<DataNodeReportMappings> PARSER =
-        new com.google.protobuf.AbstractParser<DataNodeReportMappings>() {
-      public DataNodeReportMappings parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new DataNodeReportMappings(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<DataNodeReportMappings> getParserForType() {
-      return PARSER;
-    }
-
-    // repeated .DataNodeReportMapping mappings = 1;
     public static final int MAPPINGS_FIELD_NUMBER = 1;
     private java.util.List<com.distributed.systems.HDFSProtos.DataNodeReportMapping> mappings_;
     /**
@@ -11579,13 +11399,11 @@ public final class HDFSProtos {
       return mappings_.get(index);
     }
 
-    private void initFields() {
-      mappings_ = java.util.Collections.emptyList();
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -11593,16 +11411,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       for (int i = 0; i < mappings_.size(); i++) {
         output.writeMessage(1, mappings_.get(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -11610,18 +11426,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, mappings_.get(i));
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.DataNodeReportMappings parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -11645,42 +11455,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.DataNodeReportMappings parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeReportMappings parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.DataNodeReportMappings parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeReportMappings parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.DataNodeReportMappings parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeReportMappings parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.DataNodeReportMappings prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.DataNodeReportMappings prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -11692,8 +11501,9 @@ public final class HDFSProtos {
      * Protobuf type {@code DataNodeReportMappings}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.DataNodeReportMappingsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:DataNodeReportMappings)
+        com.distributed.systems.HDFSProtos.DataNodeReportMappingsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_DataNodeReportMappings_descriptor;
@@ -11721,10 +11531,6 @@ public final class HDFSProtos {
           getMappingsFieldBuilder();
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         if (mappingsBuilder_ == null) {
@@ -11734,10 +11540,6 @@ public final class HDFSProtos {
           mappingsBuilder_.clear();
         }
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -11810,7 +11612,8 @@ public final class HDFSProtos {
             }
           }
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -11827,7 +11630,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.DataNodeReportMappings) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -11837,7 +11640,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // repeated .DataNodeReportMapping mappings = 1;
       private java.util.List<com.distributed.systems.HDFSProtos.DataNodeReportMapping> mappings_ =
         java.util.Collections.emptyList();
       private void ensureMappingsIsMutable() {
@@ -11979,7 +11781,8 @@ public final class HDFSProtos {
           java.lang.Iterable<? extends com.distributed.systems.HDFSProtos.DataNodeReportMapping> values) {
         if (mappingsBuilder_ == null) {
           ensureMappingsIsMutable();
-          super.addAll(values, mappings_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, mappings_);
           onChanged();
         } else {
           mappingsBuilder_.addAllMessages(values);
@@ -12080,18 +11883,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:DataNodeReportMappings)
     }
 
+    // @@protoc_insertion_point(class_scope:DataNodeReportMappings)
+    private static final com.distributed.systems.HDFSProtos.DataNodeReportMappings DEFAULT_INSTANCE;
     static {
-      defaultInstance = new DataNodeReportMappings(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.DataNodeReportMappings();
     }
 
-    // @@protoc_insertion_point(class_scope:DataNodeReportMappings)
+    public static com.distributed.systems.HDFSProtos.DataNodeReportMappings getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<DataNodeReportMappings>
+        PARSER = new com.google.protobuf.AbstractParser<DataNodeReportMappings>() {
+      public DataNodeReportMappings parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new DataNodeReportMappings(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<DataNodeReportMappings> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DataNodeReportMappings> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.DataNodeReportMappings getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface DataNodeReportMappingOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface DataNodeReportMappingOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:DataNodeReportMapping)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string dataNodeIP = 1;
     /**
      * <code>optional string dataNodeIP = 1;</code>
      */
@@ -12106,7 +11945,6 @@ public final class HDFSProtos {
     com.google.protobuf.ByteString
         getDataNodeIPBytes();
 
-    // optional int32 blockNumber = 2;
     /**
      * <code>optional int32 blockNumber = 2;</code>
      */
@@ -12119,36 +11957,28 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code DataNodeReportMapping}
    */
-  public static final class DataNodeReportMapping extends
-      com.google.protobuf.GeneratedMessage
-      implements DataNodeReportMappingOrBuilder {
+  public  static final class DataNodeReportMapping extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:DataNodeReportMapping)
+      DataNodeReportMappingOrBuilder {
     // Use DataNodeReportMapping.newBuilder() to construct.
     private DataNodeReportMapping(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private DataNodeReportMapping(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final DataNodeReportMapping defaultInstance;
-    public static DataNodeReportMapping getDefaultInstance() {
-      return defaultInstance;
+    private DataNodeReportMapping() {
+      dataNodeIP_ = "";
+      blockNumber_ = 0;
     }
 
-    public DataNodeReportMapping getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private DataNodeReportMapping(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -12168,8 +11998,9 @@ public final class HDFSProtos {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              dataNodeIP_ = input.readBytes();
+              dataNodeIP_ = bs;
               break;
             }
             case 16: {
@@ -12180,10 +12011,10 @@ public final class HDFSProtos {
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -12201,25 +12032,9 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.DataNodeReportMapping.class, com.distributed.systems.HDFSProtos.DataNodeReportMapping.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<DataNodeReportMapping> PARSER =
-        new com.google.protobuf.AbstractParser<DataNodeReportMapping>() {
-      public DataNodeReportMapping parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new DataNodeReportMapping(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<DataNodeReportMapping> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional string dataNodeIP = 1;
     public static final int DATANODEIP_FIELD_NUMBER = 1;
-    private java.lang.Object dataNodeIP_;
+    private volatile java.lang.Object dataNodeIP_;
     /**
      * <code>optional string dataNodeIP = 1;</code>
      */
@@ -12260,7 +12075,6 @@ public final class HDFSProtos {
       }
     }
 
-    // optional int32 blockNumber = 2;
     public static final int BLOCKNUMBER_FIELD_NUMBER = 2;
     private int blockNumber_;
     /**
@@ -12276,14 +12090,11 @@ public final class HDFSProtos {
       return blockNumber_;
     }
 
-    private void initFields() {
-      dataNodeIP_ = "";
-      blockNumber_ = 0;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -12291,42 +12102,33 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getDataNodeIPBytes());
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, dataNodeIP_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeInt32(2, blockNumber_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getDataNodeIPBytes());
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, dataNodeIP_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, blockNumber_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.DataNodeReportMapping parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -12350,42 +12152,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.DataNodeReportMapping parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeReportMapping parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.DataNodeReportMapping parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeReportMapping parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.DataNodeReportMapping parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.DataNodeReportMapping parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.DataNodeReportMapping prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.DataNodeReportMapping prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -12397,8 +12198,9 @@ public final class HDFSProtos {
      * Protobuf type {@code DataNodeReportMapping}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.DataNodeReportMappingOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:DataNodeReportMapping)
+        com.distributed.systems.HDFSProtos.DataNodeReportMappingOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_DataNodeReportMapping_descriptor;
@@ -12425,10 +12227,6 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         dataNodeIP_ = "";
@@ -12436,10 +12234,6 @@ public final class HDFSProtos {
         blockNumber_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -12495,7 +12289,8 @@ public final class HDFSProtos {
         if (other.hasBlockNumber()) {
           setBlockNumber(other.getBlockNumber());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -12512,7 +12307,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.DataNodeReportMapping) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -12522,7 +12317,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional string dataNodeIP = 1;
       private java.lang.Object dataNodeIP_ = "";
       /**
        * <code>optional string dataNodeIP = 1;</code>
@@ -12536,9 +12330,12 @@ public final class HDFSProtos {
       public java.lang.String getDataNodeIP() {
         java.lang.Object ref = dataNodeIP_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          dataNodeIP_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            dataNodeIP_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -12596,7 +12393,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // optional int32 blockNumber = 2;
       private int blockNumber_ ;
       /**
        * <code>optional int32 blockNumber = 2;</code>
@@ -12632,18 +12428,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:DataNodeReportMapping)
     }
 
+    // @@protoc_insertion_point(class_scope:DataNodeReportMapping)
+    private static final com.distributed.systems.HDFSProtos.DataNodeReportMapping DEFAULT_INSTANCE;
     static {
-      defaultInstance = new DataNodeReportMapping(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.DataNodeReportMapping();
     }
 
-    // @@protoc_insertion_point(class_scope:DataNodeReportMapping)
+    public static com.distributed.systems.HDFSProtos.DataNodeReportMapping getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<DataNodeReportMapping>
+        PARSER = new com.google.protobuf.AbstractParser<DataNodeReportMapping>() {
+      public DataNodeReportMapping parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new DataNodeReportMapping(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<DataNodeReportMapping> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DataNodeReportMapping> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.DataNodeReportMapping getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface NameNodeBlockDataNodeMappingsOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface NameNodeBlockDataNodeMappingsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:NameNodeBlockDataNodeMappings)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .NameNodeBlockDataNodeMapping mappings = 1;
     /**
      * <code>repeated .NameNodeBlockDataNodeMapping mappings = 1;</code>
      */
@@ -12677,36 +12509,27 @@ public final class HDFSProtos {
    * This is extra book-keeping for speed purposes
    * </pre>
    */
-  public static final class NameNodeBlockDataNodeMappings extends
-      com.google.protobuf.GeneratedMessage
-      implements NameNodeBlockDataNodeMappingsOrBuilder {
+  public  static final class NameNodeBlockDataNodeMappings extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:NameNodeBlockDataNodeMappings)
+      NameNodeBlockDataNodeMappingsOrBuilder {
     // Use NameNodeBlockDataNodeMappings.newBuilder() to construct.
     private NameNodeBlockDataNodeMappings(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private NameNodeBlockDataNodeMappings(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final NameNodeBlockDataNodeMappings defaultInstance;
-    public static NameNodeBlockDataNodeMappings getDefaultInstance() {
-      return defaultInstance;
+    private NameNodeBlockDataNodeMappings() {
+      mappings_ = java.util.Collections.emptyList();
     }
 
-    public NameNodeBlockDataNodeMappings getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private NameNodeBlockDataNodeMappings(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -12730,16 +12553,16 @@ public final class HDFSProtos {
                 mappings_ = new java.util.ArrayList<com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              mappings_.add(input.readMessage(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping.PARSER, extensionRegistry));
+              mappings_.add(input.readMessage(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping.parser(), extensionRegistry));
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           mappings_ = java.util.Collections.unmodifiableList(mappings_);
@@ -12760,22 +12583,6 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings.class, com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<NameNodeBlockDataNodeMappings> PARSER =
-        new com.google.protobuf.AbstractParser<NameNodeBlockDataNodeMappings>() {
-      public NameNodeBlockDataNodeMappings parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NameNodeBlockDataNodeMappings(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NameNodeBlockDataNodeMappings> getParserForType() {
-      return PARSER;
-    }
-
-    // repeated .NameNodeBlockDataNodeMapping mappings = 1;
     public static final int MAPPINGS_FIELD_NUMBER = 1;
     private java.util.List<com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping> mappings_;
     /**
@@ -12811,13 +12618,11 @@ public final class HDFSProtos {
       return mappings_.get(index);
     }
 
-    private void initFields() {
-      mappings_ = java.util.Collections.emptyList();
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -12825,16 +12630,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       for (int i = 0; i < mappings_.size(); i++) {
         output.writeMessage(1, mappings_.get(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -12842,18 +12645,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, mappings_.get(i));
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -12877,42 +12674,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -12930,8 +12726,9 @@ public final class HDFSProtos {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:NameNodeBlockDataNodeMappings)
+        com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_NameNodeBlockDataNodeMappings_descriptor;
@@ -12959,10 +12756,6 @@ public final class HDFSProtos {
           getMappingsFieldBuilder();
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         if (mappingsBuilder_ == null) {
@@ -12972,10 +12765,6 @@ public final class HDFSProtos {
           mappingsBuilder_.clear();
         }
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -13048,7 +12837,8 @@ public final class HDFSProtos {
             }
           }
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -13065,7 +12855,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -13075,7 +12865,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // repeated .NameNodeBlockDataNodeMapping mappings = 1;
       private java.util.List<com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping> mappings_ =
         java.util.Collections.emptyList();
       private void ensureMappingsIsMutable() {
@@ -13217,7 +13006,8 @@ public final class HDFSProtos {
           java.lang.Iterable<? extends com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping> values) {
         if (mappingsBuilder_ == null) {
           ensureMappingsIsMutable();
-          super.addAll(values, mappings_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, mappings_);
           onChanged();
         } else {
           mappingsBuilder_.addAllMessages(values);
@@ -13318,18 +13108,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:NameNodeBlockDataNodeMappings)
     }
 
+    // @@protoc_insertion_point(class_scope:NameNodeBlockDataNodeMappings)
+    private static final com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings DEFAULT_INSTANCE;
     static {
-      defaultInstance = new NameNodeBlockDataNodeMappings(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings();
     }
 
-    // @@protoc_insertion_point(class_scope:NameNodeBlockDataNodeMappings)
+    public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<NameNodeBlockDataNodeMappings>
+        PARSER = new com.google.protobuf.AbstractParser<NameNodeBlockDataNodeMappings>() {
+      public NameNodeBlockDataNodeMappings parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new NameNodeBlockDataNodeMappings(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<NameNodeBlockDataNodeMappings> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NameNodeBlockDataNodeMappings> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface NameNodeBlockDataNodeMappingOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface NameNodeBlockDataNodeMappingOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:NameNodeBlockDataNodeMapping)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int32 blockNumber = 1;
     /**
      * <code>optional int32 blockNumber = 1;</code>
      */
@@ -13339,12 +13165,11 @@ public final class HDFSProtos {
      */
     int getBlockNumber();
 
-    // repeated string dataNodeIPs = 2;
     /**
      * <code>repeated string dataNodeIPs = 2;</code>
      */
-    java.util.List<java.lang.String>
-    getDataNodeIPsList();
+    com.google.protobuf.ProtocolStringList
+        getDataNodeIPsList();
     /**
      * <code>repeated string dataNodeIPs = 2;</code>
      */
@@ -13362,36 +13187,28 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code NameNodeBlockDataNodeMapping}
    */
-  public static final class NameNodeBlockDataNodeMapping extends
-      com.google.protobuf.GeneratedMessage
-      implements NameNodeBlockDataNodeMappingOrBuilder {
+  public  static final class NameNodeBlockDataNodeMapping extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:NameNodeBlockDataNodeMapping)
+      NameNodeBlockDataNodeMappingOrBuilder {
     // Use NameNodeBlockDataNodeMapping.newBuilder() to construct.
     private NameNodeBlockDataNodeMapping(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private NameNodeBlockDataNodeMapping(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final NameNodeBlockDataNodeMapping defaultInstance;
-    public static NameNodeBlockDataNodeMapping getDefaultInstance() {
-      return defaultInstance;
+    private NameNodeBlockDataNodeMapping() {
+      blockNumber_ = 0;
+      dataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
-    public NameNodeBlockDataNodeMapping getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private NameNodeBlockDataNodeMapping(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -13416,23 +13233,24 @@ public final class HDFSProtos {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
                 dataNodeIPs_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000002;
               }
-              dataNodeIPs_.add(input.readBytes());
+              dataNodeIPs_.add(bs);
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          dataNodeIPs_ = new com.google.protobuf.UnmodifiableLazyStringList(dataNodeIPs_);
+          dataNodeIPs_ = dataNodeIPs_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -13450,23 +13268,7 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping.class, com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<NameNodeBlockDataNodeMapping> PARSER =
-        new com.google.protobuf.AbstractParser<NameNodeBlockDataNodeMapping>() {
-      public NameNodeBlockDataNodeMapping parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NameNodeBlockDataNodeMapping(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NameNodeBlockDataNodeMapping> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional int32 blockNumber = 1;
     public static final int BLOCKNUMBER_FIELD_NUMBER = 1;
     private int blockNumber_;
     /**
@@ -13482,13 +13284,12 @@ public final class HDFSProtos {
       return blockNumber_;
     }
 
-    // repeated string dataNodeIPs = 2;
     public static final int DATANODEIPS_FIELD_NUMBER = 2;
     private com.google.protobuf.LazyStringList dataNodeIPs_;
     /**
      * <code>repeated string dataNodeIPs = 2;</code>
      */
-    public java.util.List<java.lang.String>
+    public com.google.protobuf.ProtocolStringList
         getDataNodeIPsList() {
       return dataNodeIPs_;
     }
@@ -13512,14 +13313,11 @@ public final class HDFSProtos {
       return dataNodeIPs_.getByteString(index);
     }
 
-    private void initFields() {
-      blockNumber_ = 0;
-      dataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -13527,19 +13325,17 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, blockNumber_);
       }
       for (int i = 0; i < dataNodeIPs_.size(); i++) {
-        output.writeBytes(2, dataNodeIPs_.getByteString(i));
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, dataNodeIPs_.getRaw(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -13550,24 +13346,17 @@ public final class HDFSProtos {
       {
         int dataSize = 0;
         for (int i = 0; i < dataNodeIPs_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeBytesSizeNoTag(dataNodeIPs_.getByteString(i));
+          dataSize += computeStringSizeNoTag(dataNodeIPs_.getRaw(i));
         }
         size += dataSize;
         size += 1 * getDataNodeIPsList().size();
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -13591,42 +13380,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -13638,8 +13426,9 @@ public final class HDFSProtos {
      * Protobuf type {@code NameNodeBlockDataNodeMapping}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:NameNodeBlockDataNodeMapping)
+        com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_NameNodeBlockDataNodeMapping_descriptor;
@@ -13666,10 +13455,6 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         blockNumber_ = 0;
@@ -13677,10 +13462,6 @@ public final class HDFSProtos {
         dataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -13709,8 +13490,7 @@ public final class HDFSProtos {
         }
         result.blockNumber_ = blockNumber_;
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          dataNodeIPs_ = new com.google.protobuf.UnmodifiableLazyStringList(
-              dataNodeIPs_);
+          dataNodeIPs_ = dataNodeIPs_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.dataNodeIPs_ = dataNodeIPs_;
@@ -13743,7 +13523,8 @@ public final class HDFSProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -13760,7 +13541,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -13770,7 +13551,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional int32 blockNumber = 1;
       private int blockNumber_ ;
       /**
        * <code>optional int32 blockNumber = 1;</code>
@@ -13803,7 +13583,6 @@ public final class HDFSProtos {
         return this;
       }
 
-      // repeated string dataNodeIPs = 2;
       private com.google.protobuf.LazyStringList dataNodeIPs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureDataNodeIPsIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
@@ -13814,9 +13593,9 @@ public final class HDFSProtos {
       /**
        * <code>repeated string dataNodeIPs = 2;</code>
        */
-      public java.util.List<java.lang.String>
+      public com.google.protobuf.ProtocolStringList
           getDataNodeIPsList() {
-        return java.util.Collections.unmodifiableList(dataNodeIPs_);
+        return dataNodeIPs_.getUnmodifiableView();
       }
       /**
        * <code>repeated string dataNodeIPs = 2;</code>
@@ -13869,7 +13648,8 @@ public final class HDFSProtos {
       public Builder addAllDataNodeIPs(
           java.lang.Iterable<java.lang.String> values) {
         ensureDataNodeIPsIsMutable();
-        super.addAll(values, dataNodeIPs_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, dataNodeIPs_);
         onChanged();
         return this;
       }
@@ -13899,18 +13679,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:NameNodeBlockDataNodeMapping)
     }
 
+    // @@protoc_insertion_point(class_scope:NameNodeBlockDataNodeMapping)
+    private static final com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping DEFAULT_INSTANCE;
     static {
-      defaultInstance = new NameNodeBlockDataNodeMapping(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping();
     }
 
-    // @@protoc_insertion_point(class_scope:NameNodeBlockDataNodeMapping)
+    public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<NameNodeBlockDataNodeMapping>
+        PARSER = new com.google.protobuf.AbstractParser<NameNodeBlockDataNodeMapping>() {
+      public NameNodeBlockDataNodeMapping parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new NameNodeBlockDataNodeMapping(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<NameNodeBlockDataNodeMapping> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NameNodeBlockDataNodeMapping> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface NameNodeBlockDataNodeMappingsRequestOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface NameNodeBlockDataNodeMappingsRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:NameNodeBlockDataNodeMappingsRequest)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string fileName = 1;
     /**
      * <code>optional string fileName = 1;</code>
      */
@@ -13928,36 +13744,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code NameNodeBlockDataNodeMappingsRequest}
    */
-  public static final class NameNodeBlockDataNodeMappingsRequest extends
-      com.google.protobuf.GeneratedMessage
-      implements NameNodeBlockDataNodeMappingsRequestOrBuilder {
+  public  static final class NameNodeBlockDataNodeMappingsRequest extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:NameNodeBlockDataNodeMappingsRequest)
+      NameNodeBlockDataNodeMappingsRequestOrBuilder {
     // Use NameNodeBlockDataNodeMappingsRequest.newBuilder() to construct.
     private NameNodeBlockDataNodeMappingsRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private NameNodeBlockDataNodeMappingsRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final NameNodeBlockDataNodeMappingsRequest defaultInstance;
-    public static NameNodeBlockDataNodeMappingsRequest getDefaultInstance() {
-      return defaultInstance;
+    private NameNodeBlockDataNodeMappingsRequest() {
+      fileName_ = "";
     }
 
-    public NameNodeBlockDataNodeMappingsRequest getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private NameNodeBlockDataNodeMappingsRequest(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -13977,17 +13784,18 @@ public final class HDFSProtos {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              fileName_ = input.readBytes();
+              fileName_ = bs;
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -14005,25 +13813,9 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest.class, com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<NameNodeBlockDataNodeMappingsRequest> PARSER =
-        new com.google.protobuf.AbstractParser<NameNodeBlockDataNodeMappingsRequest>() {
-      public NameNodeBlockDataNodeMappingsRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NameNodeBlockDataNodeMappingsRequest(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NameNodeBlockDataNodeMappingsRequest> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
-    // optional string fileName = 1;
     public static final int FILENAME_FIELD_NUMBER = 1;
-    private java.lang.Object fileName_;
+    private volatile java.lang.Object fileName_;
     /**
      * <code>optional string fileName = 1;</code>
      */
@@ -14064,13 +13856,11 @@ public final class HDFSProtos {
       }
     }
 
-    private void initFields() {
-      fileName_ = "";
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -14078,35 +13868,26 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getFileNameBytes());
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, fileName_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getFileNameBytes());
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, fileName_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -14130,42 +13911,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -14177,8 +13957,9 @@ public final class HDFSProtos {
      * Protobuf type {@code NameNodeBlockDataNodeMappingsRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequestOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:NameNodeBlockDataNodeMappingsRequest)
+        com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_NameNodeBlockDataNodeMappingsRequest_descriptor;
@@ -14205,19 +13986,11 @@ public final class HDFSProtos {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         fileName_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -14266,7 +14039,8 @@ public final class HDFSProtos {
           fileName_ = other.fileName_;
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -14283,7 +14057,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -14293,7 +14067,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // optional string fileName = 1;
       private java.lang.Object fileName_ = "";
       /**
        * <code>optional string fileName = 1;</code>
@@ -14307,9 +14080,12 @@ public final class HDFSProtos {
       public java.lang.String getFileName() {
         java.lang.Object ref = fileName_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          fileName_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            fileName_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -14370,18 +14146,54 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:NameNodeBlockDataNodeMappingsRequest)
     }
 
+    // @@protoc_insertion_point(class_scope:NameNodeBlockDataNodeMappingsRequest)
+    private static final com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest DEFAULT_INSTANCE;
     static {
-      defaultInstance = new NameNodeBlockDataNodeMappingsRequest(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest();
     }
 
-    // @@protoc_insertion_point(class_scope:NameNodeBlockDataNodeMappingsRequest)
+    public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<NameNodeBlockDataNodeMappingsRequest>
+        PARSER = new com.google.protobuf.AbstractParser<NameNodeBlockDataNodeMappingsRequest>() {
+      public NameNodeBlockDataNodeMappingsRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new NameNodeBlockDataNodeMappingsRequest(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<NameNodeBlockDataNodeMappingsRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NameNodeBlockDataNodeMappingsRequest> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public interface NameNodeBlockDataNodeMappingsResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface NameNodeBlockDataNodeMappingsResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:NameNodeBlockDataNodeMappingsResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .NameNodeBlockDataNodeMapping mappings = 1;
     /**
      * <code>repeated .NameNodeBlockDataNodeMapping mappings = 1;</code>
      */
@@ -14409,36 +14221,27 @@ public final class HDFSProtos {
   /**
    * Protobuf type {@code NameNodeBlockDataNodeMappingsResponse}
    */
-  public static final class NameNodeBlockDataNodeMappingsResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements NameNodeBlockDataNodeMappingsResponseOrBuilder {
+  public  static final class NameNodeBlockDataNodeMappingsResponse extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:NameNodeBlockDataNodeMappingsResponse)
+      NameNodeBlockDataNodeMappingsResponseOrBuilder {
     // Use NameNodeBlockDataNodeMappingsResponse.newBuilder() to construct.
     private NameNodeBlockDataNodeMappingsResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private NameNodeBlockDataNodeMappingsResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final NameNodeBlockDataNodeMappingsResponse defaultInstance;
-    public static NameNodeBlockDataNodeMappingsResponse getDefaultInstance() {
-      return defaultInstance;
+    private NameNodeBlockDataNodeMappingsResponse() {
+      mappings_ = java.util.Collections.emptyList();
     }
 
-    public NameNodeBlockDataNodeMappingsResponse getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private NameNodeBlockDataNodeMappingsResponse(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -14462,16 +14265,16 @@ public final class HDFSProtos {
                 mappings_ = new java.util.ArrayList<com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              mappings_.add(input.readMessage(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping.PARSER, extensionRegistry));
+              mappings_.add(input.readMessage(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping.parser(), extensionRegistry));
               break;
             }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
+        throw new RuntimeException(e.setUnfinishedMessage(this));
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+        throw new RuntimeException(new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           mappings_ = java.util.Collections.unmodifiableList(mappings_);
@@ -14492,22 +14295,6 @@ public final class HDFSProtos {
               com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse.class, com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<NameNodeBlockDataNodeMappingsResponse> PARSER =
-        new com.google.protobuf.AbstractParser<NameNodeBlockDataNodeMappingsResponse>() {
-      public NameNodeBlockDataNodeMappingsResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NameNodeBlockDataNodeMappingsResponse(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NameNodeBlockDataNodeMappingsResponse> getParserForType() {
-      return PARSER;
-    }
-
-    // repeated .NameNodeBlockDataNodeMapping mappings = 1;
     public static final int MAPPINGS_FIELD_NUMBER = 1;
     private java.util.List<com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping> mappings_;
     /**
@@ -14543,13 +14330,11 @@ public final class HDFSProtos {
       return mappings_.get(index);
     }
 
-    private void initFields() {
-      mappings_ = java.util.Collections.emptyList();
-    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -14557,16 +14342,14 @@ public final class HDFSProtos {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       for (int i = 0; i < mappings_.size(); i++) {
         output.writeMessage(1, mappings_.get(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -14574,18 +14357,12 @@ public final class HDFSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, mappings_.get(i));
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -14609,42 +14386,41 @@ public final class HDFSProtos {
     }
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseDelimitedWithIOException(PARSER, input, extensionRegistry);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input);}
     public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
+      return com.google.protobuf.GeneratedMessage.parseWithIOException(PARSER, input, extensionRegistry);}
 
-    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
@@ -14656,8 +14432,9 @@ public final class HDFSProtos {
      * Protobuf type {@code NameNodeBlockDataNodeMappingsResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:NameNodeBlockDataNodeMappingsResponse)
+        com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.distributed.systems.HDFSProtos.internal_static_NameNodeBlockDataNodeMappingsResponse_descriptor;
@@ -14685,10 +14462,6 @@ public final class HDFSProtos {
           getMappingsFieldBuilder();
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
       public Builder clear() {
         super.clear();
         if (mappingsBuilder_ == null) {
@@ -14698,10 +14471,6 @@ public final class HDFSProtos {
           mappingsBuilder_.clear();
         }
         return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -14774,7 +14543,8 @@ public final class HDFSProtos {
             }
           }
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
@@ -14791,7 +14561,7 @@ public final class HDFSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -14801,7 +14571,6 @@ public final class HDFSProtos {
       }
       private int bitField0_;
 
-      // repeated .NameNodeBlockDataNodeMapping mappings = 1;
       private java.util.List<com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping> mappings_ =
         java.util.Collections.emptyList();
       private void ensureMappingsIsMutable() {
@@ -14943,7 +14712,8 @@ public final class HDFSProtos {
           java.lang.Iterable<? extends com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping> values) {
         if (mappingsBuilder_ == null) {
           ensureMappingsIsMutable();
-          super.addAll(values, mappings_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, mappings_);
           onChanged();
         } else {
           mappingsBuilder_.addAllMessages(values);
@@ -15044,12 +14814,48 @@ public final class HDFSProtos {
       // @@protoc_insertion_point(builder_scope:NameNodeBlockDataNodeMappingsResponse)
     }
 
+    // @@protoc_insertion_point(class_scope:NameNodeBlockDataNodeMappingsResponse)
+    private static final com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse DEFAULT_INSTANCE;
     static {
-      defaultInstance = new NameNodeBlockDataNodeMappingsResponse(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse();
     }
 
-    // @@protoc_insertion_point(class_scope:NameNodeBlockDataNodeMappingsResponse)
+    public static com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<NameNodeBlockDataNodeMappingsResponse>
+        PARSER = new com.google.protobuf.AbstractParser<NameNodeBlockDataNodeMappingsResponse>() {
+      public NameNodeBlockDataNodeMappingsResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new NameNodeBlockDataNodeMappingsResponse(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<NameNodeBlockDataNodeMappingsResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NameNodeBlockDataNodeMappingsResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
   private static com.google.protobuf.Descriptors.Descriptor
@@ -15238,179 +15044,179 @@ public final class HDFSProtos {
       "\027com.distributed.systemsB\nHDFSProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_OpenFileRequest_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_OpenFileRequest_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_OpenFileRequest_descriptor,
-              new java.lang.String[] { "FileName", "ForRead", });
-          internal_static_OpenFileResponse_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_OpenFileResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_OpenFileResponse_descriptor,
-              new java.lang.String[] { "Status", "RendezvousIndentifier", });
-          internal_static_CloseFileRequest_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_CloseFileRequest_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_CloseFileRequest_descriptor,
-              new java.lang.String[] { "Handle", });
-          internal_static_CloseFileResponse_descriptor =
-            getDescriptor().getMessageTypes().get(3);
-          internal_static_CloseFileResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_CloseFileResponse_descriptor,
-              new java.lang.String[] { "Status", });
-          internal_static_WriteBlockRequest_descriptor =
-            getDescriptor().getMessageTypes().get(4);
-          internal_static_WriteBlockRequest_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_WriteBlockRequest_descriptor,
-              new java.lang.String[] { "BlockNumber", "Data", "RemainingDataNodeIPs", });
-          internal_static_WriteBlockResponse_descriptor =
-            getDescriptor().getMessageTypes().get(5);
-          internal_static_WriteBlockResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_WriteBlockResponse_descriptor,
-              new java.lang.String[] { "Status", });
-          internal_static_BlockLocationRequest_descriptor =
-            getDescriptor().getMessageTypes().get(6);
-          internal_static_BlockLocationRequest_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_BlockLocationRequest_descriptor,
-              new java.lang.String[] { "BlockNums", });
-          internal_static_BlockLocationResponse_descriptor =
-            getDescriptor().getMessageTypes().get(7);
-          internal_static_BlockLocationResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_BlockLocationResponse_descriptor,
-              new java.lang.String[] { "Status", });
-          internal_static_AssignBlockResponse_descriptor =
-            getDescriptor().getMessageTypes().get(8);
-          internal_static_AssignBlockResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_AssignBlockResponse_descriptor,
-              new java.lang.String[] { "Status", "BlockNumber", "DataNodeIPs", });
-          internal_static_ListFilesRequest_descriptor =
-            getDescriptor().getMessageTypes().get(9);
-          internal_static_ListFilesRequest_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_ListFilesRequest_descriptor,
-              new java.lang.String[] { "DirName", });
-          internal_static_ListFilesResponse_descriptor =
-            getDescriptor().getMessageTypes().get(10);
-          internal_static_ListFilesResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_ListFilesResponse_descriptor,
-              new java.lang.String[] { "Status", "FileNames", });
-          internal_static_ReadBlockRequest_descriptor =
-            getDescriptor().getMessageTypes().get(11);
-          internal_static_ReadBlockRequest_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_ReadBlockRequest_descriptor,
-              new java.lang.String[] { "BlockNumber", });
-          internal_static_ReadBlockResponse_descriptor =
-            getDescriptor().getMessageTypes().get(12);
-          internal_static_ReadBlockResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_ReadBlockResponse_descriptor,
-              new java.lang.String[] { "Status", });
-          internal_static_BlockReportRequest_descriptor =
-            getDescriptor().getMessageTypes().get(13);
-          internal_static_BlockReportRequest_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_BlockReportRequest_descriptor,
-              new java.lang.String[] { "Id", "Mappings", });
-          internal_static_BlockReportResponse_descriptor =
-            getDescriptor().getMessageTypes().get(14);
-          internal_static_BlockReportResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_BlockReportResponse_descriptor,
-              new java.lang.String[] { "Status", });
-          internal_static_HeartBeatRequest_descriptor =
-            getDescriptor().getMessageTypes().get(15);
-          internal_static_HeartBeatRequest_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_HeartBeatRequest_descriptor,
-              new java.lang.String[] { "Id", "Ip", });
-          internal_static_HeartBeatResponse_descriptor =
-            getDescriptor().getMessageTypes().get(16);
-          internal_static_HeartBeatResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_HeartBeatResponse_descriptor,
-              new java.lang.String[] { "Status", });
-          internal_static_DataNodeBlockMappings_descriptor =
-            getDescriptor().getMessageTypes().get(17);
-          internal_static_DataNodeBlockMappings_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_DataNodeBlockMappings_descriptor,
-              new java.lang.String[] { "Mappings", });
-          internal_static_DataNodeBlockMapping_descriptor =
-            getDescriptor().getMessageTypes().get(18);
-          internal_static_DataNodeBlockMapping_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_DataNodeBlockMapping_descriptor,
-              new java.lang.String[] { "BlockNumber", "LocalPath", });
-          internal_static_NameNodeFileMappings_descriptor =
-            getDescriptor().getMessageTypes().get(19);
-          internal_static_NameNodeFileMappings_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_NameNodeFileMappings_descriptor,
-              new java.lang.String[] { "Mappings", });
-          internal_static_NameNodeFileMapping_descriptor =
-            getDescriptor().getMessageTypes().get(20);
-          internal_static_NameNodeFileMapping_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_NameNodeFileMapping_descriptor,
-              new java.lang.String[] { "FileName", "BlockNumbers", });
-          internal_static_DataNodeReportMappings_descriptor =
-            getDescriptor().getMessageTypes().get(21);
-          internal_static_DataNodeReportMappings_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_DataNodeReportMappings_descriptor,
-              new java.lang.String[] { "Mappings", });
-          internal_static_DataNodeReportMapping_descriptor =
-            getDescriptor().getMessageTypes().get(22);
-          internal_static_DataNodeReportMapping_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_DataNodeReportMapping_descriptor,
-              new java.lang.String[] { "DataNodeIP", "BlockNumber", });
-          internal_static_NameNodeBlockDataNodeMappings_descriptor =
-            getDescriptor().getMessageTypes().get(23);
-          internal_static_NameNodeBlockDataNodeMappings_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_NameNodeBlockDataNodeMappings_descriptor,
-              new java.lang.String[] { "Mappings", });
-          internal_static_NameNodeBlockDataNodeMapping_descriptor =
-            getDescriptor().getMessageTypes().get(24);
-          internal_static_NameNodeBlockDataNodeMapping_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_NameNodeBlockDataNodeMapping_descriptor,
-              new java.lang.String[] { "BlockNumber", "DataNodeIPs", });
-          internal_static_NameNodeBlockDataNodeMappingsRequest_descriptor =
-            getDescriptor().getMessageTypes().get(25);
-          internal_static_NameNodeBlockDataNodeMappingsRequest_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_NameNodeBlockDataNodeMappingsRequest_descriptor,
-              new java.lang.String[] { "FileName", });
-          internal_static_NameNodeBlockDataNodeMappingsResponse_descriptor =
-            getDescriptor().getMessageTypes().get(26);
-          internal_static_NameNodeBlockDataNodeMappingsResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_NameNodeBlockDataNodeMappingsResponse_descriptor,
-              new java.lang.String[] { "Mappings", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_OpenFileRequest_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_OpenFileRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_OpenFileRequest_descriptor,
+        new java.lang.String[] { "FileName", "ForRead", });
+    internal_static_OpenFileResponse_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_OpenFileResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_OpenFileResponse_descriptor,
+        new java.lang.String[] { "Status", "RendezvousIndentifier", });
+    internal_static_CloseFileRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_CloseFileRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_CloseFileRequest_descriptor,
+        new java.lang.String[] { "Handle", });
+    internal_static_CloseFileResponse_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_CloseFileResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_CloseFileResponse_descriptor,
+        new java.lang.String[] { "Status", });
+    internal_static_WriteBlockRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_WriteBlockRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_WriteBlockRequest_descriptor,
+        new java.lang.String[] { "BlockNumber", "Data", "RemainingDataNodeIPs", });
+    internal_static_WriteBlockResponse_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_WriteBlockResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_WriteBlockResponse_descriptor,
+        new java.lang.String[] { "Status", });
+    internal_static_BlockLocationRequest_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_BlockLocationRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_BlockLocationRequest_descriptor,
+        new java.lang.String[] { "BlockNums", });
+    internal_static_BlockLocationResponse_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_BlockLocationResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_BlockLocationResponse_descriptor,
+        new java.lang.String[] { "Status", });
+    internal_static_AssignBlockResponse_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_AssignBlockResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_AssignBlockResponse_descriptor,
+        new java.lang.String[] { "Status", "BlockNumber", "DataNodeIPs", });
+    internal_static_ListFilesRequest_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_ListFilesRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_ListFilesRequest_descriptor,
+        new java.lang.String[] { "DirName", });
+    internal_static_ListFilesResponse_descriptor =
+      getDescriptor().getMessageTypes().get(10);
+    internal_static_ListFilesResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_ListFilesResponse_descriptor,
+        new java.lang.String[] { "Status", "FileNames", });
+    internal_static_ReadBlockRequest_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_ReadBlockRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_ReadBlockRequest_descriptor,
+        new java.lang.String[] { "BlockNumber", });
+    internal_static_ReadBlockResponse_descriptor =
+      getDescriptor().getMessageTypes().get(12);
+    internal_static_ReadBlockResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_ReadBlockResponse_descriptor,
+        new java.lang.String[] { "Status", });
+    internal_static_BlockReportRequest_descriptor =
+      getDescriptor().getMessageTypes().get(13);
+    internal_static_BlockReportRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_BlockReportRequest_descriptor,
+        new java.lang.String[] { "Id", "Mappings", });
+    internal_static_BlockReportResponse_descriptor =
+      getDescriptor().getMessageTypes().get(14);
+    internal_static_BlockReportResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_BlockReportResponse_descriptor,
+        new java.lang.String[] { "Status", });
+    internal_static_HeartBeatRequest_descriptor =
+      getDescriptor().getMessageTypes().get(15);
+    internal_static_HeartBeatRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_HeartBeatRequest_descriptor,
+        new java.lang.String[] { "Id", "Ip", });
+    internal_static_HeartBeatResponse_descriptor =
+      getDescriptor().getMessageTypes().get(16);
+    internal_static_HeartBeatResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_HeartBeatResponse_descriptor,
+        new java.lang.String[] { "Status", });
+    internal_static_DataNodeBlockMappings_descriptor =
+      getDescriptor().getMessageTypes().get(17);
+    internal_static_DataNodeBlockMappings_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_DataNodeBlockMappings_descriptor,
+        new java.lang.String[] { "Mappings", });
+    internal_static_DataNodeBlockMapping_descriptor =
+      getDescriptor().getMessageTypes().get(18);
+    internal_static_DataNodeBlockMapping_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_DataNodeBlockMapping_descriptor,
+        new java.lang.String[] { "BlockNumber", "LocalPath", });
+    internal_static_NameNodeFileMappings_descriptor =
+      getDescriptor().getMessageTypes().get(19);
+    internal_static_NameNodeFileMappings_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_NameNodeFileMappings_descriptor,
+        new java.lang.String[] { "Mappings", });
+    internal_static_NameNodeFileMapping_descriptor =
+      getDescriptor().getMessageTypes().get(20);
+    internal_static_NameNodeFileMapping_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_NameNodeFileMapping_descriptor,
+        new java.lang.String[] { "FileName", "BlockNumbers", });
+    internal_static_DataNodeReportMappings_descriptor =
+      getDescriptor().getMessageTypes().get(21);
+    internal_static_DataNodeReportMappings_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_DataNodeReportMappings_descriptor,
+        new java.lang.String[] { "Mappings", });
+    internal_static_DataNodeReportMapping_descriptor =
+      getDescriptor().getMessageTypes().get(22);
+    internal_static_DataNodeReportMapping_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_DataNodeReportMapping_descriptor,
+        new java.lang.String[] { "DataNodeIP", "BlockNumber", });
+    internal_static_NameNodeBlockDataNodeMappings_descriptor =
+      getDescriptor().getMessageTypes().get(23);
+    internal_static_NameNodeBlockDataNodeMappings_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_NameNodeBlockDataNodeMappings_descriptor,
+        new java.lang.String[] { "Mappings", });
+    internal_static_NameNodeBlockDataNodeMapping_descriptor =
+      getDescriptor().getMessageTypes().get(24);
+    internal_static_NameNodeBlockDataNodeMapping_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_NameNodeBlockDataNodeMapping_descriptor,
+        new java.lang.String[] { "BlockNumber", "DataNodeIPs", });
+    internal_static_NameNodeBlockDataNodeMappingsRequest_descriptor =
+      getDescriptor().getMessageTypes().get(25);
+    internal_static_NameNodeBlockDataNodeMappingsRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_NameNodeBlockDataNodeMappingsRequest_descriptor,
+        new java.lang.String[] { "FileName", });
+    internal_static_NameNodeBlockDataNodeMappingsResponse_descriptor =
+      getDescriptor().getMessageTypes().get(26);
+    internal_static_NameNodeBlockDataNodeMappingsResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_NameNodeBlockDataNodeMappingsResponse_descriptor,
+        new java.lang.String[] { "Mappings", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

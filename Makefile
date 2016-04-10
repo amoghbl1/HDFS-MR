@@ -24,6 +24,7 @@ clean:
 
 protobuf:
 	protoc -I=. --java_out=. hdfs.proto
+	protoc -I=. --java_out=. mr.proto
 	cp -r com Namenode
 	cp -r com Datanode
 	cp -r com Client

@@ -1,3 +1,8 @@
+syntax = "proto2";
+
+option java_outer_classname = "MRProtos";
+option java_package = "com.distributed.systems";
+
 message JobSubmitRequest {
   optional string mapName = 1; // Java class, or name of C .so
   optional string reducerName = 2; // Java class, or name of C .so
