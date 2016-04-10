@@ -1,6 +1,6 @@
 all: compile
 
-compile: clean protobuf namenode datanode client
+compile: clean protobuf namenode datanode client tasktracker
 	@echo "Start rmiregistry and run the code now!"
 
 namenode: protobuf
