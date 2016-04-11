@@ -129,8 +129,8 @@ public class TaskTracker {
                     heartBeatRequestBuilder.setTaskTrackerId(parentNode.getMyID());
                     heartBeatRequestBuilder.setNumMapSlotsFree(parentNode.getNumMapSlotsFree());
                     heartBeatRequestBuilder.setNumReduceSlotsFree(parentNode.getNumReduceSlotsFree());
-                    heartBeatRequestBuilder.setMapStatus(parentNode.getMyIndex(), parentNode.getMapTaskStatus());
-                    heartBeatRequestBuilder.setReduceStatus(parentNode.getMyIndex(), parentNode.getReduceTaskStatus());
+                    //heartBeatRequestBuilder.setMapStatus(parentNode.getMyIndex(), parentNode.getMapTaskStatus());
+                    //heartBeatRequestBuilder.setReduceStatus(parentNode.getMyIndex(), parentNode.getReduceTaskStatus());
 
                     JobTrackerInterface jobtracker = (JobTrackerInterface) Naming.lookup("//" +
                             jobTrackerIP + "/HDFSMRJobTracker");
@@ -152,6 +152,18 @@ public class TaskTracker {
             }
         }
 
+    }
+
+    public static void main(String[] args) {
+    	TaskTracker me = null;
+	try {
+	    me = new TaskTracker(configFile);
+	} catch (Exception e) {
+            System.out.println("Some Error: " + e.getMessage());
+            e.printStackTrace();
+	}
+	new HeartBeatThread(me).start();
+	System.out.println("Hear Beat Thread Started.");
     }
 
 }
