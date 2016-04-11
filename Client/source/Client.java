@@ -10,6 +10,8 @@ import com.distributed.systems.HDFSProtos.ReadBlockRequest;
 import com.distributed.systems.HDFSProtos.ReadBlockResponse;
 import com.distributed.systems.HDFSProtos.WriteBlockRequest;
 import com.distributed.systems.HDFSProtos.WriteBlockResponse;
+import com.distributed.systems.MRProtos.JobStatusRequest;
+import com.distributed.systems.MRProtos.JobStatusResponse;
 import com.distributed.systems.MRProtos.JobSubmitRequest;
 import com.distributed.systems.MRProtos.JobSubmitResponse;
 import java.io.BufferedReader;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 public class Client {
 
     private int BLOCK_SIZE_IN_BYTES = 32000000;
+    private int JOB_STATUS_POLL_TIME = 1500;
 
     // Using hdfs_mr_client.conf as the default config file.
     private static String configFile = "hdfs_mr_client.conf"; 
@@ -352,8 +355,11 @@ public class Client {
      * @param numberOfReducers the number of reducers to be used
      */
     public void runJob(String mapClassName, String reduceClassName, String inputFile, String outputFile, int numberOfReducers) {
-        JobSubmitResponse response = null;
+        JobSubmitResponse jobSubmitResponse = null;
         byte[] responseEncoded = null;
+        boolean jobCompleteFlag = false;
+        
+        // Build my job submit request and send it to the JT
         try {
             JobSubmitRequest.Builder requestBuilder = JobSubmitRequest.newBuilder();
             requestBuilder.setMapperName(mapClassName);
@@ -367,10 +373,52 @@ public class Client {
 
             responseEncoded = jobTracker.jobSubmit(requestBuilder.build().toByteArray());
         } catch (Exception e) {
-            System.out.println("Problem sending a job submit to job tracker??" + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Looks like Job Tracker is down!!");
+            return;
         }
         
+        // Parse JTs response to my job submit request
+        try {
+            jobSubmitResponse = JobSubmitResponse.parseFrom(responseEncoded);
+            System.out.println(jobSubmitResponse.toString());
+        } catch (Exception e) {
+            System.out.println("Problem parsing job submit response from job tracker??" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        while(!jobCompleteFlag) {
+            try {
+                Thread.sleep( JOB_STATUS_POLL_TIME );
+            } catch (Exception e) {
+                System.out.println("Thread killed while sleeping??" + e.getMessage());
+                e.printStackTrace();
+            }
+            // Based on job submit response, build job status request and send it to JT
+            try {
+                JobStatusRequest.Builder jobStatusRequestBuilder = JobStatusRequest.newBuilder();
+                jobStatusRequestBuilder.setJobId(
+                        jobSubmitResponse.getJobId());
+
+                JobTrackerInterface jobTracker = (JobTrackerInterface) Naming.lookup("//" +
+                        jobTrackerIP + "/HDFSMRJobTracker");
+
+                responseEncoded = jobTracker.getJobStatus(jobStatusRequestBuilder.build().toByteArray());
+            } catch (Exception e) {
+                System.out.println("Looks like Job Tracker is down!!");
+                return;
+            }
+
+            // Parse JTs response to this status request and print it.
+            // If this is incomplete, sleep for a bit and recheck status.
+            try {
+                JobStatusResponse jobStatusResponse =  JobStatusResponse.parseFrom(responseEncoded);
+                System.out.println(jobStatusResponse.toString());
+                jobCompleteFlag = jobStatusResponse.getJobDone();
+            } catch (Exception e) {
+                System.out.println("Problem parsing job status response from job tracker??" + e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
