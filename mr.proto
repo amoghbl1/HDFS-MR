@@ -64,7 +64,7 @@ message MapTaskInfo {
   optional int32 jobId = 1;
   optional int32 taskId = 2;
   optional string mapperName = 3;
-  repeated BlockLocations inputBlocks = 4;
+  optional BlockLocations inputBlock = 4;
 }
 
 message ReducerTaskInfo {
