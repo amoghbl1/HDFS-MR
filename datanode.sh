@@ -5,4 +5,4 @@ make datanode
 
 cd Datanode/bin && nohup rmiregistry&
 
-cd datanode && java -cp ./bin/:../protobuf-java-2.6.1.jar: DataNode
+cd Datanode && java -cp ./bin/:../protobuf-java-2.6.1.jar: DataNode
