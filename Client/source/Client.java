@@ -435,6 +435,7 @@ public class Client {
             System.out.println("list <filename>");
             System.out.println("put <filename>");
             System.out.println("get <filename>");
+            System.out.println("job <mapClassName> <reduceClassName> <inputFile> <outputFile> <numOfReducers>");
             return;
         }
 
@@ -504,7 +505,7 @@ public class Client {
             if(args.length < 6) {
                 System.out.println("Not enough arguments for job.");
                 System.out.println("Usage:");
-                System.out.println("job mapClassName reduceClassName inputFile outputFile numOfReducers");
+                System.out.println("job <mapClassName> <reduceClassName> <inputFile> <outputFile> <numOfReducers>");
                 return;
             }
             me.runJob(args[1], // Map Class Name

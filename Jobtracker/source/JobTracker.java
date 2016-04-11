@@ -1,9 +1,13 @@
+import com.distributed.systems.HDFSProtos.OpenFileRequest;
+import com.distributed.systems.HDFSProtos.OpenFileResponse;
 import com.distributed.systems.MRProtos.HeartBeatRequest;
 import com.distributed.systems.MRProtos.HeartBeatResponse;
 import com.distributed.systems.MRProtos.JobStatusRequest;
 import com.distributed.systems.MRProtos.JobStatusResponse;
 import com.distributed.systems.MRProtos.JobSubmitRequest;
 import com.distributed.systems.MRProtos.JobSubmitResponse;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -14,6 +18,8 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
     // Using this default config file
     private static String configFile = "hdfs_mr_job_tracker.conf";
 
+    private static String nameNodeIP = "127.0.0.1";
+
     private static int currentJobID = 0;
 
     private static HashMap<Integer, JobRunnerThread> currentJobThreads = new HashMap<Integer, JobRunnerThread>();
@@ -23,6 +29,28 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
     public JobTracker(String conf) throws RemoteException {
         this.configFile = conf;
+        BufferedReader fileReader = null;
+        String configLine;
+        // Parsing the config file for configs
+        try {
+            fileReader = new BufferedReader(new FileReader(this.configFile));
+        } catch (Exception e) {
+            System.out.println("Bad config file?? " + e.getMessage());
+            e.printStackTrace();
+        }
+        while(true) {
+            try {
+                if((configLine = fileReader.readLine()) == null)
+                    break;
+            } catch (Exception e) {
+                System.out.println("Config file read problems?? " + e.getMessage());
+                e.printStackTrace();
+                break;
+            }
+            if(configLine.startsWith("nameNodeIP")) {
+                this.nameNodeIP = configLine.split(" ")[1];
+            }
+        }
     }
 
     public synchronized int getAndIncrementJobID() {
@@ -133,6 +161,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         private String inputFile = "";
         private String outputFile = "";
         private int numberOfReducers = 0;
+        private String rendezvousIdentifier = "";
 
         private int JID = 0;
 
@@ -160,7 +189,53 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
         public void run() {
             try { Thread.sleep(10000); } catch (Exception e){}
+            this.open(this.inputFile, true);
+            this.close();
             this.parentJT.removeJobRunnerFromJRList(this.JID);
+        }
+
+        public boolean open(String fileName, boolean forRead) {
+            OpenFileRequest.Builder openFileRequestBuilder = OpenFileRequest.newBuilder();
+            openFileRequestBuilder.setFileName(fileName);
+            openFileRequestBuilder.setForRead(forRead);
+            OpenFileResponse openFileResponse = null;
+
+            byte[] requestEncoded = openFileRequestBuilder.build().toByteArray();
+            byte[] responseEncoded = null;
+
+            try {
+                NameNodeInterface nameNode = (NameNodeInterface) Naming.lookup("//" +
+                        this.parentJT.nameNodeIP + "/HDFSNameNode"); // This name node request location is hard coded.
+                responseEncoded = nameNode.openFile(requestEncoded);
+
+            } catch (Exception e) {
+                System.out.println("Connecting to HDFS for open file problem?? " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            try {
+                openFileResponse = OpenFileResponse.parseFrom(responseEncoded);
+            } catch (Exception e) {
+                System.out.println("Problem parsing open response?? " + e.getMessage());
+                e.printStackTrace();
+            }
+            System.out.println("Open file reponse rendezvous: " + openFileResponse.getRendezvousIndentifier());
+            this.rendezvousIdentifier = openFileResponse.getRendezvousIndentifier();
+
+            return true;
+        }
+
+        public boolean close() {
+            try {
+                RendezvousRunnableInterface rendezvous = (RendezvousRunnableInterface) Naming.lookup("//" +
+                        this.parentJT.nameNodeIP + "/" + this.rendezvousIdentifier);
+                rendezvous.closeFile();
+
+            } catch (Exception e) {
+                System.out.println("Connecting to HDFS for close file problem?? " + e.getMessage());
+                e.printStackTrace();
+            }
+            return true;
         }
     }
 }

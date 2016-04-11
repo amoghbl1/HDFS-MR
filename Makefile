@@ -16,7 +16,7 @@ client: protobuf
 	@echo "Client compiled..."
 
 jobtracker: protobuf
-	cd Jobtracker && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/JobTracker.java source/JobTrackerInterface.java
+	cd Jobtracker && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/JobTracker.java source/JobTrackerInterface.java source/NameNodeInterface.java source/RendezvousRunnableInterface.java
 	@echo "Job Tracker compiled..."
 
 tasktracker: protobuf
