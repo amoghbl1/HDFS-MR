@@ -89,6 +89,8 @@ public class Client {
         System.out.println("Open file reponse rendezvous: " + openFileResponse.getRendezvousIndentifier());
         this.rendezvousIdentifier = openFileResponse.getRendezvousIndentifier();
 
+        try { Thread.sleep(1000); } catch (Exception e) {}// Prevent talking to rendezvous before it binds
+
         return true;
     }
 

@@ -1,3 +1,7 @@
+import com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping;
+import com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappings;
+import com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest;
+import com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse;
 import com.distributed.systems.HDFSProtos.OpenFileRequest;
 import com.distributed.systems.HDFSProtos.OpenFileResponse;
 import com.distributed.systems.MRProtos.HeartBeatRequest;
@@ -11,6 +15,7 @@ import java.io.FileReader;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class JobTracker extends UnicastRemoteObject implements JobTrackerInterface {
@@ -175,7 +180,6 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
             this.inputFile = input;
             this.outputFile = output;
             this.numberOfReducers = numberReducers;
-
             this.JID = this.parentJT.getAndIncrementJobID();
         }
 
@@ -188,10 +192,70 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         public void run() {
-            try { Thread.sleep(10000); } catch (Exception e){}
             this.open(this.inputFile, true);
+            try { Thread.sleep(1000); } catch (Exception e){} // Waiting for NN to spawn the rendezvousThread
+            NameNodeBlockDataNodeMappingsResponse mappings = this.getBlocks(this.inputFile);
+            // Block:IPs obtained as above protobuf object
+            // Using the hash map to now store blocks that it needs to process in map phase
+            // Trying to fins the most even distribution for optimization
+            HashMap<String, Integer> ipMapTaskCount = new HashMap<String, Integer>();
+            for(int i=0; i < mappings.getMappingsCount(); i++) {
+                int blockNumber  = mappings.getMappings(i).getBlockNumber();
+                int IPsLength = mappings.getMappings(i).getDataNodeIPsCount();
+                String IPToQueueTo = "";
+                int mapTasksMin = -1;
+                // Parse all IPs that have the block, get the one with the least map tasks and queue the job there.
+                for(int j=0; j < IPsLength; j++) {
+                    String thisIP = mappings.getMappings(i).getDataNodeIPs(j);
+                    if(ipMapTaskCount.containsKey(thisIP)) {
+                        int mapTasks = ipMapTaskCount.get(thisIP);
+                        if(mapTasksMin == -1 || mapTasks < mapTasksMin) {
+                            mapTasksMin = mapTasks;
+                            IPToQueueTo = thisIP;
+                        }
+                    }
+                    else {
+                        IPToQueueTo = thisIP;
+                        break;
+                    }
+                }
+                // Got the IP that needs to be queued, add entry into our mappings
+                if(ipMapTaskCount.containsKey(IPToQueueTo)) {
+                    int newCount = ipMapTaskCount.get(IPToQueueTo) + 1;
+                    ipMapTaskCount.put(IPToQueueTo, newCount);
+                }
+                else {
+                    ipMapTaskCount.put(IPToQueueTo, 1);
+                }
+                System.out.println("Queuing: " + IPToQueueTo +" with map task, on block number: " + blockNumber);
+            }
             this.close();
             this.parentJT.removeJobRunnerFromJRList(this.JID);
+        }
+
+        public NameNodeBlockDataNodeMappingsResponse getBlocks(String fileName) {
+            byte[] responseEncoded = null;
+            NameNodeBlockDataNodeMappingsResponse nameNodeBlockDataNodeMappingsResponse = null;
+            NameNodeBlockDataNodeMappingsRequest.Builder nameNodeBlockDataNodeMappingsRequest = NameNodeBlockDataNodeMappingsRequest.newBuilder();
+            nameNodeBlockDataNodeMappingsRequest.setFileName(fileName);
+            try {
+                RendezvousRunnableInterface rendezvous = (RendezvousRunnableInterface) Naming.lookup("//" +
+                        this.parentJT.nameNodeIP + "/" + this.rendezvousIdentifier);
+                responseEncoded = rendezvous.getNameNodeBlockDataNodeMappings(
+                        nameNodeBlockDataNodeMappingsRequest.build().toByteArray());
+
+            } catch (Exception e) {
+                System.out.println("Connecting to NN for get file problem?? " + e.getMessage());
+                e.printStackTrace();
+            }
+            try {
+                nameNodeBlockDataNodeMappingsResponse = NameNodeBlockDataNodeMappingsResponse.parseFrom(responseEncoded);
+                System.out.println("Got response " + nameNodeBlockDataNodeMappingsResponse.toString());
+            } catch (Exception e) {
+                System.out.println("Parsing get response problem?? " + e.getMessage());
+                e.printStackTrace();
+            }
+            return nameNodeBlockDataNodeMappingsResponse;
         }
 
         public boolean open(String fileName, boolean forRead) {
