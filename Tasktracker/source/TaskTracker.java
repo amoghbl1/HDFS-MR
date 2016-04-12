@@ -231,12 +231,6 @@ public class TaskTracker {
 					mapOutputFile = reduceTaskInfo.getMapOutputFiles(j);
 
 					System.out.println("Starting a reduce thread!! ");
-					System.out.println("With Values: ");
-					System.out.println("jobid: " + jobID 
-							+ "taskid: " + taskID 
-							+ "reducername: " + reducerName 
-							+ "mapOutputFile: " + mapOutputFile 
-							+ "outputFile: " + outputFile); 
 
 					Runnable r  = new ReduceThreadRunnable(jobID, //int
 									taskID, //int
