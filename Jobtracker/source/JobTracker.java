@@ -4,12 +4,17 @@ import com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest;
 import com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse;
 import com.distributed.systems.HDFSProtos.OpenFileRequest;
 import com.distributed.systems.HDFSProtos.OpenFileResponse;
+import com.distributed.systems.MRProtos.BlockLocations;
+import com.distributed.systems.MRProtos.DataNodeLocation;
 import com.distributed.systems.MRProtos.HeartBeatRequest;
 import com.distributed.systems.MRProtos.HeartBeatResponse;
 import com.distributed.systems.MRProtos.JobStatusRequest;
 import com.distributed.systems.MRProtos.JobStatusResponse;
 import com.distributed.systems.MRProtos.JobSubmitRequest;
 import com.distributed.systems.MRProtos.JobSubmitResponse;
+import com.distributed.systems.MRProtos.MapTaskInfo;
+import com.distributed.systems.MRProtos.MapTaskStatus;                                                                                            import com.distributed.systems.MRProtos.ReducerTaskInfo;
+import com.distributed.systems.MRProtos.ReduceTaskStatus;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.rmi.Naming;
@@ -134,15 +139,95 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
     /* HeartBeatResponse heartBeat(HeartBeatRequest) */
     public byte[] heartBeat(byte[] encodedRequest) throws RemoteException {
         System.out.println("Received heart beat!!");
+	HeartBeatResponse.Builder heartBeatResponseBuilder = HeartBeatResponse.newBuilder();
         HeartBeatRequest heartBeatRequest = null;
         try {
             heartBeatRequest = HeartBeatRequest.parseFrom(encodedRequest);
             System.out.println(heartBeatRequest.toString());
+
+	    //parsing the heart beat request
+	    int taskTrackerID;
+	    int numMapSlotsFree; 
+	    int numReduceSlotsFree; 
+	    String taskTrackerIP;
+	    taskTrackerID = heartBeatRequest.getTaskTrackerId();
+	    taskTrackerIP = heartBeatRequest.getTaskTrackerIp();
+	    numMapSlotsFree = heartBeatRequest.getNumMapSlotsFree();
+	    numReduceSlotsFree = heartBeatRequest.getNumReduceSlotsFree();
+
+	    try {
+		//creating the heart beat response
+		heartBeatResponseBuilder.setStatus(1);
+		if(false) {//currently using for map
+		    int jobID;
+		    int taskID;
+		    String mapperName;
+		    int blockNumber;
+		    String ip;
+		    int port;
+
+		    //Building up the protobuf object
+		    for(int j = 1; j < 3; j++) {//creating two map task info as a part of testing
+			MapTaskInfo.Builder mapTaskInfoBuilder = MapTaskInfo.newBuilder();
+			jobID = j;
+			taskID = j;
+			mapperName = "testMapper" + j;
+			mapTaskInfoBuilder.setJobId(jobID);
+			mapTaskInfoBuilder.setTaskId(taskID);
+			mapTaskInfoBuilder.setMapperName(mapperName);
+
+			BlockLocations.Builder blockLocationBuilder = BlockLocations.newBuilder();
+			blockNumber = j;
+			blockLocationBuilder.setBlockNumber(blockNumber);
+
+			for(int i = 1; i < 3; i++) {//sending two datanode as a part of testing
+			    DataNodeLocation.Builder dataNodeLocationBuilder = DataNodeLocation.newBuilder();
+			    ip = i + "." + "." + "." + i;
+			    port = i + 10;
+			    dataNodeLocationBuilder.setPort(port);
+			    dataNodeLocationBuilder.setIp(ip);
+			    blockLocationBuilder.addLocations(dataNodeLocationBuilder);
+			}
+
+			mapTaskInfoBuilder.setInputBlock(blockLocationBuilder);
+			heartBeatResponseBuilder.addMapTasks(mapTaskInfoBuilder);
+		    }
+		}
+		else if(true) { //currently using for reduce
+		    int jobID;
+		    int taskID;
+		    String reducerName;
+		    String outputFile;
+
+		    //Building up the protobuf object
+		    for(int j = 1; j < 3; j++) {//creating two map task info as a part of testing
+			ReducerTaskInfo.Builder reducerTaskInfoBuilder = ReducerTaskInfo.newBuilder();
+			jobID = j;
+			taskID = j;
+			reducerName = "testReducer" + j;
+			outputFile = "op" + j;
+			reducerTaskInfoBuilder.setJobId(jobID);
+			reducerTaskInfoBuilder.setTaskId(taskID);
+			reducerTaskInfoBuilder.setReducerName(reducerName);
+			reducerTaskInfoBuilder.setOutputFile(outputFile);
+
+			for(int i = 1; i < 3; i++) {//sending two datanode as a part of testing
+			    reducerTaskInfoBuilder.addMapOutputFiles("map_out_" + i);
+			}
+
+			heartBeatResponseBuilder.addReduceTasks(reducerTaskInfoBuilder);
+		    }
+		}
+	    } catch (Exception e) {
+		System.out.println("Problem creating heart beat response?? " + e.getMessage());
+		e.printStackTrace();
+	    }
+
         } catch (Exception e) {
-            System.out.println("Problem parsing heart beat request??" + e.getMessage());
+            System.out.println("Problem parsing heart beat request?? " + e.getMessage());
             e.printStackTrace();
         }
-        return null;
+	return heartBeatResponseBuilder.build().toByteArray();
     }
 
     public static void main(String[] args) {

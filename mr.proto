@@ -46,8 +46,9 @@ message HeartBeatRequest {
   optional int32 taskTrackerId = 1;
   optional int32 numMapSlotsFree = 2;
   optional int32 numReduceSlotsFree = 3;
-  repeated MapTaskStatus mapStatus = 4;
-  repeated ReduceTaskStatus reduceStatus = 5;
+  optional string taskTrackerIp =4;
+  repeated MapTaskStatus mapStatus = 5;
+  repeated ReduceTaskStatus reduceStatus = 6;
 }
 
 message DataNodeLocation {
