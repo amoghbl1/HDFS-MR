@@ -168,7 +168,7 @@ public class TaskTracker {
 			heartBeatResponse = HeartBeatResponse.parseFrom(responseEncoded);
 
 			if(heartBeatResponse.getStatus() != 0) {
-			    //System.out.println(heartBeatResponse.toString());
+			    //Testing - System.out.println(heartBeatResponse.toString());
 			    if(heartBeatResponse.getMapTasksList().size() != 0) {
 			        System.out.println("Map Task(s) Received");
 
