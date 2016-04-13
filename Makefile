@@ -4,23 +4,23 @@ compile: clean protobuf namenode datanode client jobtracker tasktracker
 	@echo "Start rmiregistry and run the code now!"
 
 namenode: protobuf
-	cd Namenode && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/NameNodeInterface.java source/NameNode.java source/RendezvousRunnableInterface.java source/DataNodeInterface.java
+	cd Namenode && mkdir -p bin && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/NameNodeInterface.java source/NameNode.java source/RendezvousRunnableInterface.java source/DataNodeInterface.java
 	@echo "Name Node compiled..."
 
 datanode: protobuf
-	cd Datanode && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/DataNodeInterface.java source/NameNodeInterface.java source/DataNode.java
+	cd Datanode && mkdir -p bin && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/DataNodeInterface.java source/NameNodeInterface.java source/DataNode.java
 	@echo "Data Node compiled..."
 
 client: protobuf
-	cd Client && javac -d bin -cp .:../protobuf-java-2.6.1.jar: source/Client.java source/NameNodeInterface.java source/DataNodeInterface.java source/RendezvousRunnableInterface.java source/JobTrackerInterface.java
+	cd Client && mkdir -p bin && javac -d bin -cp .:../protobuf-java-2.6.1.jar: source/Client.java source/NameNodeInterface.java source/DataNodeInterface.java source/RendezvousRunnableInterface.java source/JobTrackerInterface.java
 	@echo "Client compiled..."
 
 jobtracker: protobuf
-	cd Jobtracker && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/JobTracker.java source/JobTrackerInterface.java source/NameNodeInterface.java source/RendezvousRunnableInterface.java
+	cd Jobtracker && mkdir -p bin && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/JobTracker.java source/JobTrackerInterface.java source/NameNodeInterface.java source/RendezvousRunnableInterface.java
 	@echo "Job Tracker compiled..."
 
 tasktracker: protobuf
-	cd Tasktracker && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java
+	cd Tasktracker && mkdir -p bin && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java
 	@echo "Task Tracker Compiled..."
 
 clean:
