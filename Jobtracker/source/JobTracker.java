@@ -222,16 +222,18 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 		    mapperName = taskData.mapper;
 
 		    //Building up the protobuf object
-		    for(int j = 1; j < 3; j++) {//creating two map task info as a part of testing
-			MapTaskInfo.Builder mapTaskInfoBuilder = MapTaskInfo.newBuilder();
-			mapTaskInfoBuilder.setJobId(jobID);
-			mapTaskInfoBuilder.setTaskId(taskID);
-			mapTaskInfoBuilder.setMapperName(mapperName);
-			mapTaskInfoBuilder.setBlockNumber(blockNumber);
-			mapTaskInfoBuilder.setIp(ip);
+		    MapTaskInfo.Builder mapTaskInfoBuilder = MapTaskInfo.newBuilder();
+		    mapTaskInfoBuilder.setJobId(jobID);
+		    mapTaskInfoBuilder.setTaskId(taskID);
+		    mapTaskInfoBuilder.setMapperName(mapperName);
+		    mapTaskInfoBuilder.setBlockNumber(blockNumber);
+		    mapTaskInfoBuilder.setIp(ip);
 
-			heartBeatResponseBuilder.addMapTasks(mapTaskInfoBuilder);
-		    }
+		    heartBeatResponseBuilder.addMapTasks(mapTaskInfoBuilder);
+
+		    //move task from toProcess to processing queue
+		    rmFromToProcess(ip);
+		    addToProcessing(ip, taskData);
 		}
 		else if(true) { //currently using for reduce
 		    int jobID;
