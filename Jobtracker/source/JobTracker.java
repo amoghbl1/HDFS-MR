@@ -158,7 +158,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 	    try {
 		//creating the heart beat response
 		heartBeatResponseBuilder.setStatus(1);
-		if(false) {//currently using for map
+		if(true) {//currently using for map
 		    int jobID;
 		    int taskID;
 		    String mapperName;

@@ -17,6 +17,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TaskTracker {
 
@@ -189,25 +190,27 @@ public class TaskTracker {
 				    mapperName = mapTask.getMapperName();
 				    inputBlock = mapTask.getInputBlock();
 				    blockNumber = inputBlock.getBlockNumber();
+				    Map<String, Integer> ipPort = new HashMap<String, Integer>();
+
 				    for(int j = 0; j < inputBlock.getLocationsList().size(); j++) {
 					location = inputBlock.getLocations(j);
 					ip = location.getIp();
 					port = location.getPort();
-
-					System.out.println("Starting a map thread!! ");
-
-					Runnable r  = new MapThreadRunnable(jobID, //int
-									taskID, //int
-									mapperName, //String
-									blockNumber, //int
-									ip, //String
-									port);//int
-					Thread th = new Thread(r);
-					th.start();
-					parentTT.addToHashMap(taskID, th, 1);
-					//decrease the num of free map slots
-					parentTT.myNumMapSlotsFree--;
+					ipPort.put(ip, port);
 				    }
+
+
+				    System.out.println("Starting a map thread!! ");
+				    Runnable r  = new MapThreadRunnable(jobID, //int
+					    taskID, //int
+					    mapperName, //String
+					    blockNumber, //int
+					    ipPort); //map<String, Integer>
+				    Thread th = new Thread(r);
+				    th.start();
+				    parentTT.addToHashMap(taskID, th, 1);
+				    //decrease the num of free map slots
+				    parentTT.myNumMapSlotsFree--;
 				}
 			    }
 
@@ -281,26 +284,24 @@ public class TaskTracker {
             e.printStackTrace();
 	}
 	new HeartBeatThread(me).start();
-	System.out.println("Hear Beat Thread Started.");
+	System.out.println("Heart Beat Thread Started.");
     }
 
     public static class MapThreadRunnable implements Runnable {
         
 	int jobID;
 	int taskID;
-	int port;
 	int blockNumber;
 	String mapperName;
-	String ip;
+	Map<String, Integer> ipPort = new HashMap<String, Integer>();
 
         public MapThreadRunnable(int jobId, int taskId, String mapperNam, 
-                int blockNo, String ipAddr, int portNo) throws RemoteException{
+                int blockNo, Map<String, Integer> ip_port) throws RemoteException{
             this.jobID = jobId;
             this.taskID = taskId;
             this.mapperName = mapperNam;
             this.blockNumber = blockNo;
-            this.ip = ipAddr;
-            this.port = portNo;
+            this.ipPort = ip_port;
         }
         public void run() {
 		System.out.println("Map Thread Runnable printing hello... ");
