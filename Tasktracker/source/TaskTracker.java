@@ -1,5 +1,5 @@
-import com.distributed.systems.MRProtos.BlockLocations;
-import com.distributed.systems.MRProtos.DataNodeLocation;
+import com.distributed.systems.HDFSProtos.ReadBlockRequest;
+import com.distributed.systems.HDFSProtos.ReadBlockResponse;
 import com.distributed.systems.MRProtos.HeartBeatRequest;
 import com.distributed.systems.MRProtos.HeartBeatResponse;
 import com.distributed.systems.MRProtos.MapTaskInfo;
@@ -169,43 +169,31 @@ public class TaskTracker {
 			heartBeatResponse = HeartBeatResponse.parseFrom(responseEncoded);
 
 			if(heartBeatResponse.getStatus() != 0) {
-			    //Testing - System.out.println(heartBeatResponse.toString());
+			    System.out.println(heartBeatResponse.toString());
 			    if(heartBeatResponse.getMapTasksList().size() != 0) {
 			        System.out.println("Map Task(s) Received");
 
 				int jobID;
 			        int taskID;
-			        int port;
 			        int blockNumber;
 				String mapperName;
 				String ip;
 				MapTaskInfo mapTask;
-				BlockLocations inputBlock;
-				DataNodeLocation location;
 
 			        for(int i = 0; i < heartBeatResponse.getMapTasksList().size(); i++) {
 				    mapTask = heartBeatResponse.getMapTasks(i);
 				    jobID = mapTask.getJobId();
 				    taskID = mapTask.getTaskId();
 				    mapperName = mapTask.getMapperName();
-				    inputBlock = mapTask.getInputBlock();
-				    blockNumber = inputBlock.getBlockNumber();
-				    Map<String, Integer> ipPort = new HashMap<String, Integer>();
-
-				    for(int j = 0; j < inputBlock.getLocationsList().size(); j++) {
-					location = inputBlock.getLocations(j);
-					ip = location.getIp();
-					port = location.getPort();
-					ipPort.put(ip, port);
-				    }
-
+				    blockNumber = mapTask.getBlockNumber();
+				    ip = mapTask.getIp();
 
 				    System.out.println("Starting a map thread!! ");
 				    Runnable r  = new MapThreadRunnable(jobID, //int
 					    taskID, //int
 					    mapperName, //String
 					    blockNumber, //int
-					    ipPort); //map<String, Integer>
+					    ip); //String
 				    Thread th = new Thread(r);
 				    th.start();
 				    parentTT.addToHashMap(taskID, th, 1);
@@ -293,15 +281,15 @@ public class TaskTracker {
 	int taskID;
 	int blockNumber;
 	String mapperName;
-	Map<String, Integer> ipPort = new HashMap<String, Integer>();
+	String ip;
 
         public MapThreadRunnable(int jobId, int taskId, String mapperNam, 
-                int blockNo, Map<String, Integer> ip_port) throws RemoteException{
+                int blockNo, String Ip) throws RemoteException{
             this.jobID = jobId;
             this.taskID = taskId;
             this.mapperName = mapperNam;
             this.blockNumber = blockNo;
-            this.ipPort = ip_port;
+            this.ip = Ip;
         }
         public void run() {
 		System.out.println("Map Thread Runnable printing hello... ");

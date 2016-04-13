@@ -51,21 +51,12 @@ message HeartBeatRequest {
   repeated ReduceTaskStatus reduceStatus = 6;
 }
 
-message DataNodeLocation {
-  optional string ip = 1 ;
-  optional int32 port = 2;
-}
-
-message BlockLocations {
-  optional int32 blockNumber = 1;
-  repeated DataNodeLocation locations = 2;
-}
-
 message MapTaskInfo {
   optional int32 jobId = 1;
   optional int32 taskId = 2;
   optional string mapperName = 3;
-  optional BlockLocations inputBlock = 4;
+  optional int32 blockNumber = 4;
+  optional string ip = 5; 
 }
 
 message ReducerTaskInfo {
