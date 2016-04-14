@@ -63,7 +63,7 @@ message ReducerTaskInfo {
   optional int32 jobId = 1;
   optional int32 taskId = 2;
   optional string reducerName = 3;
-  repeated string mapOutputFiles = 4;
+  optional string mapOutputFile = 4;
   optional string outputFile = 5;
 }
 

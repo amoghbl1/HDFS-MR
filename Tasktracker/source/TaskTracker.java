@@ -17,6 +17,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class TaskTracker {
@@ -34,49 +35,17 @@ public class TaskTracker {
     private static int myID;
     private static MapTaskStatus myMapTaskStatus;
     private static ReduceTaskStatus myReduceTaskStatus;
-    private static HashMap<Integer, Thread> mapHashMap = new HashMap<Integer, Thread>();
-    private static HashMap<Integer, Thread> reduceHashMap = new HashMap<Integer, Thread>();
-
-    public void addToHashMap(int taskID, Thread thread, int type) {
-	if(type == 1) {//map task
-	    mapHashMap.put(taskID, thread);
-	}
-	else if(type == 2) {//reduce task
-	    reduceHashMap.put(taskID, thread);
-	}
-    }
-
-    public void removeFromHashMap(int taskID, int type) {
-	if(type == 1) {//map task
-	    mapHashMap.remove(taskID);
-	}
-	else if(type == 2) {//reduce task
-	    reduceHashMap.remove(taskID);
-	}
-    }
-
-    public Thread getFromHashMap(int taskID, int type) {
-	if(type == 1) {//map task
-	   if(mapHashMap.containsKey(taskID)) {
-	       return  mapHashMap.get(taskID);
-	   }
-	   else {
-	       return null;
-	   }
-	}
-	//else it is a reduce task
-	if(!reduceHashMap.containsKey(taskID)) {
-            return  reduceHashMap.get(taskID);
-	}
-	return null;
-    }
+    public static HashMap<Integer, MapThreadRunnable> processingMapQueue = new HashMap<Integer, MapThreadRunnable>();
+    public static HashMap<Integer, ReduceThreadRunnable> processingReduceQueue = new HashMap<Integer, ReduceThreadRunnable>();
+    public static HashMap<Integer, MapThreadRunnable> completeMapQueue = new HashMap<Integer, MapThreadRunnable>();
+    public static HashMap<Integer, ReduceThreadRunnable> completeReduceQueue = new HashMap<Integer, ReduceThreadRunnable>();
 
     public MapTaskStatus getMapTaskStatus() {
-    	return this.myMapTaskStatus;
+        return this.myMapTaskStatus;
     }
 
     public ReduceTaskStatus getReduceTaskStatus() {
-    	return this.myReduceTaskStatus;
+        return this.myReduceTaskStatus;
     }
 
     public String getJobTrackerIP() {
@@ -91,18 +60,18 @@ public class TaskTracker {
     }
 
     public int getNumMapSlotsFree() {
-    	return this.myNumMapSlotsFree;
+        return this.myNumMapSlotsFree;
     }
 
     public int getNumReduceSlotsFree() {
-    	return this.myNumReduceSlotsFree;
+        return this.myNumReduceSlotsFree;
     }
 
     public TaskTracker(String conf) throws RemoteException{
-	this.myNumMapSlotsFree = 1;//change
-	this.myNumReduceSlotsFree = 1;//change
-	//this.myMapTaskStatus = getMapStatus();
-	//this.myReduceTaskStatus = getReduceStatus();
+        this.myNumMapSlotsFree = 1;//change
+        this.myNumReduceSlotsFree = 1;//change
+        //this.myMapTaskStatus = getMapStatus();
+        //this.myReduceTaskStatus = getReduceStatus();
         this.configFile = conf;
 
         BufferedReader fileReader = null;
@@ -146,7 +115,7 @@ public class TaskTracker {
 
         public void run() {
             byte[] responseEncoded = null;
-	    HeartBeatResponse heartBeatResponse = null;
+            HeartBeatResponse heartBeatResponse = null;
             while(true) {
                 try {
                     String jobTrackerIP = parentTT.getJobTrackerIP();
@@ -155,104 +124,129 @@ public class TaskTracker {
                     heartBeatRequestBuilder.setTaskTrackerIp(parentTT.getMyIP());
                     heartBeatRequestBuilder.setNumMapSlotsFree(parentTT.getNumMapSlotsFree());
                     heartBeatRequestBuilder.setNumReduceSlotsFree(parentTT.getNumReduceSlotsFree());
-                    //heartBeatRequestBuilder.setMapStatus(parentTT.getMyIndex(), parentTT.getMapTaskStatus());
-                    //heartBeatRequestBuilder.setReduceStatus(parentTT.getMyIndex(), parentTT.getReduceTaskStatus());
+
+                    Iterator<Map.Entry<Integer, MapThreadRunnable>> completeMapTaskIterator
+                        = parentTT.completeMapQueue.entrySet().iterator();
+                    MapThreadRunnable mapTh;
+                    while(completeMapTaskIterator.hasNext()) {
+                        MapTaskStatus.Builder mapTaskStatusBuilder = MapTaskStatus.newBuilder();
+                        Map.Entry<Integer, MapThreadRunnable> compMapQueueEntry = completeMapTaskIterator.next();
+                        mapTh = compMapQueueEntry.getValue();
+                        mapTaskStatusBuilder.setJobId(mapTh.jobID);
+                        mapTaskStatusBuilder.setTaskId(mapTh.taskID);
+                        mapTaskStatusBuilder.setTaskCompleted(true);
+                        mapTaskStatusBuilder.setMapOutputFile(mapTh.mapOutputFile);
+                        heartBeatRequestBuilder.addMapStatus(mapTaskStatusBuilder);
+                    }
+
+                    Iterator<Map.Entry<Integer, ReduceThreadRunnable>> completeReduceTaskIterator 
+                        = parentTT.completeReduceQueue.entrySet().iterator();
+                    ReduceThreadRunnable reduceTh;
+                    while(completeReduceTaskIterator.hasNext()) {
+                        ReduceTaskStatus.Builder reduceTaskStatusBuilder = ReduceTaskStatus.newBuilder();
+                        Map.Entry<Integer, ReduceThreadRunnable> compReduceQueueEntry = completeReduceTaskIterator.next();
+                        reduceTh = compReduceQueueEntry.getValue();
+                        reduceTaskStatusBuilder.setJobId(reduceTh.jobID);
+                        reduceTaskStatusBuilder.setTaskId(reduceTh.taskID);
+                        reduceTaskStatusBuilder.setTaskCompleted(true);
+                        heartBeatRequestBuilder.addReduceStatus(reduceTaskStatusBuilder);
+                    }
 
                     JobTrackerInterface jobtracker = (JobTrackerInterface) Naming.lookup("//" +
                             jobTrackerIP + "/HDFSMRJobTracker");
 
                     responseEncoded = jobtracker.heartBeat(
                             heartBeatRequestBuilder.build().toByteArray());
-		    try{
+                    try{
 
-			// Parse the Heart Beat Response and spawn a new thread with that data
-			heartBeatResponse = HeartBeatResponse.parseFrom(responseEncoded);
+                        // Parse the Heart Beat Response and spawn a new thread with that data
+                        heartBeatResponse = HeartBeatResponse.parseFrom(responseEncoded);
 
-			if(heartBeatResponse.getStatus() != 0) {
-			    System.out.println(heartBeatResponse.toString());
-			    if(heartBeatResponse.getMapTasksList().size() != 0) {
-			        System.out.println("Map Task(s) Received");
+                        if(heartBeatResponse.getStatus() != 0) {
+                            System.out.println(heartBeatResponse.toString());
+                            if(heartBeatResponse.getMapTasksList().size() != 0) {
+                                System.out.println("Map Task(s) Received");
 
-				int jobID;
-			        int taskID;
-			        int blockNumber;
-				String mapperName;
-				String ip;
-				MapTaskInfo mapTask;
+                                int jobID;
+                                int taskID;
+                                int blockNumber;
+                                String mapperName;
+                                String ip;
+                                MapTaskInfo mapTask;
 
-			        for(int i = 0; i < heartBeatResponse.getMapTasksList().size(); i++) {
-				    mapTask = heartBeatResponse.getMapTasks(i);
-				    jobID = mapTask.getJobId();
-				    taskID = mapTask.getTaskId();
-				    mapperName = mapTask.getMapperName();
-				    blockNumber = mapTask.getBlockNumber();
-				    ip = mapTask.getIp();
+                                for(int i = 0; i < heartBeatResponse.getMapTasksList().size(); i++) {
+                                    mapTask = heartBeatResponse.getMapTasks(i);
+                                    jobID = mapTask.getJobId();
+                                    taskID = mapTask.getTaskId();
+                                    mapperName = mapTask.getMapperName();
+                                    blockNumber = mapTask.getBlockNumber();
+                                    ip = mapTask.getIp();
 
-				    System.out.println("Starting a map thread!! ");
-				    Runnable r  = new MapThreadRunnable(jobID, //int
-					    taskID, //int
-					    mapperName, //String
-					    blockNumber, //int
-					    ip); //String
-				    Thread th = new Thread(r);
-				    th.start();
-				    parentTT.addToHashMap(taskID, th, 1);
-				    //decrease the num of free map slots
-				    parentTT.myNumMapSlotsFree--;
-				}
-			    }
+                                    System.out.println("Starting a map thread!! ");
+                                    MapThreadRunnable r  = new MapThreadRunnable(jobID, //int
+                                            taskID, //int
+                                            mapperName, //String
+                                            blockNumber, //int
+                                            ip, //String
+                                            parentTT); //Tasktracker
+                                    Thread th = new Thread(r);
+                                    th.start();
+                                    parentTT.processingMapQueue.put(taskID, r);
+                                    //decrease the num of free map slots
+                                    parentTT.myNumMapSlotsFree--;
+                                }
+                            }
 
-			    else if(heartBeatResponse.getReduceTasksList().size() != 0) {
-			        System.out.println("Reduce Task(s) Received");
+                            else if(heartBeatResponse.getReduceTasksList().size() != 0) {
+                                System.out.println("Reduce Task(s) Received");
 
-				int jobID;
-				int taskID;
-				String reducerName;
-			        String mapOutputFile;
-			        String outputFile;
-				ReducerTaskInfo reduceTaskInfo;
+                                int jobID;
+                                int taskID;
+                                String reducerName;
+                                String outputFile = "";
+                                String mapOutputFile = "";
+                                ReducerTaskInfo reduceTaskInfo;
 
-			        for(int i = 0; i < heartBeatResponse.getReduceTasksList().size(); i++) {
-				    reduceTaskInfo = heartBeatResponse.getReduceTasks(i);
-				    jobID = reduceTaskInfo.getJobId();
-				    taskID = reduceTaskInfo.getTaskId();
-				    reducerName = reduceTaskInfo.getReducerName();
-				    outputFile = reduceTaskInfo.getOutputFile();
-				    for(int j = 0; j < reduceTaskInfo.getMapOutputFilesList().size(); j++) {
-					mapOutputFile = reduceTaskInfo.getMapOutputFiles(j);
+                                for(int i = 0; i < heartBeatResponse.getReduceTasksList().size(); i++) {
+                                    reduceTaskInfo = heartBeatResponse.getReduceTasks(i);
+                                    jobID = reduceTaskInfo.getJobId();
+                                    taskID = reduceTaskInfo.getTaskId();
+                                    reducerName = reduceTaskInfo.getReducerName();
+                                    outputFile = reduceTaskInfo.getOutputFile();
+                                    mapOutputFile = reduceTaskInfo.getMapOutputFile();
 
-					System.out.println("Starting a reduce thread!! ");
+                                    System.out.println("Starting a reduce thread!! ");
 
-					Runnable r  = new ReduceThreadRunnable(jobID, //int
-									taskID, //int
-									reducerName, //String
-									mapOutputFile, //String
-									outputFile); //String
-					Thread th = new Thread(r);
-					th.start();
-					parentTT.addToHashMap(taskID, th, 2);
-					//decrease the num of free reduce slots
-					parentTT.myNumReduceSlotsFree--;
-				    }
-				}
-				    }
-			    else {
-			        System.out.println("No Task Received");
-			    }
-			}
-			else {
-			    System.out.println("Heart Beat Response Status found to be zero for unknown reasons");
-			}
-		    } catch (Exception err) {
-			System.out.println("Parsing get Response Problem?? " + err.getMessage());
-			err.printStackTrace();
-		    }
+                                    ReduceThreadRunnable r  = new ReduceThreadRunnable(jobID, //int
+                                            taskID, //int
+                                            reducerName, //String
+                                            mapOutputFile, //String
+                                            outputFile, //String
+                                            parentTT); //Tasktracker
+                                    Thread th = new Thread(r);
+                                    th.start();
+                                    parentTT.processingReduceQueue.put(taskID, r);
+                                    //decrease the num of free reduce slots
+                                    parentTT.myNumReduceSlotsFree--;
+                                }
+                            }
+                            else {
+                                System.out.println("No Task Received");
+                            }
+                        }
+                        else {
+                            System.out.println("Heart Beat Response Status found to be zero for unknown reasons");
+                        }
+                    } catch (Exception err) {
+                        System.out.println("Parsing get Response Problem?? " + err.getMessage());
+                        err.printStackTrace();
+                    }
 
                 } catch (Exception e) {
                     System.out.println("Problem heart beating?? " + e.getMessage());
                     e.printStackTrace();
                 }
-            try {
+                try {
                     Thread.sleep(HEART_BEAT_TIME);
                 } catch (Exception e) {
                     System.out.println("Thread Interrupted?? " + e.getMessage());
@@ -264,57 +258,102 @@ public class TaskTracker {
     }
 
     public static void main(String[] args) {
-    	TaskTracker me = null;
-	try {
-	    me = new TaskTracker(configFile);
-	} catch (Exception e) {
+        TaskTracker me = null;
+        try {
+            me = new TaskTracker(configFile);
+        } catch (Exception e) {
             System.out.println("Some Error: " + e.getMessage());
             e.printStackTrace();
-	}
-	new HeartBeatThread(me).start();
-	System.out.println("Heart Beat Thread Started.");
+        }
+        new HeartBeatThread(me).start();
+        System.out.println("Heart Beat Thread Started.");
     }
 
     public static class MapThreadRunnable implements Runnable {
-        
-	int jobID;
-	int taskID;
-	int blockNumber;
-	String mapperName;
-	String ip;
+
+        int jobID;
+        int taskID;
+        int blockNumber;
+        String mapperName;
+        String ip;
+        TaskTracker parentTT;
+        int type;
+        String mapOutputFile;
 
         public MapThreadRunnable(int jobId, int taskId, String mapperNam, 
-                int blockNo, String Ip) throws RemoteException{
+                int blockNo, String Ip, TaskTracker TT) throws RemoteException{
             this.jobID = jobId;
             this.taskID = taskId;
             this.mapperName = mapperNam;
             this.blockNumber = blockNo;
             this.ip = Ip;
+            this.parentTT = TT;
+            this.type = 1;
+            this.mapOutputFile = "job_" + jobId + "_map_" + taskId;
         }
         public void run() {
-		System.out.println("Map Thread Runnable printing hello... ");
-	}
+            //put to sleep for 2 seconds for testing purpose
+            try { Thread.sleep(2000); } catch (Exception e) {
+                System.out.println("Problem in trying to sleep thread?? " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            MapThreadRunnable r;
+            if((r = this.parentTT.processingMapQueue.get(this.taskID)) != null) {
+                System.out.println("Can not fetch non-existent key from processing map.");
+            }
+            if(this.parentTT.processingMapQueue.remove(this.taskID) != null) {
+                System.out.println("Can not remove non-existent key from processing map.");
+            }
+            if(this.parentTT.completeMapQueue.put(this.taskID, r) != null) {
+                System.out.println("Problem adding entry to complete map?? ");
+            }
+            System.out.println("Map Thread completed task with tid: " + this.taskID + " and thread properties " + r.toString());
+        }
     }
 
     public static class ReduceThreadRunnable implements Runnable {
         
-	int jobID;
-	int taskID;
-	String reducerName;
-	String mapOutputFile;
-	String outputFile;
+        int jobID;
+        int taskID;
+        String reducerName;
+        String mapOutputFile;
+        String outputFile;
+        TaskTracker parentTT;
+        int type;
+        String reduceOutputFile;
 
         public ReduceThreadRunnable(int jobId, int taskId, String reducerNam, 
-                String mapOpFile, String opFile) throws RemoteException{
+                String mapOpFile, String opFile, TaskTracker TT) throws RemoteException{
             this.jobID = jobId;
             this.taskID = taskId;
             this.reducerName = reducerNam;
             this.mapOutputFile = mapOpFile;
             this.outputFile = opFile;
+            this.parentTT = TT;
+            this.type = 2;
+            this.reduceOutputFile = opFile + "_ " + jobId + "_" + taskId;
         }
         public void run() {
-		System.out.println("Reduce Thread Runnable printing hello... ");
-	}
+            //put to sleep for 2 seconds for testing purpose
+            try { Thread.sleep(2000); } catch (Exception e) {
+                System.out.println("Problem in trying to sleep thread?? " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            ReduceThreadRunnable r;
+            if((r = this.parentTT.processingReduceQueue.get(this.taskID)) != null) {
+                System.out.println("Can not fetch non-existent key from processing reduce.");
+            }
+            if(this.parentTT.processingReduceQueue.remove(this.taskID) != null) {
+                System.out.println("Can not remove non-existent key from processing reduce.");
+            }
+            if(this.parentTT.completeReduceQueue.put(this.taskID, r) != null) {
+                System.out.println("Problem adding entry to complete reduce?? ");
+            }
+
+            System.out.println("Reduce Thread completed task with tid: " + this.taskID + " and thread properties " + r.toString());
+        }
     }
 
 }

@@ -11,7 +11,8 @@ import com.distributed.systems.MRProtos.JobStatusResponse;
 import com.distributed.systems.MRProtos.JobSubmitRequest;
 import com.distributed.systems.MRProtos.JobSubmitResponse;
 import com.distributed.systems.MRProtos.MapTaskInfo;
-import com.distributed.systems.MRProtos.MapTaskStatus;                                                                                            import com.distributed.systems.MRProtos.ReducerTaskInfo;
+import com.distributed.systems.MRProtos.MapTaskStatus;
+import com.distributed.systems.MRProtos.ReducerTaskInfo;
 import com.distributed.systems.MRProtos.ReduceTaskStatus;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -30,13 +31,19 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
     private static int currentJobID = 0;
 
-    private static HashMap<Integer, JobRunnerThread> currentJobThreads = new HashMap<Integer, JobRunnerThread>();
+    public static HashMap<Integer, JobRunnerThread> currentJobThreads = new HashMap<Integer, JobRunnerThread>();
 
-    private static HashMap<String, TaskData> toProcessQueue = new HashMap<String, TaskData>();
+    public static HashMap<String, ArrayList<TaskData>> toProcessMapQueue = new HashMap<String, ArrayList<TaskData>>();
 
-    private static HashMap<String, TaskData> processingQueue = new HashMap<String, TaskData>();
+    public static HashMap<String, ArrayList<TaskData>> processingMapQueue = new HashMap<String, ArrayList<TaskData>>();
 
-    private static HashMap<String, TaskData> completeQueue = new HashMap<String, TaskData>();
+    public static HashMap<String, ArrayList<TaskData>> completeMapQueue = new HashMap<String, ArrayList<TaskData>>();
+
+    public static HashMap<String, ArrayList<TaskData>> toProcessReduceQueue = new HashMap<String, ArrayList<TaskData>>();
+
+    public static HashMap<String, ArrayList<TaskData>> processingReduceQueue = new HashMap<String, ArrayList<TaskData>>();
+
+    public static HashMap<String, ArrayList<TaskData>> completeReduceQueue = new HashMap<String, ArrayList<TaskData>>();
 
 
     private final Object CJTLock = new Object();
@@ -67,49 +74,187 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
     }
 
-    public void addToProcess(String Ip, TaskData taskData) {
-	toProcessQueue.put(Ip, taskData);
+    public void addToProcessQueue(String Ip, TaskData taskData, int type) {
+        HashMap<String, ArrayList<TaskData>> toProcessQueue;
+        if(type == 1) {
+            toProcessQueue = this.toProcessMapQueue;
+        }
+        else {
+            toProcessQueue = this.toProcessReduceQueue;
+        }
+
+        if(toProcessQueue.containsKey(Ip)) {
+            toProcessQueue.get(Ip).add(taskData);
+        }
+        else {
+            ArrayList<TaskData> td = new ArrayList<TaskData>();
+            td.add(taskData);
+            toProcessQueue.put(Ip, td);
+        }
     }
 
-    public void addToProcessing(String Ip, TaskData taskData) {
-	processingQueue.put(Ip, taskData);
+    public void addToProcessingQueue(String Ip, TaskData taskData, int type) {
+        HashMap<String, ArrayList<TaskData>> processingQueue;
+        if(type == 1) {
+            processingQueue = this.processingMapQueue;
+        }
+        else {
+            processingQueue = this.processingReduceQueue;
+        }
+
+        if(processingQueue.containsKey(Ip)) {
+            processingQueue.get(Ip).add(taskData);
+        }
+        else {
+            ArrayList<TaskData> td = new ArrayList<TaskData>();
+            td.add(taskData);
+            processingQueue.put(Ip, td);
+        }
     }
 
-    public void addToComplete(String Ip, TaskData taskData) {
-	completeQueue.put(Ip, taskData);
+    public void addToCompleteQueue(String Ip, TaskData taskData, int type) {
+        HashMap<String, ArrayList<TaskData>> completeQueue;
+        if(type == 1) {
+            completeQueue = this.completeMapQueue;
+        }
+        else {
+            completeQueue = this.completeReduceQueue;
+        }
+
+        if(completeQueue.containsKey(Ip)) {
+            completeQueue.get(Ip).add(taskData);
+        }
+        else {
+            ArrayList<TaskData> td = new ArrayList<TaskData>();
+            td.add(taskData);
+            completeQueue.put(Ip, td);
+        }
     }
 
-    public TaskData getFromToProcess(String Ip) {
-	if(toProcessQueue.containsKey(Ip)) {
-	    return toProcessQueue.get(Ip);
-	}
-	return null;
+    public TaskData getFromToProcessQueue(String Ip, int type) {
+        HashMap<String, ArrayList<TaskData>> toProcessQueue;
+        if(type == 1) {
+            toProcessQueue = this.toProcessMapQueue;
+        }
+        else {
+            toProcessQueue = this.toProcessReduceQueue;
+        }
+
+        if(toProcessQueue.containsKey(Ip)) {
+            return toProcessQueue.get(Ip).get(0);
+        }
+        return null;
     }
 
-    public TaskData getFromProcessing(String Ip) {
-	if(processingQueue.containsKey(Ip)) {
-	    return processingQueue.get(Ip);
-	}
-	return null;
+    public TaskData getFromProcessingQueue(String Ip, int type) {
+        HashMap<String, ArrayList<TaskData>> processingQueue;
+        if(type == 1) {
+            processingQueue = this.processingMapQueue;
+        }
+        else {
+            processingQueue = this.processingReduceQueue;
+        }
+
+        if(processingQueue.containsKey(Ip)) {
+            return processingQueue.get(Ip).get(0);
+        }
+        return null;
     }
 
-    public TaskData getFromComplete(String Ip) {
-	if(completeQueue.containsKey(Ip)) {
-	    return completeQueue.get(Ip);
-	}
-	return null;
+    public TaskData getFromCompleteQueue(String Ip, int type) {
+        HashMap<String, ArrayList<TaskData>> completeQueue;
+        if(type == 1) {
+            completeQueue = this.completeMapQueue;
+        }
+        else {
+            completeQueue = this.completeReduceQueue;
+        }
+
+        if(completeQueue.containsKey(Ip)) {
+            return completeQueue.get(Ip).get(0);
+        }
+        return null;
     }
 
-    public void rmFromToProcess(String Ip) {
-	toProcessQueue.remove(Ip);
+    public void rmFromToProcessQueue(String Ip, TaskData td, int type) {
+        HashMap<String, ArrayList<TaskData>> toProcessQueue;
+        if(type == 1) {
+            toProcessQueue = this.toProcessMapQueue;
+        }
+        else {
+            toProcessQueue = this.toProcessReduceQueue;
+        }
+
+        if(toProcessQueue.containsKey(Ip)) {
+            if(toProcessQueue.get(Ip).size() == 0) {
+                try { 
+                    toProcessQueue.remove(Ip); 
+                } catch (Exception e) { 
+                    System.out.println("Problem while removing Ip element from toProcessQueue with type = " + type + " " + e.getMessage());
+                }
+            }
+            else {
+                try {
+                    toProcessQueue.get(Ip).remove(td);
+                } catch (Exception e) {
+                    System.out.println("Problem while removing taskdata element from toProcessQueue with type = " + type + " " + e.getMessage());
+                }
+            }
+        }
     }
 
-    public void rmFromProcessing(String Ip) {
-	processingQueue.remove(Ip);
+    public void rmFromProcessingQueue(String Ip, TaskData td, int type) {
+        HashMap<String, ArrayList<TaskData>> processingQueue;
+        if(type == 1) {
+            processingQueue = this.processingMapQueue;
+        }
+        else {
+            processingQueue = this.processingReduceQueue;
+        }
+
+        if(processingQueue.containsKey(Ip)) {
+            if(processingQueue.get(Ip).size() == 0) {
+                try { 
+                    processingQueue.remove(Ip); 
+                } catch (Exception e) { 
+                    System.out.println("Problem while removing Ip element from processingQueue with type = " + type + " " + e.getMessage());
+                }
+            }
+            else {
+                try {
+                    processingQueue.get(Ip).remove(td);
+                } catch (Exception e) {
+                    System.out.println("Problem while removing taskdata from processingQueue with type = " + type + " " + e.getMessage());
+                }
+            }
+        }
     }
 
-    public void rmFromComplete(String Ip) {
-	completeQueue.remove(Ip);
+    public void rmFromCompleteQueue(String Ip, TaskData td, int type) {
+        HashMap<String, ArrayList<TaskData>> completeQueue;
+        if(type == 1) {
+            completeQueue = this.completeMapQueue;
+        }
+        else {
+            completeQueue = this.completeReduceQueue;
+        }
+
+        if(completeQueue.containsKey(Ip)) {
+            if(completeQueue.get(Ip).size() == 0) {
+                try { 
+                    completeQueue.remove(Ip); 
+                } catch (Exception e) { 
+                    System.out.println("Problem while removing Ip element from completeQueue with type = " + type + " " + e.getMessage());
+                }
+            }
+            else {
+                try {
+                    completeQueue.get(Ip).remove(td);
+                } catch (Exception e) {
+                    System.out.println("Problem while removing taskdata element from completeQueue with type = " + type + " " + e.getMessage());
+                }
+            }
+        }
     }
 
     public synchronized int getAndIncrementJobID() {
@@ -188,88 +333,132 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
     /* HeartBeatResponse heartBeat(HeartBeatRequest) */
     public byte[] heartBeat(byte[] encodedRequest) throws RemoteException {
         System.out.println("Received heart beat!!");
-	HeartBeatResponse.Builder heartBeatResponseBuilder = HeartBeatResponse.newBuilder();
+        HeartBeatResponse.Builder heartBeatResponseBuilder = HeartBeatResponse.newBuilder();
         HeartBeatRequest heartBeatRequest = null;
         try {
             heartBeatRequest = HeartBeatRequest.parseFrom(encodedRequest);
             System.out.println(heartBeatRequest.toString());
 
-	    //parsing the heart beat request
-	    int taskTrackerID;
-	    int numMapSlotsFree; 
-	    int numReduceSlotsFree; 
-	    String taskTrackerIP;
-	    taskTrackerID = heartBeatRequest.getTaskTrackerId();
-	    taskTrackerIP = heartBeatRequest.getTaskTrackerIp();
-	    numMapSlotsFree = heartBeatRequest.getNumMapSlotsFree();
-	    numReduceSlotsFree = heartBeatRequest.getNumReduceSlotsFree();
+            int type;//to decide which hashmap to perform operations on
 
-	    try {
-		//creating the heart beat response
-		heartBeatResponseBuilder.setStatus(1);
-		if(true) {//currently using for map
-		    int jobID;
-		    int taskID;
-		    String mapperName;
-		    int blockNumber;
-		    String ip;
-		    ip = taskTrackerIP;
-		    TaskData taskData;
-		    taskData = getFromToProcess(ip);
-		    jobID = taskData.jobID;
-		    taskID = taskData.taskID;
-		    blockNumber = taskData.blockNumber;
-		    mapperName = taskData.mapper;
+            //parsing the heart beat request
+            int taskTrackerID;
+            int numMapSlotsFree; 
+            int numReduceSlotsFree; 
+            String taskTrackerIP;
+            MapTaskStatus mapTaskStatus;
+            ReduceTaskStatus reduceTaskStatus;
 
-		    //Building up the protobuf object
-		    MapTaskInfo.Builder mapTaskInfoBuilder = MapTaskInfo.newBuilder();
-		    mapTaskInfoBuilder.setJobId(jobID);
-		    mapTaskInfoBuilder.setTaskId(taskID);
-		    mapTaskInfoBuilder.setMapperName(mapperName);
-		    mapTaskInfoBuilder.setBlockNumber(blockNumber);
-		    mapTaskInfoBuilder.setIp(ip);
+            taskTrackerIP = heartBeatRequest.getTaskTrackerIp();
 
-		    heartBeatResponseBuilder.addMapTasks(mapTaskInfoBuilder);
+            //fetching all the complete map tasks and moving them from processing to complete queue
+            for(int i = 0; i < heartBeatRequest.getMapStatusList().size(); i++) {
+                mapTaskStatus = heartBeatRequest.getMapStatus(i);
+                if(mapTaskStatus.getTaskCompleted()) {
+                    TaskData td;
+                    td = getFromToProcessQueue(taskTrackerIP, 1);
+                    rmFromToProcessQueue(taskTrackerIP, td, 1);
+                    addToCompleteQueue(taskTrackerIP, td, 1);
+                }
+            }
 
-		    //move task from toProcess to processing queue
-		    rmFromToProcess(ip);
-		    addToProcessing(ip, taskData);
-		}
-		else if(true) { //currently using for reduce
-		    int jobID;
-		    int taskID;
-		    String reducerName;
-		    String outputFile;
+            //fetching all the complete reduce tasks and moving them from processing to complete queue
+            for(int i = 0; i < heartBeatRequest.getReduceStatusList().size(); i++) {
+                reduceTaskStatus = heartBeatRequest.getReduceStatus(i);
+                if(reduceTaskStatus.getTaskCompleted()) {
+                    TaskData td;
+                    td = getFromToProcessQueue(taskTrackerIP, 2);
+                    rmFromToProcessQueue(taskTrackerIP, td, 2);
+                    addToCompleteQueue(taskTrackerIP, td, 2);
+                }
+            }
 
-		    //Building up the protobuf object
-		    for(int j = 1; j < 3; j++) {//creating two map task info as a part of testing
-			ReducerTaskInfo.Builder reducerTaskInfoBuilder = ReducerTaskInfo.newBuilder();
-			jobID = j;
-			taskID = j;
-			reducerName = "testReducer" + j;
-			outputFile = "op" + j;
-			reducerTaskInfoBuilder.setJobId(jobID);
-			reducerTaskInfoBuilder.setTaskId(taskID);
-			reducerTaskInfoBuilder.setReducerName(reducerName);
-			reducerTaskInfoBuilder.setOutputFile(outputFile);
+            taskTrackerID = heartBeatRequest.getTaskTrackerId();
+            numMapSlotsFree = heartBeatRequest.getNumMapSlotsFree();
+            numReduceSlotsFree = heartBeatRequest.getNumReduceSlotsFree();
 
-			for(int i = 1; i < 3; i++) {//sending two datanode as a part of testing
-			    reducerTaskInfoBuilder.addMapOutputFiles("map_out_" + i);
-			}
+            try {
+                //creating the heart beat response
+                heartBeatResponseBuilder.setStatus(1);
+                if(!toProcessMapQueue.isEmpty()) {//currently using for map
+                    type = 1;
+                    TaskData taskData;
+                    taskData = getFromToProcessQueue(taskTrackerIP, type);
 
-			heartBeatResponseBuilder.addReduceTasks(reducerTaskInfoBuilder);
-		    }
-		}
-	    } catch (Exception e) {
-		System.out.println("Problem creating heart beat response?? " + e.getMessage());
-		e.printStackTrace();
-	    }
+                    //got no task for the tasktracker's ip
+                    if(taskData == null) {
+                        return heartBeatResponseBuilder.build().toByteArray();
+                    }
+
+                    int jobID;
+                    int taskID;
+                    String mapperName;
+                    int blockNumber;
+                    jobID = taskData.jobID;
+                    taskID = taskData.taskID;
+                    blockNumber = taskData.blockNumber;
+                    mapperName = taskData.mapper;
+
+                    //Building up the protobuf object
+                    MapTaskInfo.Builder mapTaskInfoBuilder = MapTaskInfo.newBuilder();
+                    mapTaskInfoBuilder.setJobId(jobID);
+                    mapTaskInfoBuilder.setTaskId(taskID);
+                    mapTaskInfoBuilder.setMapperName(mapperName);
+                    mapTaskInfoBuilder.setBlockNumber(blockNumber);
+                    mapTaskInfoBuilder.setIp(taskTrackerIP);
+
+                    heartBeatResponseBuilder.addMapTasks(mapTaskInfoBuilder);
+
+                    //move task from toProcess to processing queue
+                    rmFromToProcessQueue(taskTrackerIP, taskData, type);
+                    addToProcessingQueue(taskTrackerIP, taskData, type);
+                }
+                else if(!toProcessReduceQueue.isEmpty()) { //currently using for reduce
+                    type = 2;
+                    int jobID;
+                    int taskID;
+                    String reducerName;
+                    String outputFile;
+
+                    TaskData taskData;
+                    taskData = getFromToProcessQueue(taskTrackerIP, type);
+
+                    //got no task for the tasktracker's ip
+                    if(taskData == null) {
+                        return heartBeatResponseBuilder.build().toByteArray();
+                    }
+
+
+                    //Building up the protobuf object
+                    ReducerTaskInfo.Builder reducerTaskInfoBuilder = ReducerTaskInfo.newBuilder();
+                    jobID = taskData.jobID;
+                    taskID = taskData.taskID;
+                    reducerName = taskData.reducer;
+                    reducerTaskInfoBuilder.setJobId(jobID);
+                    reducerTaskInfoBuilder.setTaskId(taskID);
+                    reducerTaskInfoBuilder.setReducerName(reducerName);
+                    reducerTaskInfoBuilder.setOutputFile(outputFile);
+                    reducerTaskInfoBuilder.setMapOutputFile(outputFile);
+
+                    heartBeatResponseBuilder.addReduceTasks(reducerTaskInfoBuilder);
+
+                    //move task from toProcess to processing queue
+                    rmFromToProcessQueue(taskTrackerIP, taskData, type);
+                    addToProcessingQueue(taskTrackerIP, taskData, type);
+                }
+                else {
+                    System.out.println("No task available to send back in heart beat response.");
+                }
+            } catch (Exception e) {
+                System.out.println("Problem creating heart beat response?? " + e.getMessage());
+                e.printStackTrace();
+            }
 
         } catch (Exception e) {
             System.out.println("Problem parsing heart beat request?? " + e.getMessage());
             e.printStackTrace();
         }
-	return heartBeatResponseBuilder.build().toByteArray();
+        return heartBeatResponseBuilder.build().toByteArray();
     }
 
     public static void main(String[] args) {
@@ -285,32 +474,32 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
     }
 
     public class TaskData {
-	int blockNumber;
-	String mapper;
-	String reducer;
-	String input;
-	String output;
-	int jobID;
-	int taskID;
+        int blockNumber;
+        String mapper;
+        String reducer;
+        String input;
+        String output;
+        int jobID;
+        int taskID;
 
-	public TaskData() {
-	}
+        public TaskData() {
+        }
 
-	public TaskData(int BlockNum,
-		String Mapper,
-		String Reducer,
-		String Input,
-		String Output,
-		int Jid,
-		int Tid){
-	    this.blockNumber = BlockNum;
-	    this.mapper = Mapper;
-	    this.reducer = Reducer;
-	    this.input = Input;
-	    this.output = Output;
-	    this.jobID = Jid;
-	    this.taskID = Tid;
-	}
+        public TaskData(int BlockNum,
+                String Mapper,
+                String Reducer,
+                String Input,
+                String Output,
+                int Jid,
+                int Tid){
+            this.blockNumber = BlockNum;
+            this.mapper = Mapper;
+            this.reducer = Reducer;
+            this.input = Input;
+            this.output = Output;
+            this.jobID = Jid;
+            this.taskID = Tid;
+        }
     }
 
     public class JobRunnerThread extends Thread {
@@ -325,8 +514,8 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
         private int JID = 0;
         private int TID = 0;
-	private int numMapTasks = 0;
-	private int numReduceTasks = 0;
+        private int numMapTasks = 0;
+        private int numReduceTasks = 0;
 
         public JobRunnerThread(JobTracker parent, String mapper, String reducer, String input, String output, int numberReducers) {
             // A new Job has been started with the following parameters
@@ -341,9 +530,9 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
             this.JID = this.parentJT.getAndIncrementJobID();
         }
 
-	public int getJID() {
-	    return this.JID;
-	}
+        public int getJID() {
+            return this.JID;
+        }
 
         public String getStatus() {
             return "";
@@ -390,7 +579,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         public int assignTID() {
-	    this.TID += 1;
+            this.TID += 1;
             return this.TID;
         }
 
@@ -432,18 +621,18 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 }
                 System.out.println("Queuing: " + IPToQueueTo +" with map task, on block number: " + blockNumber);
 
-		//add the map task to the toProcessQueue
-		this.parentJT.addToProcess(IPToQueueTo, //String
-			new TaskData(blockNumber, //int
-			    this.getMapper(), //String
-			    this.getReducer(), //String
-			    this.getInput(), //String
-			    this.getOutput(), //String
-			    this.getJID(), //int
-			    this.assignTID())); // int
+                //add the map task to the toProcessQueue
+                this.parentJT.addToProcessQueue(IPToQueueTo, //String
+                        new TaskData(blockNumber, //int
+                            this.getMapper(), //String
+                            this.getReducer(), //String
+                            this.getInput(), //String
+                            this.getOutput(), //String
+                            this.getJID(), //int
+                            this.assignTID()), 1); // int
 
-		//incrment the num of map tasks by 1
-		this.addMapTasks(1);
+                //incrment the num of map tasks by 1
+                this.addMapTasks(1);
             }
             this.close();
             this.parentJT.removeJobRunnerFromJRList(this.JID);
