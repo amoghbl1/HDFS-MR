@@ -7,5 +7,5 @@ make tasktracker
 make rmiregistry
 sleep 2
 
-cd Namenode && java -cp ./bin/:../protobuf-java-2.6.1.jar: DataNode &
+cd Datanode && java -cp ./bin/:../protobuf-java-2.6.1.jar: DataNode &
 cd Tasktracker && java -cp ./bin:../protobuf-java-2.6.1.jar: TaskTracker &
