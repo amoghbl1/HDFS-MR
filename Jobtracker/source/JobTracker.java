@@ -141,7 +141,9 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(toProcessQueue.containsKey(Ip)) {
-            return toProcessQueue.get(Ip).get(0);
+            if(!toProcessQueue.get(Ip).isEmpty()) {
+                return toProcessQueue.get(Ip).get(0);
+            }
         }
         return null;
     }
@@ -156,7 +158,9 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(processingQueue.containsKey(Ip)) {
-            return processingQueue.get(Ip).get(0);
+            if(!processingQueue.get(Ip).isEmpty()) {
+                return processingQueue.get(Ip).get(0);
+            }
         }
         return null;
     }
@@ -171,7 +175,9 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(completeQueue.containsKey(Ip)) {
-            return completeQueue.get(Ip).get(0);
+            if(!completeQueue.get(Ip).isEmpty()) {
+                return completeQueue.get(Ip).get(0);
+            }
         }
         return null;
     }
@@ -186,20 +192,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(toProcessQueue.containsKey(Ip)) {
-            if(toProcessQueue.get(Ip).size() == 0) {
-                try { 
-                    toProcessQueue.remove(Ip); 
-                } catch (Exception e) { 
-                    System.out.println("Problem while removing Ip element from toProcessQueue with type = " + type + " " + e.getMessage());
-                }
-            }
-            else {
-                try {
-                    toProcessQueue.get(Ip).remove(td);
-                } catch (Exception e) {
-                    System.out.println("Problem while removing taskdata element from toProcessQueue with type = " + type + " " + e.getMessage());
-                }
-            }
+            toProcessQueue.get(Ip).remove(td);
         }
     }
 
@@ -213,20 +206,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(processingQueue.containsKey(Ip)) {
-            if(processingQueue.get(Ip).size() == 0) {
-                try { 
-                    processingQueue.remove(Ip); 
-                } catch (Exception e) { 
-                    System.out.println("Problem while removing Ip element from processingQueue with type = " + type + " " + e.getMessage());
-                }
-            }
-            else {
-                try {
-                    processingQueue.get(Ip).remove(td);
-                } catch (Exception e) {
-                    System.out.println("Problem while removing taskdata from processingQueue with type = " + type + " " + e.getMessage());
-                }
-            }
+            processingQueue.get(Ip).remove(td);
         }
     }
 
@@ -240,20 +220,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(completeQueue.containsKey(Ip)) {
-            if(completeQueue.get(Ip).size() == 0) {
-                try { 
-                    completeQueue.remove(Ip); 
-                } catch (Exception e) { 
-                    System.out.println("Problem while removing Ip element from completeQueue with type = " + type + " " + e.getMessage());
-                }
-            }
-            else {
-                try {
-                    completeQueue.get(Ip).remove(td);
-                } catch (Exception e) {
-                    System.out.println("Problem while removing taskdata element from completeQueue with type = " + type + " " + e.getMessage());
-                }
-            }
+            completeQueue.get(Ip).remove(td);
         }
     }
 
