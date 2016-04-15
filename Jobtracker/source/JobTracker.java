@@ -20,7 +20,9 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class JobTracker extends UnicastRemoteObject implements JobTrackerInterface {
 
@@ -73,6 +75,19 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 this.nameNodeIP = configLine.split(" ")[1];
             }
         }
+    }
+
+    //Counts the no of tasks for a jobid in the queue hashmaps
+    public int countTasks(HashMap<String, ArrayList<TaskData>> queueMap, int jid) {
+        int count = 0;
+        for(ArrayList<TaskData> tdList : queueMap.values()) {
+            for(TaskData td : tdList) {
+                if(td.jobID == jid) {
+                    count += 1;
+                }
+            }
+        }
+        return count;
     }
 
     // Checks if a certain JID is present in any of the taskData objs in all mappings of the ToProcessQueue
