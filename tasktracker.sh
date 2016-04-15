@@ -3,6 +3,6 @@
 
 make tasktracker
 
-cd Tasktracker/bin && nohup rmiregistry&
+make rmiregistry
 
 cd Tasktracker && java -cp ./bin/:../protobuf-java-2.6.1.jar: TaskTracker

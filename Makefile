@@ -23,6 +23,9 @@ tasktracker: protobuf
 	cd Tasktracker && mkdir -p bin && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java
 	@echo "Task Tracker Compiled..."
 
+rmiregistry:
+	CLASSPATH=Namenode/bin:Datanode/bin:Jobtracker/bin:Tasktracker/bin
+
 clean:
 	rm -rf com */com
 	find . -name "nohup.out" -type f -delete

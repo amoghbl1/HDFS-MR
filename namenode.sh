@@ -3,6 +3,6 @@
 
 make namenode
 
-cd Namenode/bin && nohup rmiregistry&
+make rmiregistry
 
 cd Namenode && java -cp ./bin/:../protobuf-java-2.6.1.jar: NameNode
