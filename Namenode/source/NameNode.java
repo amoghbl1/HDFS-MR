@@ -80,6 +80,8 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
         // Bringing out blockNumber up to speed, before we do anything.
         int blockNumber = 0;
         NameNodeFileMappings oldMappings = this.readNameNodeFileMappings();
+        if(oldMappings == null)
+            return;
         for(int i=0; i < oldMappings.getMappingsCount(); i++) {
             NameNodeFileMapping thisMapping = oldMappings.getMappings(i);
             for(int j=0; j < thisMapping.getBlockNumbersCount(); j++) {
