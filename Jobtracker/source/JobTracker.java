@@ -433,12 +433,12 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                     ReducerTaskInfo.Builder reducerTaskInfoBuilder = ReducerTaskInfo.newBuilder();
                     jobID = taskData.jobID;
                     taskID = taskData.taskID;
+                    outputFile = taskData.output;
                     reducerName = taskData.reducer;
                     reducerTaskInfoBuilder.setJobId(jobID);
                     reducerTaskInfoBuilder.setTaskId(taskID);
                     reducerTaskInfoBuilder.setReducerName(reducerName);
                     reducerTaskInfoBuilder.setOutputFile(outputFile);
-                    reducerTaskInfoBuilder.setMapOutputFile(outputFile);
 
                     heartBeatResponseBuilder.addReduceTasks(reducerTaskInfoBuilder);
 

@@ -213,7 +213,7 @@ public class TaskTracker {
                                     taskID = reduceTaskInfo.getTaskId();
                                     reducerName = reduceTaskInfo.getReducerName();
                                     outputFile = reduceTaskInfo.getOutputFile();
-                                    mapOutputFile = reduceTaskInfo.getMapOutputFile();
+                                    //mapOutputFile = reduceTaskInfo.getMapOutputFile();
 
                                     System.out.println("Starting a reduce thread!! ");
 
@@ -328,7 +328,7 @@ public class TaskTracker {
             this.jobID = jobId;
             this.taskID = taskId;
             this.reducerName = reducerNam;
-            this.mapOutputFile = mapOpFile;
+            this.mapOutputFile = "job_" + jobID + "_map_" + taskID;
             this.outputFile = opFile;
             this.parentTT = TT;
             this.type = 2;
