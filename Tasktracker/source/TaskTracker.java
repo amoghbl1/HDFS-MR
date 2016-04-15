@@ -307,9 +307,7 @@ public class TaskTracker {
             if(this.parentTT.processingMapQueue.remove(this.taskID) == null) {
                 System.out.println("Can not remove non-existent key from processing map.");
             }
-            if(this.parentTT.completeMapQueue.put(this.taskID, r) == null) {
-                System.out.println("Problem adding entry to complete map?? ");
-            }
+            this.parentTT.completeMapQueue.put(this.taskID, r);
             System.out.println("Map Thread completed task with tid: " + this.taskID + " and thread properties " + r.toString());
         }
     }
@@ -350,10 +348,7 @@ public class TaskTracker {
             if(this.parentTT.processingReduceQueue.remove(this.taskID) != null) {
                 System.out.println("Can not remove non-existent key from processing reduce.");
             }
-            if(this.parentTT.completeReduceQueue.put(this.taskID, r) != null) {
-                System.out.println("Problem adding entry to complete reduce?? ");
-            }
-
+            this.parentTT.completeReduceQueue.put(this.taskID, r);
             System.out.println("Reduce Thread completed task with tid: " + this.taskID + " and thread properties " + r.toString());
         }
     }
