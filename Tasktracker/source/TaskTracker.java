@@ -301,13 +301,13 @@ public class TaskTracker {
             }
 
             MapThreadRunnable r;
-            if((r = this.parentTT.processingMapQueue.get(this.taskID)) != null) {
+            if((r = this.parentTT.processingMapQueue.get(this.taskID)) == null) {
                 System.out.println("Can not fetch non-existent key from processing map.");
             }
-            if(this.parentTT.processingMapQueue.remove(this.taskID) != null) {
+            if(this.parentTT.processingMapQueue.remove(this.taskID) == null) {
                 System.out.println("Can not remove non-existent key from processing map.");
             }
-            if(this.parentTT.completeMapQueue.put(this.taskID, r) != null) {
+            if(this.parentTT.completeMapQueue.put(this.taskID, r) == null) {
                 System.out.println("Problem adding entry to complete map?? ");
             }
             System.out.println("Map Thread completed task with tid: " + this.taskID + " and thread properties " + r.toString());
