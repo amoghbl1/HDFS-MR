@@ -163,7 +163,8 @@ public class TaskTracker {
                         heartBeatResponse = HeartBeatResponse.parseFrom(responseEncoded);
 
                         if(heartBeatResponse.getStatus() != 0) {
-                            System.out.println(heartBeatResponse.toString());
+                            // Don't print, too noisy
+                            // System.out.println(heartBeatResponse.toString());
                             if(heartBeatResponse.getMapTasksList().size() != 0) {
                                 System.out.println("Map Task(s) Received");
 
@@ -231,7 +232,8 @@ public class TaskTracker {
                                 }
                             }
                             else {
-                                System.out.println("No Task Received");
+                                // Don't print, too noisy
+                                // System.out.println("No Task Received");
                             }
                         }
                         else {
