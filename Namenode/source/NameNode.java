@@ -24,6 +24,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
@@ -42,6 +43,8 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
     private List<String> dataNodeList = new ArrayList<String>();
 
     private int currentBlockNumber = 0;
+
+    HashMap<Integer, ArrayList<String>> blockToDataNodeMappings = new HashMap<Integer, ArrayList<String>>(100);
 
     public NameNode(String configFile) throws RemoteException {
         this.configFile = configFile;
@@ -80,18 +83,24 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
         // Bringing out blockNumber up to speed, before we do anything.
         int blockNumber = 0;
         NameNodeFileMappings oldMappings = this.readNameNodeFileMappings();
-        if(oldMappings == null)
-            return;
-        for(int i=0; i < oldMappings.getMappingsCount(); i++) {
-            NameNodeFileMapping thisMapping = oldMappings.getMappings(i);
-            for(int j=0; j < thisMapping.getBlockNumbersCount(); j++) {
-                if(thisMapping.getBlockNumbers(j) >= blockNumber)
-                    blockNumber = thisMapping.getBlockNumbers(j);
+        if(oldMappings != null) {
+            for(int i=0; i < oldMappings.getMappingsCount(); i++) {
+                NameNodeFileMapping thisMapping = oldMappings.getMappings(i);
+                for(int j=0; j < thisMapping.getBlockNumbersCount(); j++) {
+                    if(thisMapping.getBlockNumbers(j) >= blockNumber)
+                        blockNumber = thisMapping.getBlockNumbers(j);
+                }
             }
+            blockNumber += 10;
+            System.out.println("Resuming Name Node, Block Number set to " + blockNumber);
+            this.currentBlockNumber = blockNumber;
+        } else {
+            System.out.println("Block Number started from default! No history found!!");
         }
-        blockNumber += 10;
-        System.out.println("Resuming Name Node, Block Number set to " + blockNumber);
-        this.currentBlockNumber = blockNumber;
+    }
+
+    public ArrayList<String> getDNsFromBlock(int i) {
+        return blockToDataNodeMappings.get(i);
     }
 
     /* ListFilesResponse list(ListFilesRequest) */
@@ -222,7 +231,7 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
     }
 
     // Gets the mappings from the default file
-    public NameNodeBlockDataNodeMappings readNameNodeBlockDataNodeMappings(){ 
+    public synchronized NameNodeBlockDataNodeMappings readNameNodeBlockDataNodeMappings(){ 
         NameNodeBlockDataNodeMappings returnMappings = null;
         synchronized(blocksPbufLock){
             try {
@@ -267,7 +276,7 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
         }
     }
 
-    public NameNodeFileMappings readNameNodeFileMappings() {
+    public synchronized NameNodeFileMappings readNameNodeFileMappings() {
         NameNodeFileMappings returnMappings = null;
         try {
             synchronized(filesPbufLock) {
@@ -295,16 +304,34 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
     public synchronized byte[] blockReport(byte[] request) throws RemoteException {
         System.out.println("Got a DN Report!! ");
         DataNodeReportMappings dataNodeReportMappings = null;
-        try {
-            
+        try { 
             dataNodeReportMappings = DataNodeReportMappings.parseFrom(request); 
         } catch (Exception e) {
             System.out.println("Problem parsing DN Report request?? " + e.getMessage());
             e.printStackTrace();
         }
 
-        System.out.println("Object received = " + dataNodeReportMappings);
         System.out.println("Parsing mappings. Count:" + dataNodeReportMappings.getMappingsCount());
+        
+        for(int i=0; i < dataNodeReportMappings.getMappingsCount(); i++) {
+            DataNodeReportMapping thisMapping = dataNodeReportMappings.getMappings(i);
+            ArrayList<String> blockToDNList = blockToDataNodeMappings.get(thisMapping.getBlockNumber());
+            if(blockToDNList == null)
+                blockToDNList = new ArrayList<String>();
+            if(blockToDNList.contains(thisMapping.getDataNodeIP())) {
+                blockToDNList.remove(thisMapping.getDataNodeIP());
+                blockToDNList.add(0, thisMapping.getDataNodeIP());
+            } else {
+                blockToDNList.add(0, thisMapping.getDataNodeIP());
+            }
+            blockToDataNodeMappings.put(thisMapping.getBlockNumber(), blockToDNList);
+        }
+
+
+        System.out.println("New State, after DN REPORT" + blockToDataNodeMappings );
+        
+        return null;
+        /*
         NameNodeBlockDataNodeMappings oldMappings = this.readNameNodeBlockDataNodeMappings();
         NameNodeBlockDataNodeMappings.Builder updatedMappingsBuilder = NameNodeBlockDataNodeMappings.newBuilder();
 
@@ -373,6 +400,7 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
         System.out.println("Writing " + updatedMappingsBuilder.getMappingsCount() + " mappings to blocks pbuf");
         this.writeToBlocksPbuf(updatedMappingsBuilder);
         return null;
+        */
     }
 
     /* HeartBeatResponse heartBeat(HeartBeatRequest) */
@@ -490,7 +518,6 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
         public byte[] getNameNodeBlockDataNodeMappings(byte[] request) throws RemoteException {
             parentNameNode.println("Get name node block data node mappings called!!");
             NameNodeBlockDataNodeMappingsResponse.Builder nameNodeBlockDataNodeMappingsResponseBuilder = NameNodeBlockDataNodeMappingsResponse.newBuilder();
-            NameNodeBlockDataNodeMappings mappings = parentNameNode.readNameNodeBlockDataNodeMappings();
             NameNodeBlockDataNodeMappingsRequest nameNodeBlockDataNodeMappingsRequest = null;
             ArrayList<Integer> blockNumbers = new ArrayList<Integer>();
             try {
@@ -511,6 +538,23 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
             }
 
             parentNameNode.println("Got " + blockNumbers.size() +" blocks");
+            for(Integer i : blockNumbers) {
+                NameNodeBlockDataNodeMapping.Builder blockToDNsBuilder = NameNodeBlockDataNodeMapping.newBuilder();
+                blockToDNsBuilder.setBlockNumber(i.intValue());
+                // HashMap<Integer, ArrayList<String>> hashMap = parentNameNode.getBlockToDNMappings();
+                ArrayList<String> blockToDNs = parentNameNode.getDNsFromBlock(i.intValue());
+                if(blockToDNs != null) {
+                    parentNameNode.println("Block " + i.intValue() +" is mapped to " + blockToDNs.size() +" IPs.");
+                    for(String s : blockToDNs) {
+                        blockToDNsBuilder.addDataNodeIPs(s);
+                    }
+                } else {
+                    parentNameNode.println("Null DNs From Block??");
+                }
+                nameNodeBlockDataNodeMappingsResponseBuilder.addMappings(blockToDNsBuilder);
+            }
+            /*
+            NameNodeBlockDataNodeMappings mappings = parentNameNode.readNameNodeBlockDataNodeMappings(); 
             if(mappings != null) {
                 int mappingsCount = mappings.getMappingsCount();
                 System.out.println("Mappings we have " + mappingsCount);
@@ -542,6 +586,7 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
                     }
                 }
             }
+            */
             return nameNodeBlockDataNodeMappingsResponseBuilder.build().toByteArray();
         }
     }
