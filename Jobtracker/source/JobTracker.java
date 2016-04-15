@@ -332,12 +332,14 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
     /* HeartBeatResponse heartBeat(HeartBeatRequest) */
     public byte[] heartBeat(byte[] encodedRequest) throws RemoteException {
-        System.out.println("Received heart beat!!");
+        // Don't print, too noisy
+        // System.out.println("Received heart beat!!");
         HeartBeatResponse.Builder heartBeatResponseBuilder = HeartBeatResponse.newBuilder();
         HeartBeatRequest heartBeatRequest = null;
         try {
             heartBeatRequest = HeartBeatRequest.parseFrom(encodedRequest);
-            System.out.println(heartBeatRequest.toString());
+            // Don't print, too noisy
+            // System.out.println(heartBeatRequest.toString());
 
             int type;//to decide which hashmap to perform operations on
 
@@ -445,9 +447,12 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                     //move task from toProcess to processing queue
                     rmFromToProcessQueue(taskTrackerIP, taskData, type);
                     addToProcessingQueue(taskTrackerIP, taskData, type);
+
+                    System.out.println("Sending task " + taskData.toString() +" to " + taskTrackerIP);
                 }
                 else {
-                    System.out.println("No task available to send back in heart beat response.");
+                    // Don't print, too noisy.
+                    // System.out.println("No task available to send back in heart beat response.");
                 }
             } catch (Exception e) {
                 System.out.println("Problem creating heart beat response?? " + e.getMessage());
