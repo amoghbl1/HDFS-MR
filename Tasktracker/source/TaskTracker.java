@@ -314,15 +314,13 @@ public class TaskTracker {
 
             synchronized(this.parentTT.queueLock) {
                 MapThreadRunnable r;
-                if((r = this.parentTT.processingMapQueue.get(this.taskID)) != null) {
+                if((r = this.parentTT.processingMapQueue.get(this.taskID)) == null) {
                     System.out.println("Can not fetch non-existent key from processing map.");
                 }
-                if(this.parentTT.processingMapQueue.remove(this.taskID) != null) {
+                if(this.parentTT.processingMapQueue.remove(this.taskID) == null) {
                     System.out.println("Can not remove non-existent key from processing map.");
                 }
-                if(this.parentTT.completeMapQueue.put(this.taskID, r) != null) {
-                    System.out.println("Problem adding entry to complete map?? ");
-                }
+                this.parentTT.completeMapQueue.put(this.taskID, r);
             }
             System.out.println("Map Thread completed task with tid: " + this.taskID);
             System.out.println("proccesing queue after completing map task, tid: " + taskID + ": " + processingMapQueue);
@@ -362,15 +360,13 @@ public class TaskTracker {
 
             synchronized(this.parentTT.queueLock) {
                 ReduceThreadRunnable r;
-                if((r = this.parentTT.processingReduceQueue.get(this.taskID)) != null) {
+                if((r = this.parentTT.processingReduceQueue.get(this.taskID)) == null) {
                     System.out.println("Can not fetch non-existent key from processing reduce.");
                 }
                 if(this.parentTT.processingReduceQueue.remove(this.taskID) != null) {
                     System.out.println("Can not remove non-existent key from processing reduce.");
                 }
-                if(this.parentTT.completeReduceQueue.put(this.taskID, r) != null) {
-                    System.out.println("Problem adding entry to complete reduce?? ");
-                }
+                this.parentTT.completeReduceQueue.put(this.taskID, r);
             }
 
             System.out.println("Reduce Thread completed task with tid: " + this.taskID);
