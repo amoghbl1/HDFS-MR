@@ -24,7 +24,7 @@ tasktracker: protobuf
 	@echo "Task Tracker Compiled..."
 
 rmiregistry:
-	CLASSPATH=Namenode/bin:Datanode/bin:Jobtracker/bin:Tasktracker/bin
+	CLASSPATH=Namenode/bin:Datanode/bin:Jobtracker/bin:Tasktracker/bin rmiregistry &
 
 clean:
 	rm -rf com */com
