@@ -42,3 +42,11 @@ protobuf:
 	cp -r com Client
 	cp -r com Jobtracker
 	cp -r com Tasktracker
+
+conf:
+	echo "#conf file for tasktracker\n" > Tasktracker/hdfs_mr_task_tracker.conf
+	echo "jobTrackerIP 10.3.0.193\nmyIP 127.0.0.1\nmyID 1" >> Tasktracker/hdfs_mr_task_tracker.conf
+	echo "#conf file for datanode\n" > Datanode/hdfs_data_node.conf
+	echo "nameNodeIP 10.3.0.193\nmyIP 127.0.0.1\nmyID 1" >> Datanode/hdfs_data_node.conf
+	echo "#conf file for jobtracker\n" > Jobtracker/hdfs_mr_job_tracker.conf
+	echo "nameNodeIP 10.3.0.193" >> Jobtracker/hdfs_mr_job_tracker.conf
