@@ -33,6 +33,7 @@ public class TaskTracker {
     private static int myNumMapSlotsFree;
     private static int myNumReduceSlotsFree;
     private static int myID;
+    private final Object queueLock = new Object();
     private static MapTaskStatus myMapTaskStatus;
     private static ReduceTaskStatus myReduceTaskStatus;
     public static HashMap<Integer, MapThreadRunnable> processingMapQueue = new HashMap<Integer, MapThreadRunnable>();
@@ -183,18 +184,24 @@ public class TaskTracker {
                                     blockNumber = mapTask.getBlockNumber();
                                     ip = mapTask.getIp();
 
-                                    System.out.println("Starting a map thread!! ");
-                                    MapThreadRunnable r  = new MapThreadRunnable(jobID, //int
-                                            taskID, //int
-                                            mapperName, //String
-                                            blockNumber, //int
-                                            ip, //String
-                                            parentTT); //Tasktracker
-                                    Thread th = new Thread(r);
-                                    th.start();
-                                    parentTT.processingMapQueue.put(taskID, r);
-                                    //decrease the num of free map slots
-                                    parentTT.myNumMapSlotsFree--;
+                                    synchronized(parentTT.queueLock) {
+                                        System.out.println("Starting a map thread!! ");
+
+                                        MapThreadRunnable r  = new MapThreadRunnable(jobID, //int
+                                                taskID, //int
+                                                mapperName, //String
+                                                blockNumber, //int
+                                                ip, //String
+                                                parentTT); //Tasktracker
+                                        Thread th = new Thread(r);
+                                        th.start();
+                                        parentTT.processingMapQueue.put(taskID, r);
+                                        //decrease the num of free map slots
+                                        parentTT.myNumMapSlotsFree--;
+                                    }
+                                    System.out.println("Map Thread with taskID " + taskID + "started");
+                                    System.out.println("processing queue after task with starting task with task ID: "
+                                            + taskID + ": "  + processingMapQueue.toString());
                                 }
                             }
 
@@ -215,20 +222,24 @@ public class TaskTracker {
                                     reducerName = reduceTaskInfo.getReducerName();
                                     outputFile = reduceTaskInfo.getOutputFile();
                                     //mapOutputFile = reduceTaskInfo.getMapOutputFile();
+                                    synchronized(parentTT.queueLock) {
+                                        System.out.println("Starting a reduce thread!! ");
 
-                                    System.out.println("Starting a reduce thread!! ");
-
-                                    ReduceThreadRunnable r  = new ReduceThreadRunnable(jobID, //int
-                                            taskID, //int
-                                            reducerName, //String
-                                            mapOutputFile, //String
-                                            outputFile, //String
-                                            parentTT); //Tasktracker
-                                    Thread th = new Thread(r);
-                                    th.start();
-                                    parentTT.processingReduceQueue.put(taskID, r);
-                                    //decrease the num of free reduce slots
-                                    parentTT.myNumReduceSlotsFree--;
+                                        ReduceThreadRunnable r  = new ReduceThreadRunnable(jobID, //int
+                                                taskID, //int
+                                                reducerName, //String
+                                                mapOutputFile, //String
+                                                outputFile, //String
+                                                parentTT); //Tasktracker
+                                        Thread th = new Thread(r);
+                                        th.start();
+                                        parentTT.processingReduceQueue.put(taskID, r);
+                                        //decrease the num of free reduce slots
+                                        parentTT.myNumReduceSlotsFree--;
+                                    } 
+                                    System.out.println("Reduce Thread with taskID " + taskID + "started");
+                                    System.out.println("processing queue after task with starting task with task ID: "
+                                            + taskID + ": "  + processingReduceQueue.toString());
                                 }
                             }
                             else {
@@ -299,18 +310,23 @@ public class TaskTracker {
                 System.out.println("Problem in trying to sleep thread?? " + e.getMessage());
                 e.printStackTrace();
             }
+            System.out.println("Map Thread running task with tid: " + this.taskID);
 
-            MapThreadRunnable r;
-            if((r = this.parentTT.processingMapQueue.get(this.taskID)) != null) {
-                System.out.println("Can not fetch non-existent key from processing map.");
+            synchronized(this.parentTT.queueLock) {
+                MapThreadRunnable r;
+                if((r = this.parentTT.processingMapQueue.get(this.taskID)) != null) {
+                    System.out.println("Can not fetch non-existent key from processing map.");
+                }
+                if(this.parentTT.processingMapQueue.remove(this.taskID) != null) {
+                    System.out.println("Can not remove non-existent key from processing map.");
+                }
+                if(this.parentTT.completeMapQueue.put(this.taskID, r) != null) {
+                    System.out.println("Problem adding entry to complete map?? ");
+                }
             }
-            if(this.parentTT.processingMapQueue.remove(this.taskID) != null) {
-                System.out.println("Can not remove non-existent key from processing map.");
-            }
-            if(this.parentTT.completeMapQueue.put(this.taskID, r) != null) {
-                System.out.println("Problem adding entry to complete map?? ");
-            }
-            System.out.println("Map Thread completed task with tid: " + this.taskID + " and thread properties " + r.toString());
+            System.out.println("Map Thread completed task with tid: " + this.taskID);
+            System.out.println("proccesing queue after completing map task, tid: " + taskID + ": " + processingMapQueue);
+            System.out.println("complete queue after completing map task, tid: " + taskID + ": " + completeMapQueue);
         }
     }
 
@@ -342,19 +358,24 @@ public class TaskTracker {
                 System.out.println("Problem in trying to sleep thread?? " + e.getMessage());
                 e.printStackTrace();
             }
+            System.out.println("Map Thread running task with tid: " + this.taskID);
 
-            ReduceThreadRunnable r;
-            if((r = this.parentTT.processingReduceQueue.get(this.taskID)) != null) {
-                System.out.println("Can not fetch non-existent key from processing reduce.");
-            }
-            if(this.parentTT.processingReduceQueue.remove(this.taskID) != null) {
-                System.out.println("Can not remove non-existent key from processing reduce.");
-            }
-            if(this.parentTT.completeReduceQueue.put(this.taskID, r) != null) {
-                System.out.println("Problem adding entry to complete reduce?? ");
+            synchronized(this.parentTT.queueLock) {
+                ReduceThreadRunnable r;
+                if((r = this.parentTT.processingReduceQueue.get(this.taskID)) != null) {
+                    System.out.println("Can not fetch non-existent key from processing reduce.");
+                }
+                if(this.parentTT.processingReduceQueue.remove(this.taskID) != null) {
+                    System.out.println("Can not remove non-existent key from processing reduce.");
+                }
+                if(this.parentTT.completeReduceQueue.put(this.taskID, r) != null) {
+                    System.out.println("Problem adding entry to complete reduce?? ");
+                }
             }
 
-            System.out.println("Reduce Thread completed task with tid: " + this.taskID + " and thread properties " + r.toString());
+            System.out.println("Reduce Thread completed task with tid: " + this.taskID);
+            System.out.println("proccesing queue after completing reduce task, tid: " + taskID + ": " + processingReduceQueue);
+            System.out.println("complete queue after completing reduce task, tid: " + taskID + ": " + completeReduceQueue);
         }
     }
 

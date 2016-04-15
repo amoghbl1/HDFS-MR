@@ -47,6 +47,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
 
     private final Object CJTLock = new Object();
+    private final Object queueLock = new Object();
 
     public JobTracker(String conf) throws RemoteException {
         this.configFile = conf;
@@ -74,7 +75,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
     }
 
-    public void addToProcessQueue(String Ip, TaskData taskData, int type) {
+    public int addToProcessQueue(String Ip, TaskData taskData, int type) {
         HashMap<String, ArrayList<TaskData>> toProcessQueue;
         if(type == 1) {
             toProcessQueue = this.toProcessMapQueue;
@@ -84,16 +85,22 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(toProcessQueue.containsKey(Ip)) {
-            toProcessQueue.get(Ip).add(taskData);
+            if(toProcessQueue.get(Ip).add(taskData)){
+                return 1;
+            }
+            else {
+                return 0;
+            }
         }
         else {
             ArrayList<TaskData> td = new ArrayList<TaskData>();
             td.add(taskData);
             toProcessQueue.put(Ip, td);
+            return 1;
         }
     }
 
-    public void addToProcessingQueue(String Ip, TaskData taskData, int type) {
+    public int addToProcessingQueue(String Ip, TaskData taskData, int type) {
         HashMap<String, ArrayList<TaskData>> processingQueue;
         if(type == 1) {
             processingQueue = this.processingMapQueue;
@@ -103,16 +110,22 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(processingQueue.containsKey(Ip)) {
-            processingQueue.get(Ip).add(taskData);
+            if(processingQueue.get(Ip).add(taskData)) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
         }
         else {
             ArrayList<TaskData> td = new ArrayList<TaskData>();
             td.add(taskData);
             processingQueue.put(Ip, td);
+            return 1;
         }
     }
 
-    public void addToCompleteQueue(String Ip, TaskData taskData, int type) {
+    public int addToCompleteQueue(String Ip, TaskData taskData, int type) {
         HashMap<String, ArrayList<TaskData>> completeQueue;
         if(type == 1) {
             completeQueue = this.completeMapQueue;
@@ -122,12 +135,18 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(completeQueue.containsKey(Ip)) {
-            completeQueue.get(Ip).add(taskData);
+            if(completeQueue.get(Ip).add(taskData)) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
         }
         else {
             ArrayList<TaskData> td = new ArrayList<TaskData>();
             td.add(taskData);
             completeQueue.put(Ip, td);
+            return 1;
         }
     }
 
@@ -182,7 +201,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         return null;
     }
 
-    public void rmFromToProcessQueue(String Ip, TaskData td, int type) {
+    public int rmFromToProcessQueue(String Ip, TaskData td, int type) {
         HashMap<String, ArrayList<TaskData>> toProcessQueue;
         if(type == 1) {
             toProcessQueue = this.toProcessMapQueue;
@@ -192,11 +211,17 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(toProcessQueue.containsKey(Ip)) {
-            toProcessQueue.get(Ip).remove(td);
+            if(toProcessQueue.get(Ip).remove(td)) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
         }
+        return 0;
     }
 
-    public void rmFromProcessingQueue(String Ip, TaskData td, int type) {
+    public int rmFromProcessingQueue(String Ip, TaskData td, int type) {
         HashMap<String, ArrayList<TaskData>> processingQueue;
         if(type == 1) {
             processingQueue = this.processingMapQueue;
@@ -206,11 +231,17 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(processingQueue.containsKey(Ip)) {
-            processingQueue.get(Ip).remove(td);
+            if(processingQueue.get(Ip).remove(td)) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
         }
+        return 0;
     }
 
-    public void rmFromCompleteQueue(String Ip, TaskData td, int type) {
+    public int rmFromCompleteQueue(String Ip, TaskData td, int type) {
         HashMap<String, ArrayList<TaskData>> completeQueue;
         if(type == 1) {
             completeQueue = this.completeMapQueue;
@@ -220,8 +251,14 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
 
         if(completeQueue.containsKey(Ip)) {
-            completeQueue.get(Ip).remove(td);
+            if(completeQueue.get(Ip).remove(td)) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
         }
+        return 0;
     }
 
     public synchronized int getAndIncrementJobID() {
@@ -325,10 +362,14 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 mapTaskStatus = heartBeatRequest.getMapStatus(i);
                 if(mapTaskStatus.getTaskCompleted()) {
                     TaskData td;
-                    if((td = getFromToProcessQueue(taskTrackerIP, 1) != null) {
-                        rmFromToProcessQueue(taskTrackerIP, td, 1);
-                        addToCompleteQueue(taskTrackerIP, td, 1);
+                    if((td = getFromProcessingQueue(taskTrackerIP, 1)) != null) {
+                        synchronized(queueLock) {
+                            rmFromProcessingQueue(taskTrackerIP, td, 1);
+                            addToCompleteQueue(taskTrackerIP, td, 1);
+                        }
                     }
+                    System.out.println("processingMapQueue after reading heartbeat request: " + processingMapQueue.toString());
+                    System.out.println("completeMapQueue after reading heartbeat request: " + completeMapQueue.toString());
                 }
             }
 
@@ -338,9 +379,13 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 if(reduceTaskStatus.getTaskCompleted()) {
                     TaskData td;
                     if((td = getFromToProcessQueue(taskTrackerIP, 2)) != null) {
-                        rmFromToProcessQueue(taskTrackerIP, td, 2);
-                        addToCompleteQueue(taskTrackerIP, td, 2);
+                        synchronized(queueLock) {
+                            rmFromToProcessQueue(taskTrackerIP, td, 2);
+                            addToCompleteQueue(taskTrackerIP, td, 2);
+                        }
                     }
+                    System.out.println("processingReduceQueue after reading heartbeat request: " + processingMapQueue.toString());
+                    System.out.println("completeReduceQueue after reading heartbeat request: " + completeMapQueue.toString());
                 }
             }
 
@@ -380,9 +425,16 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
                     heartBeatResponseBuilder.addMapTasks(mapTaskInfoBuilder);
 
-                    //move task from toProcess to processing queue
-                    rmFromToProcessQueue(taskTrackerIP, taskData, type);
-                    addToProcessingQueue(taskTrackerIP, taskData, type);
+                    System.out.println("Sending task " + taskData.toString() +" to " + taskTrackerIP);
+                    synchronized(queueLock) {
+                        //move task from toProcess to processing queue
+                        rmFromToProcessQueue(taskTrackerIP, taskData, type);
+                        addToProcessingQueue(taskTrackerIP, taskData, type);
+                        System.out.println("toProcessQueue after sending task with taskid: "
+                                + taskID + ": " + toProcessMapQueue.toString());
+                        System.out.println("processingReduceQueue after sending task with taskid: "
+                                + taskID + ": " + processingMapQueue.toString());
+                    }
                 }
                 else if(!toProcessReduceQueue.isEmpty()) { //currently using for reduce
                     type = 2;
@@ -413,11 +465,16 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
                     heartBeatResponseBuilder.addReduceTasks(reducerTaskInfoBuilder);
 
-                    //move task from toProcess to processing queue
-                    rmFromToProcessQueue(taskTrackerIP, taskData, type);
-                    addToProcessingQueue(taskTrackerIP, taskData, type);
-
                     System.out.println("Sending task " + taskData.toString() +" to " + taskTrackerIP);
+                    synchronized(queueLock) {
+                        //move task from toProcess to processing queue
+                        rmFromToProcessQueue(taskTrackerIP, taskData, type);
+                        addToProcessingQueue(taskTrackerIP, taskData, type);
+                        System.out.println("toProcessReduceQueue after sending task with taskid: "
+                                + taskID + ": " + toProcessReduceQueue.toString());
+                        System.out.println("processingReduceQueue after sending task with taskid: "
+                                + taskID + ": " + processingReduceQueue.toString());
+                    }
                 }
                 else {
                     // Don't print, too noisy.
@@ -455,9 +512,6 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         String output;
         int jobID;
         int taskID;
-
-        public TaskData() {
-        }
 
         public TaskData(int BlockNum,
                 String Mapper,
@@ -596,16 +650,18 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 System.out.println("Queuing: " + IPToQueueTo +" with map task, on block number: " + blockNumber);
 
                 //add the map task to the toProcessQueue
-                this.parentJT.addToProcessQueue(IPToQueueTo, //String
-                        new TaskData(blockNumber, //int
-                            this.getMapper(), //String
-                            this.getReducer(), //String
-                            this.getInput(), //String
-                            this.getOutput(), //String
-                            this.getJID(), //int
-                            this.assignTID()), 1); // int
+                synchronized(queueLock) {
+                    this.parentJT.addToProcessQueue(IPToQueueTo, //String
+                            new TaskData(blockNumber, //int
+                                this.getMapper(), //String
+                                this.getReducer(), //String
+                                this.getInput(), //String
+                                this.getOutput(), //String
+                                this.getJID(), //int
+                                this.assignTID()), 1); // int
+                }
 
-                //incrment the num of map tasks by 1
+                //increment the num of map tasks by 1
                 this.addMapTasks(1);
             }
             this.close();
