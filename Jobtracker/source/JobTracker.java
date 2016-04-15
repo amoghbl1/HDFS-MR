@@ -79,7 +79,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
     public boolean inToProcessQueue(int JID, ArrayList<String> taskIPs) {
         synchronized(queueLock) {
             for(String ip : taskIPs) {
-                ArrayList<TaskData> tds = this.toProcessQueue.get(ip);
+                ArrayList<TaskData> tds = this.toProcessMapQueue.get(ip);
                 for(TaskData td : tds) {
                     if(td.jobID == JID)
                         return true;
@@ -93,7 +93,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
     public boolean inProcessingQueue(int JID, ArrayList<String> taskIPs) {
         synchronized(queueLock) {
             for(String ip : taskIPs) {
-                ArrayList<TaskData> tds = this.processingQueue.get(ip);
+                ArrayList<TaskData> tds = this.processingMapQueue.get(ip);
                 for(TaskData td : tds) {
                     if(td.jobID == JID)
                         return true;
@@ -704,8 +704,8 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 if(toProcessFlag) {
                     toProcessFlag = this.parentJT.inToProcessQueue(this.getJID(), taskIPs);
                 }
-                else if(processingQueue) {
-                    processingQueue = this.parentJT.inProcessingQueue(this.getJID(), taskIPs);
+                else if(processingFlag) {
+                    processingFlag = this.parentJT.inProcessingQueue(this.getJID(), taskIPs);
                 }
             }
             this.parentJT.removeJobRunnerFromJRList(this.JID);
