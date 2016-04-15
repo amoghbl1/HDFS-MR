@@ -358,9 +358,10 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 mapTaskStatus = heartBeatRequest.getMapStatus(i);
                 if(mapTaskStatus.getTaskCompleted()) {
                     TaskData td;
-                    td = getFromToProcessQueue(taskTrackerIP, 1);
-                    rmFromToProcessQueue(taskTrackerIP, td, 1);
-                    addToCompleteQueue(taskTrackerIP, td, 1);
+                    if((td = getFromToProcessQueue(taskTrackerIP, 1) != null) {
+                        rmFromToProcessQueue(taskTrackerIP, td, 1);
+                        addToCompleteQueue(taskTrackerIP, td, 1);
+                    }
                 }
             }
 
@@ -369,9 +370,10 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 reduceTaskStatus = heartBeatRequest.getReduceStatus(i);
                 if(reduceTaskStatus.getTaskCompleted()) {
                     TaskData td;
-                    td = getFromToProcessQueue(taskTrackerIP, 2);
-                    rmFromToProcessQueue(taskTrackerIP, td, 2);
-                    addToCompleteQueue(taskTrackerIP, td, 2);
+                    if((td = getFromToProcessQueue(taskTrackerIP, 2)) != null) {
+                        rmFromToProcessQueue(taskTrackerIP, td, 2);
+                        addToCompleteQueue(taskTrackerIP, td, 2);
+                    }
                 }
             }
 
