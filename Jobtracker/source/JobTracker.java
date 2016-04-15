@@ -74,6 +74,33 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
     }
 
+    // Checks if a certain JID is present in any of the taskData objs in all mappings of the ToProcessQueue
+    public boolean inToProcessQueue(int JID, ArrayList<String> taskIPs) {
+        // Need to add a lock here
+        for(String ip : taskIPs) {
+            ArrayList<TaskData> tds = this.toProcessQueue.get(ip);
+            for(TaskData td : tds) {
+                if(td.jobID == JID)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    // Checks if a certain JID is present in any of the taskData objs in all mappings of the ProcessingQueue
+    public boolean inProcessingQueue(int JID, ArrayList<String> taskIPs) {
+        // Need to add a lock here
+        for(String ip : taskIPs) {
+            ArrayList<TaskData> tds = this.processingQueue.get(ip);
+            for(TaskData td : tds) {
+                if(td.jobID == JID)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+
     public void addToProcessQueue(String Ip, TaskData taskData, int type) {
         HashMap<String, ArrayList<TaskData>> toProcessQueue;
         if(type == 1) {
@@ -565,6 +592,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
             // Using the hash map to now store blocks that it needs to process in map phase
             // Trying to fins the most even distribution for optimization
             HashMap<String, Integer> ipMapTaskCount = new HashMap<String, Integer>();
+            ArrayList<String> taskIPs = new ArrayList<String>(); // Extra book keeping to make a parent check faster.
             for(int i=0; i < mappings.getMappingsCount(); i++) {
                 int blockNumber  = mappings.getMappings(i).getBlockNumber();
                 int IPsLength = mappings.getMappings(i).getDataNodeIPsCount();
@@ -592,6 +620,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 }
                 else {
                     ipMapTaskCount.put(IPToQueueTo, 1);
+                    taskIPs.add(IPToQueueTo);
                 }
                 System.out.println("Queuing: " + IPToQueueTo +" with map task, on block number: " + blockNumber);
 
@@ -609,6 +638,18 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 this.addMapTasks(1);
             }
             this.close();
+            // Looping until there are no more tasks pertaining to this JID in the ToProcessing or Processing Queue.
+            boolean toProcessFlag = true;
+            boolean processingFlag = true;
+            while(toProcessFlag || processingFlag) {
+                try { Thread.sleep(5000); } catch (Exception e){}
+                if(toProcessFlag) {
+                    toProcessFlag = this.parentJT.inToProcessQueue(this.getJID(), taskIPs);
+                }
+                else if(processingQueue) {
+                    processingQueue = this.parentJT.inProcessingQueue(this.getJID(), taskIPs);
+                }
+            }
             this.parentJT.removeJobRunnerFromJRList(this.JID);
         }
 
