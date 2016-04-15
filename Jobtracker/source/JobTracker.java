@@ -695,7 +695,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 //increment the num of map tasks by 1
                 this.addMapTasks(1);
             }
-            this.close();
+            
             // Looping until there are no more tasks pertaining to this JID in the ToProcessing or Processing Queue.
             boolean toProcessFlag = true;
             boolean processingFlag = true;
@@ -708,6 +708,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                     processingFlag = this.parentJT.inProcessingQueue(this.getJID(), taskIPs);
                 }
             }
+            this.close();
             this.parentJT.removeJobRunnerFromJRList(this.JID);
         }
 
