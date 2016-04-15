@@ -138,7 +138,7 @@ public class TaskTracker {
                         mapTaskStatusBuilder.setTaskCompleted(true);
                         mapTaskStatusBuilder.setMapOutputFile(mapTh.mapOutputFile);
                         heartBeatRequestBuilder.addMapStatus(mapTaskStatusBuilder);
-                        synchronized(queueLock) {
+                        synchronized(parentTT.queueLock) {
                             completeMapQueue.remove(compMapQueueEntry.getKey());
                         }
                     }
@@ -154,7 +154,7 @@ public class TaskTracker {
                         reduceTaskStatusBuilder.setTaskId(reduceTh.taskID);
                         reduceTaskStatusBuilder.setTaskCompleted(true);
                         heartBeatRequestBuilder.addReduceStatus(reduceTaskStatusBuilder);
-                        synchronized(queueLock) {
+                        synchronized(parentTT.queueLock) {
                             completeReduceQueue.remove(compReduceQueueEntry.getKey());
                         }
                     }
@@ -162,12 +162,12 @@ public class TaskTracker {
                     try {
                         JobTrackerInterface jobtracker = (JobTrackerInterface) Naming.lookup("//" +
                             jobTrackerIP + "/HDFSMRJobTracker");
-                    } catch Exception(e) {
+                        responseEncoded = jobtracker.heartBeat(
+                            heartBeatRequestBuilder.build().toByteArray());
+                    } catch (Exception e) {
                         System.out.println("Job Tracker Down??");
                     }
 
-                    responseEncoded = jobtracker.heartBeat(
-                            heartBeatRequestBuilder.build().toByteArray());
                     try{
 
                         // Parse the Heart Beat Response and spawn a new thread with that data
