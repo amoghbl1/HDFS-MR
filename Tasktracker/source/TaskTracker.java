@@ -138,6 +138,9 @@ public class TaskTracker {
                         mapTaskStatusBuilder.setTaskCompleted(true);
                         mapTaskStatusBuilder.setMapOutputFile(mapTh.mapOutputFile);
                         heartBeatRequestBuilder.addMapStatus(mapTaskStatusBuilder);
+                        synchronized(queueLock) {
+                            completeMapQueue.remove(compMapQueueEntry.getKey());
+                        }
                     }
 
                     Iterator<Map.Entry<Integer, ReduceThreadRunnable>> completeReduceTaskIterator 
@@ -151,10 +154,17 @@ public class TaskTracker {
                         reduceTaskStatusBuilder.setTaskId(reduceTh.taskID);
                         reduceTaskStatusBuilder.setTaskCompleted(true);
                         heartBeatRequestBuilder.addReduceStatus(reduceTaskStatusBuilder);
+                        synchronized(queueLock) {
+                            completeReduceQueue.remove(compReduceQueueEntry.getKey());
+                        }
                     }
 
-                    JobTrackerInterface jobtracker = (JobTrackerInterface) Naming.lookup("//" +
+                    try {
+                        JobTrackerInterface jobtracker = (JobTrackerInterface) Naming.lookup("//" +
                             jobTrackerIP + "/HDFSMRJobTracker");
+                    } catch Exception(e) {
+                        System.out.println("Job Tracker Down??");
+                    }
 
                     responseEncoded = jobtracker.heartBeat(
                             heartBeatRequestBuilder.build().toByteArray());
