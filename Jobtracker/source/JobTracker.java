@@ -77,12 +77,13 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
     // Checks if a certain JID is present in any of the taskData objs in all mappings of the ToProcessQueue
     public boolean inToProcessQueue(int JID, ArrayList<String> taskIPs) {
-        // Need to add a lock here
-        for(String ip : taskIPs) {
-            ArrayList<TaskData> tds = this.toProcessQueue.get(ip);
-            for(TaskData td : tds) {
-                if(td.jobID == JID)
-                    return true;
+        synchronized(queueLock) {
+            for(String ip : taskIPs) {
+                ArrayList<TaskData> tds = this.toProcessQueue.get(ip);
+                for(TaskData td : tds) {
+                    if(td.jobID == JID)
+                        return true;
+                }
             }
         }
         return false;
@@ -90,12 +91,13 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
     // Checks if a certain JID is present in any of the taskData objs in all mappings of the ProcessingQueue
     public boolean inProcessingQueue(int JID, ArrayList<String> taskIPs) {
-        // Need to add a lock here
-        for(String ip : taskIPs) {
-            ArrayList<TaskData> tds = this.processingQueue.get(ip);
-            for(TaskData td : tds) {
-                if(td.jobID == JID)
-                    return true;
+        synchronized(queueLock) {
+            for(String ip : taskIPs) {
+                ArrayList<TaskData> tds = this.processingQueue.get(ip);
+                for(TaskData td : tds) {
+                    if(td.jobID == JID)
+                        return true;
+                }
             }
         }
         return false;
