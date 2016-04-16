@@ -8,4 +8,4 @@ make rmiregistry
 sleep 2
 
 cd Datanode && java -cp ./bin/:../protobuf-java-2.6.1.jar: DataNode &
-cd Tasktracker && java -cp ./bin:../protobuf-java-2.6.1.jar: TaskTracker &
+cd Tasktracker && java -cp ./bin:../protobuf-java-2.6.1.jar:../mapper-reducer.jar: TaskTracker &

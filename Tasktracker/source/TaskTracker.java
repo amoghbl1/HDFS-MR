@@ -315,13 +315,17 @@ public class TaskTracker {
             this.mapOutputFile = "job_" + jobId + "_map_" + taskId;
         }
         public void run() {
-            //put to sleep for 2 seconds for testing purpose
-            try { Thread.sleep(2000); } catch (Exception e) {
-                System.out.println("Problem in trying to sleep thread?? " + e.getMessage());
+            System.out.println("Map Thread running task with tid: " + this.taskID + " for jid: " + this.jobID);
+
+            // Run map function on Mapper class, who we have from interface.
+            // Map function takes string and loads that class and does whatever it has to.
+            try {
+                MapperInterface mapper = (MapperInterface) Class.forName(this.mapperName).newInstance(); 
+                mapper.map("");
+            } catch(Exception e) {
+                System.out.println("Problem loading class dynamically??" + e.getMessage());
                 e.printStackTrace();
             }
-            System.out.println("Map Thread running task with tid: " + this.taskID);
-
             synchronized(this.parentTT.queueLock) {
                 MapThreadRunnable r;
                 if((r = this.parentTT.processingMapQueue.get(this.taskID)) == null) {

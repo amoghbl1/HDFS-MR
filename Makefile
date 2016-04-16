@@ -20,7 +20,7 @@ jobtracker: protobuf
 	@echo "Job Tracker compiled..."
 
 tasktracker: protobuf
-	cd Tasktracker && mkdir -p bin && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java
+	cd Tasktracker && mkdir -p bin && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar:../mapper-reducer.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java source/MapperInterface.java source/ReducerInterface.java
 	@echo "Task Tracker Compiled..."
 
 rmiregistry:
@@ -44,9 +44,16 @@ protobuf:
 	cp -r com Tasktracker
 
 conf:
-	echo "#conf file for tasktracker\n" > Tasktracker/hdfs_mr_task_tracker.conf
-	echo "jobTrackerIP 10.3.0.193\nmyIP 127.0.0.1\nmyID 1" >> Tasktracker/hdfs_mr_task_tracker.conf
-	echo "#conf file for datanode\n" > Datanode/hdfs_data_node.conf
-	echo "nameNodeIP 10.3.0.193\nmyIP 127.0.0.1\nmyID 1" >> Datanode/hdfs_data_node.conf
-	echo "#conf file for jobtracker\n" > Jobtracker/hdfs_mr_job_tracker.conf
+	echo "# conf file for tasktracker" > Tasktracker/hdfs_mr_task_tracker.conf
+	echo "jobTrackerIP 10.3.0.193" >> Tasktracker/hdfs_mr_task_tracker.conf
+	echo "myIP 127.0.0.1" >> Tasktracker/hdfs_mr_task_tracker.conf
+	echo "myID 1" >> Tasktracker/hdfs_mr_task_tracker.conf
+	echo "# conf file for datanode" > Datanode/hdfs_data_node.conf
+	echo "nameNodeIP 10.3.0.193" >> Datanode/hdfs_data_node.conf
+	echo "myIP 127.0.0.1" >> Datanode/hdfs_data_node.conf
+	echo "myID 1" >> Datanode/hdfs_data_node.conf
+	echo "# conf file for jobtracker" > Jobtracker/hdfs_mr_job_tracker.conf
 	echo "nameNodeIP 10.3.0.193" >> Jobtracker/hdfs_mr_job_tracker.conf
+	echo "# conf file for client" > Client/hdfs_mr_client.conf
+	echo "nameNodeIP 10.3.0.193" >> Client/hdfs_mr_client.conf
+	echo "jobTrackerIP 10.3.0.193" >> Client/hdfs_mr_client.conf
