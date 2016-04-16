@@ -363,19 +363,19 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                     int jid = jobStatusRequest.getJobId();
 
 
-                    int totalTasks = this.countTasks(this.toProcessMapQueue, jid);
-                    totalTasks += this.countTasks(this.processingMapQueue, jid);
-                    int completedTasks = this.countTasks(this.completeMapQueue, jid);
-                    totalTasks += completedTasks;
-                    jobStatusResponseBuilder.setTotalMapTasks(totalTasks);
-                    jobStatusResponseBuilder.setNumMapTasksCompleted(completedTasks);
+                    jobStatusResponseBuilder.setMapTasksInToProcess(
+                            this.countTasks(this.toProcessMapQueue, jid));
+                    jobStatusResponseBuilder.setMapTasksInProcessing(
+                            this.countTasks(this.processingMapQueue, jid));
+                    jobStatusResponseBuilder.setMapTasksInCompleted(
+                            this.countTasks(this.completeMapQueue, jid));
 
-                    totalTasks = this.countTasks(this.toProcessReduceQueue, jid);
-                    totalTasks += this.countTasks(this.processingReduceQueue, jid);
-                    completedTasks = this.countTasks(this.completeReduceQueue, jid);
-                    totalTasks += completedTasks;
-                    jobStatusResponseBuilder.setTotalReduceTasks(0);
-                    jobStatusResponseBuilder.setNumReduceTasksCompleted(0);
+                    jobStatusResponseBuilder.setReduceTasksInToProcess(
+                            this.countTasks(this.toProcessReduceQueue, jid));
+                    jobStatusResponseBuilder.setReduceTasksInProcessing(
+                            this.countTasks(this.processingReduceQueue, jid));
+                    jobStatusResponseBuilder.setReduceTasksInCompleted(
+                            this.countTasks(this.completeReduceQueue, jid));
                 }
                 else {
                     jobStatusResponseBuilder.setJobDone(true);
