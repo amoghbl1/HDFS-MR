@@ -20,9 +20,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class JobTracker extends UnicastRemoteObject implements JobTrackerInterface {
 
@@ -362,10 +360,22 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
             synchronized(CJTLock) {
                 if(currentJobThreads.containsKey(jobStatusRequest.getJobId())) {
                     jobStatusResponseBuilder.setJobDone(false);
-                    jobStatusResponseBuilder.setTotalMapTasks(0);
-                    jobStatusResponseBuilder.setNumMapTasksStarted(0);
+                    int jid = jobStatusRequest.getJobId();
+
+
+                    int totalTasks = this.countTasks(this.toProcessMapQueue, jid);
+                    totalTasks += this.countTasks(this.processingMapQueue, jid);
+                    int completedTasks = this.countTasks(this.completeMapQueue, jid);
+                    totalTasks += completedTasks;
+                    jobStatusResponseBuilder.setTotalMapTasks(totalTasks);
+                    jobStatusResponseBuilder.setNumMapTasksCompleted(completedTasks);
+
+                    totalTasks = this.countTasks(this.toProcessReduceQueue, jid);
+                    totalTasks += this.countTasks(this.processingReduceQueue, jid);
+                    completedTasks = this.countTasks(this.completeReduceQueue, jid);
+                    totalTasks += completedTasks;
                     jobStatusResponseBuilder.setTotalReduceTasks(0);
-                    jobStatusResponseBuilder.setNumReduceTasksStarted(0);
+                    jobStatusResponseBuilder.setNumReduceTasksCompleted(0);
                 }
                 else {
                     jobStatusResponseBuilder.setJobDone(true);

@@ -24,9 +24,9 @@ message JobStatusResponse {
   optional int32 status = 1;
   optional bool jobDone = 2;
   optional int32 totalMapTasks = 3;
-  optional int32 numMapTasksStarted = 4;
+  optional int32 numMapTasksCompleted = 4;
   optional int32 totalReduceTasks = 5;
-  optional int32 numReduceTasksStarted = 6;
+  optional int32 numReduceTasksCompleted = 6;
 }
 
 message MapTaskStatus {
