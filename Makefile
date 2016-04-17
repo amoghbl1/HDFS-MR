@@ -23,6 +23,10 @@ tasktracker: protobuf
 	cd Tasktracker && mkdir -p bin && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar:../mapper-reducer.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java source/MapperInterface.java source/ReducerInterface.java source/NameNodeInterface.java source/DataNodeInterface.java source/RendezvousRunnableInterface.java
 	@echo "Task Tracker Compiled..."
 
+jar:
+	cd MapperReducer && mkdir -p bin && javac -d bin/ -cp . source/MapperInterface.java source/ReducerInterface.java source/testMapper.java
+	cd MapperReducer/bin && jar cf mapper-reducer.jar *.class
+
 rmiregistry:
 	CLASSPATH=Namenode/bin:Datanode/bin:Jobtracker/bin:Tasktracker/bin rmiregistry &
 
