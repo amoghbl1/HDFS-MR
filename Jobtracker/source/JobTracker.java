@@ -21,6 +21,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class JobTracker extends UnicastRemoteObject implements JobTrackerInterface {
 
@@ -86,6 +88,26 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
             }
         }
         return count;
+    }
+
+    //Move all the tasks of a particular job from one queu to antother
+    public void moveTasks(HashMap<String, ArrayList<TaskData>> fromQueue, HashMap<String, ArrayList<TaskData>> toQueue, int jid) {
+        for(Map.Entry<String, ArrayList<TaskData>> entry : toQueue.entrySet()) {
+            String ip = entry.getKey();
+            ArrayList<TaskData> tdlist = new ArrayList<TaskData>();
+            ArrayList<TaskData> tdlistiterator = entry.getValue();
+            for(TaskData td : tdlistiterator) {
+                if(td.jobID == jid) {
+                    synchronized(queueLock) {
+                        fromQueue.get(ip).remove(td);
+                    }
+                    tdlist.add(td);
+                }
+            }
+            synchronized(queueLock) {
+                toQueue.put(ip, tdlist);
+            }
+        }
     }
 
     // Checks if a certain JID is present in any of the taskData objs in all mappings of the ToProcessQueue
