@@ -149,7 +149,7 @@ public class TaskTracker {
                         mapTaskStatusBuilder.setMapOutputFile(mapTh.mapOutputFile);
                         heartBeatRequestBuilder.addMapStatus(mapTaskStatusBuilder);
                         synchronized(parentTT.queueLock) {
-                            completeMapQueue.remove(compMapQueueEntry.getKey());
+                            completeMapTaskIterator.remove();
                         }
                     }
 
@@ -165,7 +165,7 @@ public class TaskTracker {
                         reduceTaskStatusBuilder.setTaskCompleted(true);
                         heartBeatRequestBuilder.addReduceStatus(reduceTaskStatusBuilder);
                         synchronized(parentTT.queueLock) {
-                            completeReduceQueue.remove(compReduceQueueEntry.getKey());
+                            completeReduceTaskIterator.remove();
                         }
                     }
 
