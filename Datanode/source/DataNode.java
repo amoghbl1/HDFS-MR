@@ -336,7 +336,6 @@ public class DataNode extends UnicastRemoteObject implements DataNodeInterface {
                     DataNodeReportMappings.Builder dataNodeReportMappingsBuilder = DataNodeReportMappings.newBuilder();
 
                     for(Integer i : blocks) {
-                        System.out.println("Added mapping!");
                         DataNodeReportMapping.Builder dataNodeReportMappingBuilder = DataNodeReportMapping.newBuilder();
                         dataNodeReportMappingBuilder.setBlockNumber(i);
                         dataNodeReportMappingBuilder.setDataNodeIP(parentNode.getMyIP());
