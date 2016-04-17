@@ -12,6 +12,7 @@ import com.distributed.systems.MRProtos.MapTaskStatus;
 import com.distributed.systems.MRProtos.ReducerTaskInfo;
 import com.distributed.systems.MRProtos.ReduceTaskStatus;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -170,9 +171,9 @@ public class TaskTracker {
 
                     try {
                         JobTrackerInterface jobtracker = (JobTrackerInterface) Naming.lookup("//" +
-                            jobTrackerIP + "/HDFSMRJobTracker");
+                                jobTrackerIP + "/HDFSMRJobTracker");
                         responseEncoded = jobtracker.heartBeat(
-                            heartBeatRequestBuilder.build().toByteArray());
+                                heartBeatRequestBuilder.build().toByteArray());
                     } catch (Exception e) {
                         System.out.println("Job Tracker Down??");
                     }
@@ -500,6 +501,15 @@ public class TaskTracker {
                 this.put(this.mapOutputFile);
                 // Closing the file on HDFS
                 this.close();
+
+                // Done with all processing, doing cleanup.
+                try {
+                    new File(tempFileName).delete();
+                    new File(this.mapOutputFile).delete();
+                } catch (Exception e) {
+                    System.out.println("Problem cleaning up?? " + e.getMessage());
+                    e.printStackTrace();
+                }
             } catch(Exception e) {
                 System.out.println("Problem loading class dynamically??" + e.getMessage());
                 e.printStackTrace();
@@ -521,7 +531,7 @@ public class TaskTracker {
     }
 
     public static class ReduceThreadRunnable implements Runnable {
-        
+
         int jobID;
         int taskID;
         String reducerName;
