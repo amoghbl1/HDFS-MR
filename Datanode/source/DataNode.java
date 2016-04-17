@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.rmi.ConnectException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -140,7 +141,7 @@ public class DataNode extends UnicastRemoteObject implements DataNodeInterface {
 
     /* ReadBlockResponse readBlock(ReadBlockRequest)) */
     /* Method to read data from any block given block-number */
-    public synchronized byte[] readBlock(byte[] request) throws RemoteException {
+    public byte[] readBlock(byte[] request) throws RemoteException {
         int blockNumber = -1;
         byte[] blockBytes = new byte[ this.BLOCK_SIZE_IN_BYTES ];
         byte[] blockToSend = null;
@@ -192,7 +193,7 @@ public class DataNode extends UnicastRemoteObject implements DataNodeInterface {
 
     /* WriteBlockResponse writeBlock(WriteBlockRequest) */
     /* Method to write data to a specific block */
-    public synchronized byte[] writeBlock(byte[] protobuf, byte[] bytes) throws RemoteException {
+    public byte[] writeBlock(byte[] protobuf, byte[] bytes) throws RemoteException {
         System.out.println("Write block called.");
         WriteBlockRequest writeBlockRequest;
         WriteBlockResponse.Builder writeBlockResponseBuilder = WriteBlockResponse.newBuilder();
@@ -354,15 +355,24 @@ public class DataNode extends UnicastRemoteObject implements DataNodeInterface {
 
                         // Do some stuff with the response maybe.
                     } catch (Exception e) {
-                        System.out.println("Problem uploading DN Report?? " + e.getMessage());
-                        e.printStackTrace();
+                        if( e instanceof ConnectException) {
+                            System.out.println("Name Node is down!! Will sleep for a bit and wait for it to come back.");
+                            parentNode.setDirtyBit(true);
+                            try {
+                                Thread.sleep(sleepTime);
+                            } catch (Exception e1) {
+                                System.out.println("Thread Interrupted?? " + e1.getMessage());
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            System.out.println("Problem uploading DN Report?? " + e.getMessage());
+                            e.printStackTrace();
+                        }
                     }
 
                     sleepTime = DN_REPORT_SLEEP_TIME;
                     System.out.println("Setting sleep time back to default! ");
-                    if(parentNode.getDirtyBit()) {
-                        parentNode.setDirtyBit(false);
-                    }
+                    parentNode.setDirtyBit(false);
                 } else {
                     if(sleepTime < MAX_DN_REPORT_SLEEP_TIME)
                         sleepTime = sleepTime * 2;
@@ -407,9 +417,13 @@ public class DataNode extends UnicastRemoteObject implements DataNodeInterface {
                     // Do some stuff with the response maybe.
                 } catch (Exception e) {
                     // Uploading DN Report if my NN comes back up.
-                    this.parentNode.setDirtyBit(true);
-                    System.out.println("Problem heart beating?? " + e.getMessage());
-                    e.printStackTrace();
+                    if( e instanceof ConnectException) {
+                        System.out.println("Name Node is down!!");
+                    } else {
+                        this.parentNode.setDirtyBit(true);
+                        System.out.println("Problem heart beating?? " + e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
             try {
                     Thread.sleep(HEART_BEAT_TIME);
