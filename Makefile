@@ -20,7 +20,7 @@ jobtracker: protobuf
 	@echo "Job Tracker compiled..."
 
 tasktracker: protobuf
-	cd Tasktracker && mkdir -p bin && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar:../mapper-reducer.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java source/MapperInterface.java source/ReducerInterface.java
+	cd Tasktracker && mkdir -p bin && javac -d bin/ -cp .:../protobuf-java-2.6.1.jar:../mapper-reducer.jar: source/TaskTracker.java source/JobTrackerInterface.java com/distributed/systems/MRProtos.java source/MapperInterface.java source/ReducerInterface.java source/NameNodeInterface.java source/DataNodeInterface.java source/RendezvousRunnableInterface.java
 	@echo "Task Tracker Compiled..."
 
 rmiregistry:
@@ -46,6 +46,7 @@ protobuf:
 conf:
 	echo "# conf file for tasktracker" > Tasktracker/hdfs_mr_task_tracker.conf
 	echo "jobTrackerIP 10.3.0.193" >> Tasktracker/hdfs_mr_task_tracker.conf
+	echo "nameNodeIP 10.3.0.193" >> Tasktracker/hdfs_mr_task_tracker.conf
 	echo "myIP 127.0.0.1" >> Tasktracker/hdfs_mr_task_tracker.conf
 	echo "myID 1" >> Tasktracker/hdfs_mr_task_tracker.conf
 	echo "# conf file for datanode" > Datanode/hdfs_data_node.conf

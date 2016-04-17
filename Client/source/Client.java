@@ -490,7 +490,7 @@ public class Client {
             for(String s : listFiles) {
                 if(args[1].equals(s)) {
                     System.out.println("Sorry! File already exists.");
-                    return;
+                    // return;
                 }
             }
 
