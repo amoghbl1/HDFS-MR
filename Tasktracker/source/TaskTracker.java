@@ -210,32 +210,14 @@ public class TaskTracker {
                                     blockNumber = mapTask.getBlockNumber();
                                     ip = mapTask.getIp();
 
+                                    MapThreadRunnable r  = new MapThreadRunnable(jobID, //int
+                                            taskID, //int
+                                            mapperName, //String
+                                            blockNumber, //int
+                                            ip, //String
+                                            parentTT); //Tasktracker
                                     synchronized(parentTT.queueLock) {
-                                        System.out.println("Starting a map thread!! ");
-
-                                        MapThreadRunnable r  = new MapThreadRunnable(jobID, //int
-                                                taskID, //int
-                                                mapperName, //String
-                                                blockNumber, //int
-                                                ip, //String
-                                                parentTT); //Tasktracker
-                                        if(processingMapQueue.size() < parentTT.getMaxConcurrentThread()) {
-                                            Thread th = new Thread(r);
-                                            th.start();
-                                            //decrease the num of free map slots
-                                            parentTT.myNumMapSlotsFree--;
-                                            synchronized(parentTT.queueLock) {
-                                                parentTT.processingMapQueue.put(taskID, r);
-                                            }
-                                            System.out.println("Map Thread with taskID " + taskID + "started");
-                                            System.out.println("processing queue after task with starting task with task ID: "
-                                                    + taskID + ": "  + processingMapQueue.toString());
-                                        }
-                                        else {
-                                            synchronized(parentTT.queueLock) {
-                                                parentTT.toProcessMapQueue.put(taskID, r);
-                                            }
-                                        }
+                                        parentTT.toProcessMapQueue.put(taskID, r);
                                     }
                                 }
                             }
@@ -247,12 +229,18 @@ public class TaskTracker {
                                     Map.Entry<Integer, MapThreadRunnable> toPThEntry = toPThIt.next();
                                     int tid = toPThEntry.getKey();
                                     MapThreadRunnable mtr = toPThEntry.getValue();
+
+                                    System.out.println("Starting a map thread!! ");
+
                                     synchronized(parentTT.queueLock) {
                                         toPThIt.remove();
                                         parentTT.processingMapQueue.put(tid, mtr);
                                     }
                                     Thread th = new Thread(mtr);
                                     th.start();
+                                    System.out.println("Map Thread with taskID " + mtr.taskID + " started");
+                                    System.out.println("processing map queue after task with starting task with task ID: "
+                                            + mtr.taskID + ": "  + processingMapQueue.toString());
                                 }
                             }
 
@@ -273,33 +261,15 @@ public class TaskTracker {
                                     reducerName = reduceTaskInfo.getReducerName();
                                     outputFile = reduceTaskInfo.getOutputFile();
                                     //mapOutputFile = reduceTaskInfo.getMapOutputFile();
+                                    ReduceThreadRunnable r  = new ReduceThreadRunnable(jobID, //int
+                                            taskID, //int
+                                            reducerName, //String
+                                            mapOutputFile, //String
+                                            outputFile, //String
+                                            parentTT); //Tasktracker
                                     synchronized(parentTT.queueLock) {
-                                        System.out.println("Starting a reduce thread!! ");
-
-                                        ReduceThreadRunnable r  = new ReduceThreadRunnable(jobID, //int
-                                                taskID, //int
-                                                reducerName, //String
-                                                mapOutputFile, //String
-                                                outputFile, //String
-                                                parentTT); //Tasktracker
-                                        if(processingReduceQueue.size() < parentTT.getMaxConcurrentThread()) {
-                                            Thread th = new Thread(r);
-                                            th.start();
-                                            //decrease the num of free map slots
-                                            parentTT.myNumReduceSlotsFree--;
-                                            synchronized(parentTT.queueLock) {
-                                                parentTT.processingReduceQueue.put(taskID, r);
-                                            }
-                                            System.out.println("Reduce Thread with taskID " + taskID + "started");
-                                            System.out.println("processing queue after task with starting task with task ID: "
-                                                    + taskID + ": "  + processingReduceQueue.toString());
-                                        }
-                                        else {
-                                            synchronized(parentTT.queueLock) {
-                                                parentTT.toProcessReduceQueue.put(taskID, r);
-                                            }
-                                        }
-                                    } 
+                                        parentTT.toProcessReduceQueue.put(taskID, r);
+                                    }
                                 }
                             }
 
@@ -310,12 +280,18 @@ public class TaskTracker {
                                     Map.Entry<Integer, ReduceThreadRunnable> toPThEntry = toPThIt.next();
                                     int tid = toPThEntry.getKey();
                                     ReduceThreadRunnable rtr = toPThEntry.getValue();
+
+                                    System.out.println("Starting a reduce thread!! ");
+
                                     synchronized(parentTT.queueLock) {
                                         toPThIt.remove();
                                         parentTT.processingReduceQueue.put(tid, rtr);
                                     }
                                     Thread th = new Thread(rtr);
                                     th.start();
+                                    System.out.println("Reduce Thread with taskID " + rtr.taskID + " started");
+                                    System.out.println("processing reduce queue after task with starting task with task ID: "
+                                            + rtr.taskID + ": "  + processingReduceQueue.toString());
                                 }
                             }
 
@@ -560,13 +536,13 @@ public class TaskTracker {
                 this.close();
 
                 // Done with all processing, doing cleanup.
-                try {
+/*                try {
                     new File(tempFileName).delete();
                     new File(this.mapOutputFile).delete();
                 } catch (Exception e) {
                     System.out.println("Problem cleaning up?? " + e.getMessage());
                     e.printStackTrace();
-                }
+                }*/
             } catch(Exception e) {
                 System.out.println("Problem loading class dynamically??" + e.getMessage());
                 e.printStackTrace();
