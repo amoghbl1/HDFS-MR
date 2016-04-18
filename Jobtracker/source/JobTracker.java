@@ -111,7 +111,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
     }
 
     // Checks if a certain JID is present in any of the taskData objs in all mappings of the ToProcessQueue
-    public boolean inToProcessQueue(int JID, ArrayList<String> taskIPs) {
+    public boolean inToProcessMapQueue(int JID, ArrayList<String> taskIPs) {
         synchronized(queueLock) {
             for(String ip : taskIPs) {
                 ArrayList<TaskData> tds = this.toProcessMapQueue.get(ip);
@@ -125,7 +125,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
     }
 
     // Checks if a certain JID is present in any of the taskData objs in all mappings of the ProcessingQueue
-    public boolean inProcessingQueue(int JID, ArrayList<String> taskIPs) {
+    public boolean inProcessingMapQueue(int JID, ArrayList<String> taskIPs) {
         synchronized(queueLock) {
             for(String ip : taskIPs) {
                 ArrayList<TaskData> tds = this.processingMapQueue.get(ip);
@@ -138,6 +138,33 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         return false;
     }
 
+    // Checks if a certain JID is present in any of the taskData objs in all mappings of the ToProcessQueue
+    public boolean inToProcessReduceQueue(int JID, ArrayList<String> taskIPs) {
+        synchronized(queueLock) {
+            for(String ip : taskIPs) {
+                ArrayList<TaskData> tds = this.toProcessReduceQueue.get(ip);
+                for(TaskData td : tds) {
+                    if(td.jobID == JID)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Checks if a certain JID is present in any of the taskData objs in all mappings of the ProcessingQueue
+    public boolean inProcessingReduceQueue(int JID, ArrayList<String> taskIPs) {
+        synchronized(queueLock) {
+            for(String ip : taskIPs) {
+                ArrayList<TaskData> tds = this.processingReduceQueue.get(ip);
+                for(TaskData td : tds) {
+                    if(td.jobID == JID)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public int addToProcessQueue(String Ip, TaskData taskData, int type) {
         HashMap<String, ArrayList<TaskData>> toProcessQueue;
@@ -693,7 +720,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
             NameNodeBlockDataNodeMappingsResponse mappings = this.getBlocks(this.inputFile);
             // Block:IPs obtained as above protobuf object
             // Using the hash map to now store blocks that it needs to process in map phase
-            // Trying to fins the most even distribution for optimization
+            // Trying to find the most even distribution for optimization
             HashMap<String, Integer> ipMapTaskCount = new HashMap<String, Integer>();
             ArrayList<String> taskIPs = new ArrayList<String>(); // Extra book keeping to make a parent check faster.
             for(int i=0; i < mappings.getMappingsCount(); i++) {
@@ -742,19 +769,32 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 //increment the num of map tasks by 1
                 this.addMapTasks(1);
             }
-            
+
             // Looping until there are no more tasks pertaining to this JID in the ToProcessing or Processing Queue.
             boolean toProcessFlag = true;
             boolean processingFlag = true;
             while(toProcessFlag || processingFlag) {
                 try { Thread.sleep(5000); } catch (Exception e){}
                 if(toProcessFlag) {
-                    toProcessFlag = this.parentJT.inToProcessQueue(this.getJID(), taskIPs);
+                    toProcessFlag = this.parentJT.inToProcessMapQueue(this.getJID(), taskIPs);
                 }
                 else if(processingFlag) {
-                    processingFlag = this.parentJT.inProcessingQueue(this.getJID(), taskIPs);
+                    processingFlag = this.parentJT.inProcessingMapQueue(this.getJID(), taskIPs);
                 }
             }
+            // Now all the Map Tasks are complete, we schedule reduce tasks.
+            this.parentJT.moveTasks(this.parentJT.completeMapQueue, this.parentJT.toProcessReduceQueue, this.getJID());
+            toProcessFlag = true;
+            processingFlag = true;
+            while(toProcessFlag || processingFlag) {
+                try { Thread.sleep(5000); } catch (Exception e){}
+                if(toProcessFlag) {
+                    toProcessFlag = this.parentJT.inToProcessReduceQueue(this.getJID(), taskIPs);
+                }
+                else if(processingFlag) {
+                    processingFlag = this.parentJT.inProcessingReduceQueue(this.getJID(), taskIPs);
+                }
+            }           
             this.close();
             this.parentJT.removeJobRunnerFromJRList(this.JID);
         }
