@@ -141,7 +141,7 @@ public class DataNode extends UnicastRemoteObject implements DataNodeInterface {
 
     /* ReadBlockResponse readBlock(ReadBlockRequest)) */
     /* Method to read data from any block given block-number */
-    public byte[] readBlock(byte[] request) throws RemoteException {
+    public synchronized byte[] readBlock(byte[] request) throws RemoteException {
         int blockNumber = -1;
         byte[] blockBytes = new byte[ this.BLOCK_SIZE_IN_BYTES ];
         byte[] blockToSend = null;
@@ -193,7 +193,7 @@ public class DataNode extends UnicastRemoteObject implements DataNodeInterface {
 
     /* WriteBlockResponse writeBlock(WriteBlockRequest) */
     /* Method to write data to a specific block */
-    public byte[] writeBlock(byte[] protobuf, byte[] bytes) throws RemoteException {
+    public synchronized byte[] writeBlock(byte[] protobuf, byte[] bytes) throws RemoteException {
         System.out.println("Write block called.");
         WriteBlockRequest writeBlockRequest;
         WriteBlockResponse.Builder writeBlockResponseBuilder = WriteBlockResponse.newBuilder();

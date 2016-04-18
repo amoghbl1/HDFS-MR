@@ -222,28 +222,6 @@ public class TaskTracker {
                                 }
                             }
 
-                            else if(processingMapQueue.size() < parentTT.getMaxConcurrentThread()) {
-                                Iterator<Map.Entry<Integer, MapThreadRunnable>> toPThIt 
-                                    = parentTT.toProcessMapQueue.entrySet().iterator();
-                                while((parentTT.processingMapQueue.size() != parentTT.getMaxConcurrentThread()) && (toPThIt.hasNext())) {
-                                    Map.Entry<Integer, MapThreadRunnable> toPThEntry = toPThIt.next();
-                                    int tid = toPThEntry.getKey();
-                                    MapThreadRunnable mtr = toPThEntry.getValue();
-
-                                    System.out.println("Starting a map thread!! ");
-
-                                    synchronized(parentTT.queueLock) {
-                                        toPThIt.remove();
-                                        parentTT.processingMapQueue.put(tid, mtr);
-                                    }
-                                    Thread th = new Thread(mtr);
-                                    th.start();
-                                    System.out.println("Map Thread with taskID " + mtr.taskID + " started");
-                                    System.out.println("processing map queue after task with starting task with task ID: "
-                                            + mtr.taskID + ": "  + processingMapQueue.toString());
-                                }
-                            }
-
                             else if(heartBeatResponse.getReduceTasksList().size() != 0) {
                                 System.out.println("Reduce Task(s) Received");
 
@@ -270,6 +248,28 @@ public class TaskTracker {
                                     synchronized(parentTT.queueLock) {
                                         parentTT.toProcessReduceQueue.put(taskID, r);
                                     }
+                                }
+                            }
+
+                            if(processingMapQueue.size() < parentTT.getMaxConcurrentThread()) {
+                                Iterator<Map.Entry<Integer, MapThreadRunnable>> toPThIt 
+                                    = parentTT.toProcessMapQueue.entrySet().iterator();
+                                while((parentTT.processingMapQueue.size() != parentTT.getMaxConcurrentThread()) && (toPThIt.hasNext())) {
+                                    Map.Entry<Integer, MapThreadRunnable> toPThEntry = toPThIt.next();
+                                    int tid = toPThEntry.getKey();
+                                    MapThreadRunnable mtr = toPThEntry.getValue();
+
+                                    System.out.println("Starting a map thread!! ");
+
+                                    synchronized(parentTT.queueLock) {
+                                        toPThIt.remove();
+                                        parentTT.processingMapQueue.put(tid, mtr);
+                                    }
+                                    Thread th = new Thread(mtr);
+                                    th.start();
+                                    System.out.println("Map Thread with taskID " + mtr.taskID + " started");
+                                    System.out.println("processing map queue after task with starting task with task ID: "
+                                            + mtr.taskID + ": "  + processingMapQueue.toString());
                                 }
                             }
 
