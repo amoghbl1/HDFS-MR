@@ -77,6 +77,20 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
         }
     }
 
+    public void printQ(HashMap<String, ArrayList<TaskData>> queue) {
+        Iterator<Map.Entry<String, ArrayList<TaskData>>> it = queue.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry<String, ArrayList<TaskData>> entry = it.next();
+            String ip = entry.getKey();
+            System.out.println("Tasks for ip: " + ip);
+            ArrayList<TaskData> tl = entry.getValue();
+            ArrayList<TaskData> tdlist = new ArrayList<TaskData>();
+            for(TaskData td : tl) {
+                System.out.println(td.toString());
+            }
+        }
+    }
+
     //Counts the no of tasks for a jobid in the queue hashmaps
     public int countTasks(HashMap<String, ArrayList<TaskData>> queueMap, int jid) {
         int count = 0;
@@ -92,22 +106,25 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
     //Move all the tasks of a particular job from one queu to antother
     public void moveTasks(HashMap<String, ArrayList<TaskData>> fromQueue, HashMap<String, ArrayList<TaskData>> toQueue, int jid) {
-        for(Map.Entry<String, ArrayList<TaskData>> entry : toQueue.entrySet()) {
+        Iterator<Map.Entry<String, ArrayList<TaskData>>> it = fromQueue.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry<String, ArrayList<TaskData>> entry = it.next();
             String ip = entry.getKey();
+            ArrayList<TaskData> tl = entry.getValue();
             ArrayList<TaskData> tdlist = new ArrayList<TaskData>();
-            ArrayList<TaskData> tdlistiterator = entry.getValue();
-            for(TaskData td : tdlistiterator) {
+            for(TaskData td : tl) {
                 if(td.jobID == jid) {
                     synchronized(queueLock) {
                         fromQueue.get(ip).remove(td);
+                        tdlist.add(td);
                     }
-                    tdlist.add(td);
-                }
+                }                                                                                                                                     
             }
             synchronized(queueLock) {
                 toQueue.put(ip, tdlist);
             }
         }
+
     }
 
     // Checks if a certain JID is present in any of the taskData objs in all mappings of the ToProcessQueue
@@ -471,8 +488,10 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                             addToCompleteQueue(taskTrackerIP, td, 1);
                         }
                     }
-                    System.out.println("processingMapQueue after reading heartbeat request: " + processingMapQueue.toString());
-                    System.out.println("completeMapQueue after reading heartbeat request: " + completeMapQueue.toString());
+                    System.out.println("processingMapQueue after reading heartbeat request:");
+					printQ(processingMapQueue);
+                    System.out.println("completeMapQueue after reading heartbeat request:");
+					printQ(completeMapQueue);
                 }
             }
 
@@ -487,8 +506,10 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                             addToCompleteQueue(taskTrackerIP, td, 2);
                         }
                     }
-                    System.out.println("processingReduceQueue after reading heartbeat request: " + processingMapQueue.toString());
-                    System.out.println("completeReduceQueue after reading heartbeat request: " + completeMapQueue.toString());
+                    System.out.println("processingReduceQueue after reading heartbeat request:");
+					printQ(processingReduceQueue);
+                    System.out.println("completeReduceQueue after reading heartbeat request:");
+					printQ(completeReduceQueue);
                 }
             }
 
@@ -534,9 +555,11 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                         rmFromToProcessQueue(taskTrackerIP, taskData, type);
                         addToProcessingQueue(taskTrackerIP, taskData, type);
                         System.out.println("toProcessQueue after sending task with taskid: "
-                                + taskID + ": " + toProcessMapQueue.toString());
+                                + taskID + ":");
+                        printQ(toProcessMapQueue);
                         System.out.println("processingReduceQueue after sending task with taskid: "
-                                + taskID + ": " + processingMapQueue.toString());
+                                + taskID + ":");
+                        printQ(processingMapQueue);
                     }
                 }
                 else if(!toProcessReduceQueue.isEmpty()) { //currently using for reduce
@@ -574,9 +597,11 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                         rmFromToProcessQueue(taskTrackerIP, taskData, type);
                         addToProcessingQueue(taskTrackerIP, taskData, type);
                         System.out.println("toProcessReduceQueue after sending task with taskid: "
-                                + taskID + ": " + toProcessReduceQueue.toString());
+                                + taskID + ":");
+                        printQ(toProcessReduceQueue);
                         System.out.println("processingReduceQueue after sending task with taskid: "
-                                + taskID + ": " + processingReduceQueue.toString());
+                                + taskID + ":");
+                        printQ(processingReduceQueue);
                     }
                 }
                 else {
@@ -631,6 +656,13 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
             this.jobID = Jid;
             this.taskID = Tid;
         }
+
+		//@override
+		public String toString() {
+			String retVal = "";
+			retVal = "jid: " + this.jobID + " tid: " + this.taskID;
+			return retVal;
+		}
     }
 
     public class JobRunnerThread extends Thread {
