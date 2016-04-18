@@ -414,6 +414,7 @@ public class Client {
             // If this is incomplete, sleep for a bit and recheck status.
             try {
                 JobStatusResponse jobStatusResponse =  JobStatusResponse.parseFrom(responseEncoded);
+                System.out.println("Status for Job JID: " + jobSubmitResponse.getJobId());
                 System.out.println(jobStatusResponse.toString());
                 jobCompleteFlag = jobStatusResponse.getJobDone();
             } catch (Exception e) {
