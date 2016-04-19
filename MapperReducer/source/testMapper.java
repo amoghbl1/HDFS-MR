@@ -47,6 +47,7 @@ public class testMapper implements MapperInterface {
         }
         try {
             bw.close();
+            fileReader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

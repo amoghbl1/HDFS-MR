@@ -24,7 +24,7 @@ tasktracker: protobuf
 	@echo "Task Tracker Compiled..."
 
 jar:
-	cd MapperReducer && mkdir -p bin && javac -d bin/ -cp . source/MapperInterface.java source/ReducerInterface.java source/testMapper.java
+	cd MapperReducer && mkdir -p bin && javac -d bin/ -cp . source/MapperInterface.java source/ReducerInterface.java source/testMapper.java source/testReducer.java
 	cd MapperReducer/bin && jar cf mapper-reducer.jar *.class
 	cp MapperReducer/bin/mapper-reducer.jar .
 
