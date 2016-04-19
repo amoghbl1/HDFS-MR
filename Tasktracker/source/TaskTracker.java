@@ -254,18 +254,23 @@ public class TaskTracker {
                                 }
                             }
 
-                            if(processingMapQueue.size() < parentTT.getMaxConcurrentThread()) {
-                                Iterator<Map.Entry<Integer, MapThreadRunnable>> toPThIt 
+                            if((parentTT.processingMapQueue.size() + parentTT.processingReduceQueue.size()) 
+                                    < parentTT.getMaxConcurrentThread()) {
+
+                                //running map tasks
+                                Iterator<Map.Entry<Integer, MapThreadRunnable>> toPMThIt 
                                     = parentTT.toProcessMapQueue.entrySet().iterator();
-                                while((parentTT.processingMapQueue.size() != parentTT.getMaxConcurrentThread()) && (toPThIt.hasNext())) {
-                                    Map.Entry<Integer, MapThreadRunnable> toPThEntry = toPThIt.next();
-                                    int tid = toPThEntry.getKey();
-                                    MapThreadRunnable mtr = toPThEntry.getValue();
+                                while(((parentTT.processingMapQueue.size() + parentTT.processingReduceQueue.size()) 
+                                            < parentTT.getMaxConcurrentThread()) && (toPMThIt.hasNext())) {
+
+                                    Map.Entry<Integer, MapThreadRunnable> toPMThEntry = toPMThIt.next();
+                                    int tid = toPMThEntry.getKey();
+                                    MapThreadRunnable mtr = toPMThEntry.getValue();
 
                                     System.out.println("Starting a map thread!! ");
 
                                     synchronized(parentTT.queueLock) {
-                                        toPThIt.remove();
+                                        toPMThIt.remove();
                                         parentTT.processingMapQueue.put(tid, mtr);
                                     }
                                     Thread th = new Thread(mtr);
@@ -274,33 +279,30 @@ public class TaskTracker {
                                     System.out.println("processing map queue after task with starting task with task ID: "
                                             + mtr.taskID + ": "  + processingMapQueue.toString());
                                 }
-                            }
 
-                            else if(processingReduceQueue.size() < parentTT.getMaxConcurrentThread()) {
-                                Iterator<Map.Entry<Integer, ReduceThreadRunnable>> toPThIt 
+                                //running reduce tasks
+                                Iterator<Map.Entry<Integer, ReduceThreadRunnable>> toPRThIt 
                                     = parentTT.toProcessReduceQueue.entrySet().iterator();
-                                while((parentTT.processingReduceQueue.size() != parentTT.getMaxConcurrentThread()) && (toPThIt.hasNext())) {
-                                    Map.Entry<Integer, ReduceThreadRunnable> toPThEntry = toPThIt.next();
-                                    int tid = toPThEntry.getKey();
-                                    ReduceThreadRunnable rtr = toPThEntry.getValue();
+                                while(((parentTT.processingMapQueue.size() + parentTT.processingReduceQueue.size()) 
+                                            < parentTT.getMaxConcurrentThread()) && (toPRThIt.hasNext())) {
 
-                                    System.out.println("Starting a reduce thread!! ");
+                                    Map.Entry<Integer, ReduceThreadRunnable> toPRThEntry = toPRThIt.next();
+                                    int tid = toPRThEntry.getKey();
+                                    ReduceThreadRunnable rtr = toPRThEntry.getValue();
+
+                                    System.out.println("Starting a map thread!! ");
 
                                     synchronized(parentTT.queueLock) {
-                                        toPThIt.remove();
+                                        toPRThIt.remove();
                                         parentTT.processingReduceQueue.put(tid, rtr);
                                     }
                                     Thread th = new Thread(rtr);
                                     th.start();
                                     System.out.println("Reduce Thread with taskID " + rtr.taskID + " started");
-                                    System.out.println("processing reduce queue after task with starting task with task ID: "
+                                    System.out.println("processing map queue after task with starting task with task ID: "
                                             + rtr.taskID + ": "  + processingReduceQueue.toString());
                                 }
-                            }
 
-                            else {
-                                // Don't print, too noisy
-                                // System.out.println("No Task Received");
                             }
                         }
                         else {
