@@ -112,13 +112,16 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
             String ip = entry.getKey();
             ArrayList<TaskData> tl = entry.getValue();
             ArrayList<TaskData> tdlist = new ArrayList<TaskData>();
-            for(TaskData td : tl) {
-                if(td.jobID == jid) {
+            Iterator<TaskData> tdit = tl.iterator();
+            while(tdit.hasNext()) {
+                TaskData t;
+                t = tdit.next();
+                if(t.jobID == jid) {
                     synchronized(queueLock) {
-                        fromQueue.get(ip).remove(td);
-                        tdlist.add(td);
+                        tdit.remove();
+                        tdlist.add(t);
                     }
-                }                                                                                                                                     
+                }
             }
             synchronized(queueLock) {
                 toQueue.put(ip, tdlist);
