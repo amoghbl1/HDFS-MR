@@ -581,7 +581,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
 
                     //got no task for the tasktracker's ip
                     if(taskData == null) {
-                        if(this.debug) { System.out.println("Returning from reduce because of no tasks"); }
+                        if(this.debug) { System.out.println("Returning from reduce because of no tasks for ip: " + taskTrackerIP); }
                         return heartBeatResponseBuilder.build().toByteArray();
                     }
 
