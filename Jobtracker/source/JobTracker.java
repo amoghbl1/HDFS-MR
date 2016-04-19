@@ -568,7 +568,7 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                         printQ(processingMapQueue);
                     }
                 }
-                else if(!toProcessReduceQueue.isEmpty()) { //currently using for reduce
+                if(!toProcessReduceQueue.isEmpty()) { //currently using for reduce
                     if(this.debug) { System.out.println("Here in else if"); }
                     type = 2;
                     int jobID;
