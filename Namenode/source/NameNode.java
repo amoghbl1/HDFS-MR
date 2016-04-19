@@ -531,6 +531,7 @@ public class NameNode extends UnicastRemoteObject implements NameNodeInterface {
             for(int i=0; i < nameNodeFileMappings.getMappingsCount(); i++) {
                 if(nameNodeBlockDataNodeMappingsRequest.getFileName().equals(
                         nameNodeFileMappings.getMappings(i).getFileName())) {
+                    blockNumbers.clear(); // Only send the latest mappings, this way we can upload a file multiple times.
                     for(int j=0; j < nameNodeFileMappings.getMappings(i).getBlockNumbersCount(); j++) {
                         blockNumbers.add(new Integer(nameNodeFileMappings.getMappings(i).getBlockNumbers(j)));
                     }
