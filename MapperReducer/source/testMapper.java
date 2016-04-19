@@ -45,6 +45,11 @@ public class testMapper implements MapperInterface {
             }
 
         }
+        try {
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "";
     }
 }
