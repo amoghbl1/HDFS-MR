@@ -1,4 +1,7 @@
 import com.distributed.systems.HDFSProtos.AssignBlockResponse;
+import com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMapping;
+import com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsRequest;
+import com.distributed.systems.HDFSProtos.NameNodeBlockDataNodeMappingsResponse;
 import com.distributed.systems.HDFSProtos.OpenFileRequest;
 import com.distributed.systems.HDFSProtos.OpenFileResponse;
 import com.distributed.systems.HDFSProtos.ReadBlockRequest;
@@ -575,6 +578,10 @@ public class TaskTracker {
         int type;
         String reduceOutputFile;
 
+        String rendezvousIdentifier = "";
+
+        int BLOCK_SIZE_IN_BYTES = 32000000;
+
         public ReduceThreadRunnable(int jobId, int taskId, String reducerNam, 
                 String mapOpFile, String opFile, TaskTracker TT) throws RemoteException{
             this.jobID = jobId;
@@ -586,13 +593,242 @@ public class TaskTracker {
             this.type = 2;
             this.reduceOutputFile = opFile + "_ " + jobId + "_" + taskId;
         }
-        public void run() {
-            //put to sleep for 2 seconds for testing purpose
-            try { Thread.sleep(2000); } catch (Exception e) {
-                System.out.println("Problem in trying to sleep thread?? " + e.getMessage());
+
+        public boolean open(String fileName, boolean forRead) {
+            // We should add more checks to see if another file is already open, and close it auto
+            // or maybe throw an error
+
+            OpenFileRequest.Builder openFileRequestBuilder = OpenFileRequest.newBuilder();
+            openFileRequestBuilder.setFileName(fileName);
+            openFileRequestBuilder.setForRead(forRead);
+            OpenFileResponse openFileResponse = null;
+
+            byte[] requestEncoded = openFileRequestBuilder.build().toByteArray();
+            byte[] responseEncoded = null;
+
+            try {
+
+                NameNodeInterface nameNode = (NameNodeInterface) Naming.lookup("//" +
+                        this.parentTT.nameNodeIP + "/HDFSNameNode"); // This name node request location is hard coded.
+                responseEncoded = nameNode.openFile(requestEncoded);
+
+            } catch (Exception e) {
+                System.out.println("Connecting to HDFS for open file problem?? " + e.getMessage());
+                e.printStackTrace();
+                return false;
+            }
+
+            try {
+                openFileResponse = OpenFileResponse.parseFrom(responseEncoded);
+            } catch (Exception e) {
+                System.out.println("Problem parsing open response?? " + e.getMessage());
                 e.printStackTrace();
             }
+
+            System.out.println("Open file reponse rendezvous: " + openFileResponse.getRendezvousIndentifier());
+            this.rendezvousIdentifier = openFileResponse.getRendezvousIndentifier();
+
+            try { Thread.sleep(1000); } catch (Exception e) {}// Prevent talking to rendezvous before it binds
+            return true;
+        }
+
+        public boolean put(String filename) {
+            byte[] block = new byte[ this.BLOCK_SIZE_IN_BYTES ];
+            byte[] blockToSend = null;
+            int readSize;
+            WriteBlockResponse writeBlockResponse = null;
+            byte[] responseEncoded = null;
+            try {
+                FileInputStream fileInputStream = new FileInputStream(filename);
+                while(true) {
+                    readSize = fileInputStream.read(block);
+                    if(readSize <= 0) {
+                        System.out.println("Done reading file!");
+                        fileInputStream.close();
+                        break;
+                    }
+                    // Copying only the necessary bytes, out of 32MB
+                    if(readSize != BLOCK_SIZE_IN_BYTES) {
+                        blockToSend = new byte[readSize];
+                        for(int i=0; i < readSize; i++)
+                            blockToSend[i] = block[i];
+                    }
+
+                    System.out.println("Read " + readSize + " bytes");
+                    WriteBlockRequest.Builder writeBlockRequestBuilder = WriteBlockRequest.newBuilder();
+
+                    AssignBlockResponse assignBlockResponse = this.getBlock();
+                    writeBlockRequestBuilder.setBlockNumber(assignBlockResponse.getBlockNumber());
+                    ArrayList<String> ipsToSend = new ArrayList<String>(assignBlockResponse.getDataNodeIPsCount());
+                    for(int i=0; i < assignBlockResponse.getDataNodeIPsCount(); i++)
+                        ipsToSend.add(assignBlockResponse.getDataNodeIPs(i));
+                    String ipToSend = ipsToSend.get(0);
+                    System.out.println("IP to send: " + ipToSend);
+
+                    for(int i=1; i < ipsToSend.size(); i++)
+                        writeBlockRequestBuilder.addRemainingDataNodeIPs(ipsToSend.get(i));
+
+                    DataNodeInterface datanode = (DataNodeInterface) Naming.lookup("//" +
+                            ipToSend + "/HDFSDataNode");
+                    // We send a smaller block if 
+                    if(readSize != BLOCK_SIZE_IN_BYTES) {
+                        responseEncoded = datanode.writeBlock(writeBlockRequestBuilder.build().toByteArray(), blockToSend);
+                    } else {
+                        responseEncoded = datanode.writeBlock(writeBlockRequestBuilder.build().toByteArray(), block);
+                    }
+                }
+
+            } catch (Exception e) {
+                System.out.println("put file problems?? " + e.getMessage());
+                e.printStackTrace();
+            }
+            try {
+                writeBlockResponse = WriteBlockResponse.parseFrom(responseEncoded);
+            } catch (Exception e) {
+                System.out.println("Parsing response from threads write call?? " + e.getMessage());
+                e.printStackTrace();
+            }
+            if(writeBlockResponse.getStatus() == 1)
+                return true;
+            return false;
+        }
+
+
+        public byte[] getBlockFromServer(String server, int blocknumber) {
+            ReadBlockRequest.Builder readBlockRequestBuilder = ReadBlockRequest.newBuilder();
+            byte[] recievedBytes = null;
+            try {
+                readBlockRequestBuilder.setBlockNumber(blocknumber);
+                DataNodeInterface datanode = (DataNodeInterface) Naming.lookup("//" +
+                        server + "/HDFSDataNode");
+                recievedBytes = datanode.readBlock(
+                        readBlockRequestBuilder.build().toByteArray());
+            } catch (Exception e){
+                System.out.println("Problem sending read block request?? " + e.getMessage());
+                e.printStackTrace();
+            }
+            return recievedBytes;
+        }
+
+        public boolean appendBlockToFile(String filename, int blockNumber, String dataNodeIP) {
+            System.out.println("Getting block " + blockNumber + " from " + dataNodeIP);
+            byte[] blockBytes = getBlockFromServer(dataNodeIP, blockNumber);
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(filename, true);
+                fileOutputStream.write(blockBytes);
+                fileOutputStream.close();
+            } catch (Exception e) {
+                System.out.println("Problem appending to file??" + e.getMessage());
+                e.printStackTrace();
+            }   
+            return true;
+        }
+
+        public boolean get(String fileName) {
+            byte[] responseEncoded = null;
+            byte[] requestEncoded = null;
+            NameNodeBlockDataNodeMappingsResponse nameNodeBlockDataNodeMappingsResponse = null;
+            NameNodeBlockDataNodeMappingsRequest.Builder nameNodeBlockDataNodeMappingsRequest = 
+                    NameNodeBlockDataNodeMappingsRequest.newBuilder();
+            nameNodeBlockDataNodeMappingsRequest.setFileName(fileName);
+            requestEncoded = nameNodeBlockDataNodeMappingsRequest.build().toByteArray();
+            try {
+                RendezvousRunnableInterface rendezvous = (RendezvousRunnableInterface) Naming.lookup("//" +
+                        this.parentTT.nameNodeIP + "/" + this.rendezvousIdentifier);
+                responseEncoded = rendezvous.getNameNodeBlockDataNodeMappings(requestEncoded);
+
+            } catch (Exception e) {
+                System.out.println("Connecting to NN for get file problem?? " + e.getMessage());
+                e.printStackTrace();
+            }
+            try {
+                nameNodeBlockDataNodeMappingsResponse = NameNodeBlockDataNodeMappingsResponse.parseFrom(responseEncoded);
+                System.out.println("Response: " + nameNodeBlockDataNodeMappingsResponse.getMappingsCount());
+                for(int i=0; i < nameNodeBlockDataNodeMappingsResponse.getMappingsCount(); i++) {
+                    if(nameNodeBlockDataNodeMappingsResponse.getMappings(i).getDataNodeIPsCount() > 0) {
+                        appendBlockToFile(fileName,
+                                nameNodeBlockDataNodeMappingsResponse.getMappings(i).getBlockNumber(),
+                                nameNodeBlockDataNodeMappingsResponse.getMappings(i).getDataNodeIPs(0));
+                    } else {
+                        System.out.println("Sorry, looks like none of the nodes with the blocks are up!!");
+                    }
+                }
+            }catch (Exception e) {
+                System.out.println("Parsing get response problem?? " + e.getMessage());
+                e.printStackTrace();
+            }
+            return true;
+        }
+
+
+        public AssignBlockResponse getBlock() {
+            AssignBlockResponse assignBlockResponse = null;
+            byte[] responseEncoded = null;
+            try {
+                RendezvousRunnableInterface rendezvous = (RendezvousRunnableInterface) Naming.lookup("//" +
+                        this.parentTT.nameNodeIP + "/" + this.rendezvousIdentifier);
+                responseEncoded = rendezvous.assignBlock();
+            } catch (Exception e) {
+                System.out.println("Connecting to HDFS for assign block problem?? " + e.getMessage());
+                e.printStackTrace();
+            }   
+
+            try {
+                assignBlockResponse = AssignBlockResponse.parseFrom(responseEncoded);
+            } catch (Exception e) {
+                System.out.println("Problem parsing assign block response?? " + e.getMessage());
+                e.printStackTrace();
+            }   
+            return assignBlockResponse;
+        }
+
+
+         public boolean close() {
+            try {
+                RendezvousRunnableInterface rendezvous = (RendezvousRunnableInterface) Naming.lookup("//" +
+                        this.parentTT.nameNodeIP + "/" + this.rendezvousIdentifier);
+                rendezvous.closeFile();
+
+            } catch (Exception e) {
+                System.out.println("Connecting to HDFS for close file problem?? " + e.getMessage());
+                e.printStackTrace();
+            }
+            return true;
+        }
+
+
+        public void run() {
+            //put to sleep for 2 seconds for testing purpose
             System.out.println("Map Thread running task with tid: " + this.taskID);
+
+            // First, we get need to download 2 files.
+            // The final output file
+            // And the job output file.
+            // The job output file doesn't change, so let's download that first and then process final output file
+            // keeping that one open.
+            this.open(this.mapOutputFile, true);
+            this.get(this.mapOutputFile);
+            this.close();
+
+            boolean openFlag = false;
+            // Trying to open the file.
+            while(!openFlag) {
+                openFlag = this.open(this.outputFile, false);
+                try {
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            this.get(this.mapOutputFile);
+            try {
+                ReducerInterface reducer = (ReducerInterface) Class.forName(this.reducerName).newInstance();
+                reducer.reduce(this.mapOutputFile, this.outputFile);
+                this.put(this.outputFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            this.close();
 
             synchronized(this.parentTT.queueLock) {
                 ReduceThreadRunnable r;
