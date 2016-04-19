@@ -506,9 +506,9 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                 reduceTaskStatus = heartBeatRequest.getReduceStatus(i);
                 if(reduceTaskStatus.getTaskCompleted()) {
                     TaskData td;
-                    if((td = getFromToProcessQueue(taskTrackerIP, 2)) != null) {
+                    if((td = getFromProcessingQueue(taskTrackerIP, 2)) != null) {
                         synchronized(queueLock) {
-                            rmFromToProcessQueue(taskTrackerIP, td, 2);
+                            rmFromProcessingQueue(taskTrackerIP, td, 2);
                             addToCompleteQueue(taskTrackerIP, td, 2);
                         }
                     }
