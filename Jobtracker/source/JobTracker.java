@@ -532,85 +532,80 @@ public class JobTracker extends UnicastRemoteObject implements JobTrackerInterfa
                     taskData = getFromToProcessQueue(taskTrackerIP, type);
 
                     //got no task for the tasktracker's ip
-                    if(taskData == null) {
-                        return heartBeatResponseBuilder.build().toByteArray();
-                    }
+                    if(taskData != null) {
+                        int jobID;
+                        int taskID;
+                        String mapperName;
+                        int blockNumber;
+                        jobID = taskData.jobID;
+                        taskID = taskData.taskID;
+                        blockNumber = taskData.blockNumber;
+                        mapperName = taskData.mapper;
 
-                    int jobID;
-                    int taskID;
-                    String mapperName;
-                    int blockNumber;
-                    jobID = taskData.jobID;
-                    taskID = taskData.taskID;
-                    blockNumber = taskData.blockNumber;
-                    mapperName = taskData.mapper;
+                        //Building up the protobuf object
+                        MapTaskInfo.Builder mapTaskInfoBuilder = MapTaskInfo.newBuilder();
+                        mapTaskInfoBuilder.setJobId(jobID);
+                        mapTaskInfoBuilder.setTaskId(taskID);
+                        mapTaskInfoBuilder.setMapperName(mapperName);
+                        mapTaskInfoBuilder.setBlockNumber(blockNumber);
+                        mapTaskInfoBuilder.setIp(taskTrackerIP);
 
-                    //Building up the protobuf object
-                    MapTaskInfo.Builder mapTaskInfoBuilder = MapTaskInfo.newBuilder();
-                    mapTaskInfoBuilder.setJobId(jobID);
-                    mapTaskInfoBuilder.setTaskId(taskID);
-                    mapTaskInfoBuilder.setMapperName(mapperName);
-                    mapTaskInfoBuilder.setBlockNumber(blockNumber);
-                    mapTaskInfoBuilder.setIp(taskTrackerIP);
+                        heartBeatResponseBuilder.addMapTasks(mapTaskInfoBuilder);
 
-                    heartBeatResponseBuilder.addMapTasks(mapTaskInfoBuilder);
-
-                    System.out.println("Sending task " + taskData.toString() +" to " + taskTrackerIP);
-                    synchronized(queueLock) {
-                        //move task from toProcess to processing queue
-                        rmFromToProcessQueue(taskTrackerIP, taskData, type);
-                        addToProcessingQueue(taskTrackerIP, taskData, type);
-                        System.out.println("toProcessMapQueue after sending task with taskid: "
-                                + taskID + ":");
-                        printQ(toProcessMapQueue);
-                        System.out.println("processingMapQueue after sending task with taskid: "
-                                + taskID + ":");
-                        printQ(processingMapQueue);
+                        System.out.println("Sending task " + taskData.toString() +" to " + taskTrackerIP);
+                        synchronized(queueLock) {
+                            //move task from toProcess to processing queue
+                            rmFromToProcessQueue(taskTrackerIP, taskData, type);
+                            addToProcessingQueue(taskTrackerIP, taskData, type);
+                            System.out.println("toProcessMapQueue after sending task with taskid: "
+                                    + taskID + ":");
+                            printQ(toProcessMapQueue);
+                            System.out.println("processingMapQueue after sending task with taskid: "
+                                    + taskID + ":");
+                            printQ(processingMapQueue);
+                        }
                     }
                 }
                 if(!toProcessReduceQueue.isEmpty()) { //currently using for reduce
-                    if(this.debug) { System.out.println("Here in else if"); }
+                    if(this.debug) { System.out.println("Here in reduce if"); }
                     type = 2;
-                    int jobID;
-                    int taskID;
-                    String reducerName;
-                    String outputFile;
 
                     TaskData taskData;
                     taskData = getFromToProcessQueue(taskTrackerIP, type);
 
                     //got no task for the tasktracker's ip
-                    if(taskData == null) {
-                        if(this.debug) { System.out.println("Returning from reduce because of no tasks for ip: " + taskTrackerIP); }
-                        return heartBeatResponseBuilder.build().toByteArray();
-                    }
+                    if(taskData != null) {
 
-                    if(this.debug) { System.out.println("Found reduce tasks"); }
+                        int jobID;
+                        int taskID;
+                        String reducerName;
+                        String outputFile;
 
-                    //Building up the protobuf object
-                    ReducerTaskInfo.Builder reducerTaskInfoBuilder = ReducerTaskInfo.newBuilder();
-                    jobID = taskData.jobID;
-                    taskID = taskData.taskID;
-                    outputFile = taskData.output;
-                    reducerName = taskData.reducer;
-                    reducerTaskInfoBuilder.setJobId(jobID);
-                    reducerTaskInfoBuilder.setTaskId(taskID);
-                    reducerTaskInfoBuilder.setReducerName(reducerName);
-                    reducerTaskInfoBuilder.setOutputFile(outputFile);
+                        //Building up the protobuf object
+                        ReducerTaskInfo.Builder reducerTaskInfoBuilder = ReducerTaskInfo.newBuilder();
+                        jobID = taskData.jobID;
+                        taskID = taskData.taskID;
+                        outputFile = taskData.output;
+                        reducerName = taskData.reducer;
+                        reducerTaskInfoBuilder.setJobId(jobID);
+                        reducerTaskInfoBuilder.setTaskId(taskID);
+                        reducerTaskInfoBuilder.setReducerName(reducerName);
+                        reducerTaskInfoBuilder.setOutputFile(outputFile);
 
-                    heartBeatResponseBuilder.addReduceTasks(reducerTaskInfoBuilder);
+                        heartBeatResponseBuilder.addReduceTasks(reducerTaskInfoBuilder);
 
-                    System.out.println("Sending task " + taskData.toString() +" to " + taskTrackerIP);
-                    synchronized(queueLock) {
-                        //move task from toProcess to processing queue
-                        rmFromToProcessQueue(taskTrackerIP, taskData, type);
-                        addToProcessingQueue(taskTrackerIP, taskData, type);
-                        System.out.println("toProcessReduceQueue after sending task with taskid: "
-                                + taskID + ":");
-                        printQ(toProcessReduceQueue);
-                        System.out.println("processingReduceQueue after sending task with taskid: "
-                                + taskID + ":");
-                        printQ(processingReduceQueue);
+                        System.out.println("Sending task " + taskData.toString() +" to " + taskTrackerIP);
+                        synchronized(queueLock) {
+                            //move task from toProcess to processing queue
+                            rmFromToProcessQueue(taskTrackerIP, taskData, type);
+                            addToProcessingQueue(taskTrackerIP, taskData, type);
+                            System.out.println("toProcessReduceQueue after sending task with taskid: "
+                                    + taskID + ":");
+                            printQ(toProcessReduceQueue);
+                            System.out.println("processingReduceQueue after sending task with taskid: "
+                                    + taskID + ":");
+                            printQ(processingReduceQueue);
+                        }
                     }
                 }
                 else {
